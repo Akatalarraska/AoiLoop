@@ -7,6 +7,35 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Added — Phase 1: Domain & database
+
+- Eleven Drift tables: `UserProfiles`, `Devices`, `ConsumableTypes`,
+  `ConsumableInstances`, `ChangeEvents`, `Incidents`, `BodySites`,
+  `SiteUsages`, `InventoryLocations`, `InventoryItems`,
+  `NotificationSchedules`
+- Schema v2 with a tested upgrade path from the empty v1 that Phase 0 shipped
+- UUID primary keys, so records created offline on different devices can be
+  merged when sync arrives in 0.2
+- Timestamps stored as ISO-8601 UTC text, readable without decoding
+- Domain enums persisted by name, with tests pinning the stored strings so a
+  rename fails the build instead of orphaning history
+- Two invariants enforced as partial unique indexes rather than application
+  checks: one active instance per consumable type per profile, and one open
+  usage per body site
+- Per-relationship delete behaviour: cascade from a profile, `RESTRICT` on a
+  consumable type that has history, `SET NULL` when a device is removed
+- A `CHECK` constraint refusing negative inventory quantities
+- Ten repositories, each taking an injectable clock and id generator
+- Inventory consumption that draws from the batch expiring soonest, spills into
+  later batches, and reports a shortfall rather than going negative
+- Body map queries reporting last use and rest order, distinguishing "never
+  used" from "rested a long time"
+- A notification ledger independent of the OS, aware of the 64 pending
+  notification cap that iOS imposes
+- `IdGenerator` with a deterministic test implementation
+- 225 further tests, including referential integrity, the migration, and every
+  repository
+
 ### Added — Phase 0: Foundation
 
 - Flutter project targeting Android and iOS, organisation `com.dt1flow`
@@ -40,7 +69,9 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Notes
 
-- No domain tables exist yet; Phase 0 delivers the database *wiring*. Tables
-  arrive in Phase 1.
 - Generated sources (`*.g.dart`, `lib/l10n/generated/`) are not committed. Run
   `flutter gen-l10n` and `dart run build_runner build` after cloning.
+- The schema carries no built-in catalogue of products yet. Every consumable
+  type is user-created until Phase 2 seeds the presets during onboarding.
+- `ManufacturerReplacement` is specified but not implemented; it belongs with
+  the replacement flow in Phase 6.

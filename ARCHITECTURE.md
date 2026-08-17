@@ -95,6 +95,62 @@ Rules for schema changes:
 3. Never edit a shipped migration step — add a new one.
 4. Store timestamps in UTC; convert for display only.
 
+One trap worth knowing: the generated `app_database.g.dart` is a `part of` this
+library, so **every type it names must be imported by `app_database.dart`
+itself**. Importing an enum only in the table file that uses it compiles under
+`flutter analyze` — generated sources are excluded from analysis — and then
+fails at build or test time. If a fresh clone fails to compile with "X isn't a
+type" in the `.g.dart`, this is why.
+
+### Schema decisions
+
+**UUID primary keys, not autoincrement.** Release 0.2 commits to multi-device
+sync with caregivers. Two people logging a change offline — a parent at home,
+a nurse at school — would both be handed the same integer id and collide on
+merge. A UUID is minted by whichever device creates the row and stays valid
+forever, so cross-references survive syncing.
+
+**Enums stored by name, not index.** `textEnum` throughout. Reordering or
+inserting an enum value must never silently reinterpret existing rows. Tests in
+`test/shared/models/domain_enums_test.dart` pin the stored strings, so renaming
+one fails the build rather than orphaning a user's history.
+
+**Timestamps as ISO-8601 text.** `storeDateTimeAsText: true`. A health log is
+something people occasionally need to inspect or hand to support;
+`2026-08-17T11:00:00.000Z` is unambiguous where `1786662000` is not. It also
+removes a class of bug where an integer column is read back in the wrong unit.
+
+**Two invariants enforced by the database, not by code.** Both are partial
+unique indexes, declared with `@TableIndex.sql` so `drift_dev` validates them
+at build time:
+
+- one active `ConsumableInstance` per consumable type per profile — you are not
+  wearing two sensors;
+- one open `SiteUsage` per body site — a spot holds one thing at a time.
+
+They are indexes rather than application checks so they hold even when two
+writes race, which is exactly the situation shared caregiving creates.
+
+**Delete behaviour is chosen per relationship, not uniformly.** Deleting a
+profile cascades. Deleting a `ConsumableType` that has history is `RESTRICT` —
+types are deactivated, never deleted, because dropping one would erase the
+changes the user recorded. Deleting a device is `SET NULL`, so losing the pump
+does not lose the record that a set was changed.
+
+### Repositories
+
+One per aggregate, each extending `Repository` and taking `AppDatabase`,
+`Clock` and `IdGenerator`. That trio is the whole test seam: an in-memory
+database, a pinned clock, and readable sequential ids. `test/support/
+test_database.dart` wires them into a `TestHarness`.
+
+Repositories return Drift row classes directly rather than mapping to a
+parallel set of domain entities. With a single local database and no remote
+API, a mapping layer would be pure duplication — `ConsumableInstance` is
+already an immutable value class with `copyWith` and value equality. If a
+second data source ever appears, that is the point to introduce the mapping,
+not before.
+
 ### `CycleStatus` and `StatusPalette`
 
 `shared/models/cycle_status.dart` is the pure-Dart status vocabulary, shared by

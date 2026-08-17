@@ -3,7 +3,7 @@
 The MVP is `0.1.0`. It is built in phases, and **each phase is finished — it
 analyzes, it tests, it runs — before the next one starts.**
 
-Current position: **Phase 0 complete.**
+Current position: **Phase 1 complete.**
 
 ---
 
@@ -15,11 +15,11 @@ Flutter project, folder structure, theme, Riverpod, GoRouter, Drift wiring,
 Spanish/English localization, placeholder Home, navigation skeleton, CI,
 documentation.
 
-### Phase 1 — Domain & database
+### Phase 1 — Domain & database ✅
 
-Drift tables and repositories for `UserProfile`, `Device`, `ConsumableType`,
-`ConsumableInstance`, `ChangeEvent`, `Incident`, `BodySite`, `SiteUsage`,
-`InventoryItem`, `NotificationSchedule`. Migrations and tests.
+Eleven Drift tables with UUID keys, foreign keys, partial unique indexes and a
+tested v1→v2 migration. A repository per aggregate. Domain enums persisted by
+name.
 
 ### Phase 2 — Onboarding
 

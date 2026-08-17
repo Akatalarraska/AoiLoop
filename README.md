@@ -9,9 +9,10 @@ consumables that come with them.
 It keeps track of **when things need changing, what you have left, and where
 the last one went** — so that you don't have to.
 
-**Status: pre-MVP.** Phase 0 of the roadmap is complete: the app builds, runs
-and navigates, but the features are not implemented yet. See
-[ROADMAP.md](ROADMAP.md).
+**Status: pre-MVP.** Phases 0 and 1 are complete: the app builds, runs and
+navigates, and the full local database and data layer are in place and tested.
+No feature screens are implemented yet — that starts with onboarding in Phase 2.
+See [ROADMAP.md](ROADMAP.md).
 
 ---
 
