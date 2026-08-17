@@ -1,0 +1,16 @@
+# Localization configuration for DT1FLOW.
+# Regenerate with: flutter gen-l10n  (also runs as part of `flutter run`)
+arb-dir: lib/l10n
+template-arb-file: app_en.arb
+output-dir: lib/l10n/generated
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+
+# Non-nullable `AppLocalizations.of(context)`, so `context.l10n` never needs a
+# null check at the call site.
+nullable-getter: false
+
+# Writes any key present in the template but missing from a translation to
+# l10n_untranslated.txt. CI reads that file and fails if it is non-empty —
+# gen-l10n itself only warns. Accessibility and trust depend on complete copy.
+untranslated-messages-file: l10n_untranslated.txt

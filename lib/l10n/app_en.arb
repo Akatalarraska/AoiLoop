@@ -1,0 +1,146 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "DT1FLOW",
+  "@appTitle": {
+    "description": "The application name. Not translated."
+  },
+
+  "appTagline": "Diabetes has enough numbers. DT1FLOW remembers the dates.",
+  "@appTagline": {
+    "description": "Product tagline, shown on the welcome screen and in the about section."
+  },
+
+  "navHome": "Home",
+  "@navHome": {
+    "description": "Bottom navigation label for the dashboard tab."
+  },
+
+  "navCalendar": "Calendar",
+  "@navCalendar": {
+    "description": "Bottom navigation label for the calendar tab."
+  },
+
+  "navBody": "Body",
+  "@navBody": {
+    "description": "Bottom navigation label for the body map tab, where the user sees which sites are in use."
+  },
+
+  "navHistory": "History",
+  "@navHistory": {
+    "description": "Bottom navigation label for the history timeline tab."
+  },
+
+  "sectionInventory": "Inventory",
+  "@sectionInventory": {
+    "description": "Title of the supplies inventory section."
+  },
+
+  "sectionTravel": "Travel",
+  "@sectionTravel": {
+    "description": "Title of the travel planning section."
+  },
+
+  "sectionFamily": "Family",
+  "@sectionFamily": {
+    "description": "Title of the section for managing other people's profiles, e.g. a child."
+  },
+
+  "sectionSettings": "Settings",
+  "@sectionSettings": {
+    "description": "Title of the app settings section."
+  },
+
+  "moreSectionsTooltip": "More sections",
+  "@moreSectionsTooltip": {
+    "description": "Tooltip and accessibility label for the button that opens inventory, travel, family and settings."
+  },
+
+  "statusHealthy": "On track",
+  "@statusHealthy": {
+    "description": "Cycle status: the consumable is comfortably within its expected lifetime."
+  },
+
+  "statusDueSoon": "Due soon",
+  "@statusDueSoon": {
+    "description": "Cycle status: the expected change date is approaching, by default within 24 hours."
+  },
+
+  "statusDueNow": "Due now",
+  "@statusDueNow": {
+    "description": "Cycle status: the expected change date has been reached."
+  },
+
+  "statusOverdue": "Overdue",
+  "@statusOverdue": {
+    "description": "Cycle status: the expected change date has passed."
+  },
+
+  "statusInactive": "Not set up",
+  "@statusInactive": {
+    "description": "Cycle status: nothing is being tracked for this consumable."
+  },
+
+  "statusSemanticLabel": "Status: {status}",
+  "@statusSemanticLabel": {
+    "description": "Screen reader announcement for a status indicator. Wraps the already-translated status name.",
+    "placeholders": {
+      "status": {
+        "type": "String",
+        "example": "Due soon"
+      }
+    }
+  },
+
+  "notBuiltYetTitle": "Not built yet",
+  "@notBuiltYetTitle": {
+    "description": "Heading of the placeholder shown in sections that have no implementation yet."
+  },
+
+  "notBuiltYetInPhase": "Planned for phase {phase} of the roadmap.",
+  "@notBuiltYetInPhase": {
+    "description": "Body of the placeholder shown in unimplemented sections, naming the roadmap phase that will deliver it.",
+    "placeholders": {
+      "phase": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+
+  "notBuiltYetAfterMvp": "Planned for release {release}, after the 0.1.0 MVP.",
+  "@notBuiltYetAfterMvp": {
+    "description": "Body of the placeholder for sections deliberately left until after the first MVP release.",
+    "placeholders": {
+      "release": {
+        "type": "String",
+        "example": "0.3"
+      }
+    }
+  },
+
+  "devStatusVocabulary": "Status vocabulary",
+  "@devStatusVocabulary": {
+    "description": "Heading of the temporary Phase 0 reference card on Home that shows every cycle status. Removed in Phase 3."
+  },
+
+  "medicalDisclaimerShort": "DT1FLOW does not calculate doses or give treatment advice.",
+  "@medicalDisclaimerShort": {
+    "description": "Short medical boundary notice. Must stay visible somewhere reachable in the app."
+  },
+
+  "genericErrorTitle": "Something went wrong",
+  "@genericErrorTitle": {
+    "description": "Heading of the generic error state."
+  },
+
+  "genericErrorBody": "Your data is safe on this device. Try again.",
+  "@genericErrorBody": {
+    "description": "Body of the generic error state. Reassures the user because the app is offline-first."
+  },
+
+  "retry": "Try again",
+  "@retry": {
+    "description": "Label of the button that retries a failed operation."
+  }
+}

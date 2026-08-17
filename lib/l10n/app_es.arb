@@ -1,0 +1,39 @@
+{
+  "@@locale": "es",
+
+  "appTitle": "DT1FLOW",
+  "appTagline": "La diabetes ya tiene suficientes números. DT1FLOW recuerda las fechas.",
+
+  "navHome": "Inicio",
+  "navCalendar": "Calendario",
+  "navBody": "Cuerpo",
+  "navHistory": "Historial",
+
+  "sectionInventory": "Inventario",
+  "sectionTravel": "Viajes",
+  "sectionFamily": "Familia",
+  "sectionSettings": "Ajustes",
+
+  "moreSectionsTooltip": "Más secciones",
+
+  "statusHealthy": "Todo en orden",
+  "statusDueSoon": "Próximo cambio",
+  "statusDueNow": "Toca cambiar",
+  "statusOverdue": "Cambio vencido",
+  "statusInactive": "Sin configurar",
+
+  "statusSemanticLabel": "Estado: {status}",
+
+  "notBuiltYetTitle": "Todavía no disponible",
+  "notBuiltYetInPhase": "Prevista para la fase {phase} de la hoja de ruta.",
+  "notBuiltYetAfterMvp": "Prevista para la versión {release}, después del MVP 0.1.0.",
+
+  "devStatusVocabulary": "Vocabulario de estados",
+
+  "medicalDisclaimerShort": "DT1FLOW no calcula dosis ni da indicaciones de tratamiento.",
+
+  "genericErrorTitle": "Algo ha ido mal",
+  "genericErrorBody": "Tus datos siguen a salvo en este dispositivo. Vuelve a intentarlo.",
+
+  "retry": "Reintentar"
+}
