@@ -1,0 +1,86 @@
+# ---------------------------------------------------------------------------
+# DT1FLOW — .gitignore
+# ---------------------------------------------------------------------------
+
+# Dart / Flutter tooling
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+doc/api/
+
+# Generated code. DT1FLOW regenerates these with:
+#   dart run build_runner build --delete-conflicting-outputs
+# CI does the same, so they are intentionally not committed.
+*.g.dart
+*.freezed.dart
+*.mocks.dart
+
+# Generated localizations (produced by `flutter gen-l10n`)
+lib/l10n/generated/
+# Report of missing translations. CI fails when it is non-empty.
+l10n_untranslated.txt
+
+# Drift schema dumps are committed on purpose (migration safety),
+# but the local scratch database is not.
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# IDE / editor
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.history/
+*.swp
+
+# macOS / Windows / Linux noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Android
+android/.gradle/
+android/captures/
+android/local.properties
+android/key.properties
+android/app/*.jks
+android/app/*.keystore
+android/**/GeneratedPluginRegistrant.java
+android/app/debug/
+android/app/profile/
+android/app/release/
+*.keystore
+!android/app/debug.keystore
+
+# iOS
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/App.framework/
+ios/Flutter/Flutter.framework/
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/Flutter/app.flx
+ios/Flutter/app.zip
+ios/Flutter/flutter_assets/
+ios/ServiceDefinitions.json
+ios/Runner/GeneratedPluginRegistrant.*
+**/*.mobileprovision
+**/*.p12
+**/*.cer
+
+# Secrets — see SECURITY.md. Never commit these.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
