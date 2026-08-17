@@ -1,31 +1,77 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 
+// The generated part file is compiled as part of *this* library, so every type
+// it names has to be imported here. Importing them only in the table files is
+// not enough, and the analyzer will not catch the omission because generated
+// sources are excluded from analysis — only a build or a test run fails.
+import '../../shared/models/body_enums.dart';
+import '../../shared/models/change_enums.dart';
+import '../../shared/models/consumable_enums.dart';
+import '../../shared/models/device_enums.dart';
+import '../../shared/models/notification_enums.dart';
+import '../../shared/models/profile_enums.dart';
 import '../constants/app_info.dart';
+import 'converters/reminder_offsets_converter.dart';
+import 'tables/body_sites.dart';
+import 'tables/change_events.dart';
+import 'tables/consumable_instances.dart';
+import 'tables/consumable_types.dart';
+import 'tables/devices.dart';
+import 'tables/incidents.dart';
+import 'tables/inventory.dart';
+import 'tables/notification_schedules.dart';
+import 'tables/site_usages.dart';
+import 'tables/user_profiles.dart';
+
+// The row classes generated here expose these enums in their public API, so
+// anything that can read a row can name its fields without a second import.
+export '../../shared/models/body_enums.dart';
+export '../../shared/models/change_enums.dart';
+export '../../shared/models/consumable_enums.dart';
+export '../../shared/models/device_enums.dart';
+export '../../shared/models/notification_enums.dart';
+export '../../shared/models/profile_enums.dart';
+export 'tables/body_sites.dart';
+export 'tables/change_events.dart';
+export 'tables/consumable_instances.dart';
+export 'tables/consumable_types.dart';
+export 'tables/devices.dart';
+export 'tables/incidents.dart';
+export 'tables/inventory.dart';
+export 'tables/notification_schedules.dart';
+export 'tables/site_usages.dart';
+export 'tables/user_profiles.dart';
 
 part 'app_database.g.dart';
 
 /// The single local SQLite database behind DT1FLOW.
 ///
-/// DT1FLOW is offline-first: this database is the source of truth, not a cache.
-/// Every feature reads and writes through a repository that wraps this class;
-/// no widget touches Drift directly.
+/// DT1FLOW is offline-first: this database is the source of truth, not a
+/// cache. Every feature reads and writes through a repository that wraps this
+/// class; no widget touches Drift directly.
 ///
-/// **Phase 0 intentionally declares no tables.** The wiring — connection,
-/// background isolate, foreign keys, migration strategy, disposal — is what
-/// this phase delivers and what `test/core/database/app_database_test.dart`
-/// exercises. The domain tables (UserProfile, Device, ConsumableType,
-/// ConsumableInstance, ChangeEvent, Incident, BodySite, SiteUsage,
-/// InventoryItem, NotificationSchedule) arrive in Phase 1, each with an
-/// explicit migration step.
-///
-/// Rules for future schema changes, so migrations stay safe:
+/// Rules for schema changes, so migrations stay safe:
 ///
 /// 1. Bump [schemaVersion] by exactly one per released change.
 /// 2. Add a matching `from(n)To(n+1)` step in [migration].
 /// 3. Never edit a shipped migration step — add a new one.
 /// 4. Store timestamps in UTC. Presentation converts to local time.
-@DriftDatabase(tables: <Type>[])
+@DriftDatabase(
+  tables: <Type>[
+    UserProfiles,
+    Devices,
+    ConsumableTypes,
+    ConsumableInstances,
+    ChangeEvents,
+    Incidents,
+    BodySites,
+    SiteUsages,
+    InventoryLocations,
+    InventoryItems,
+    NotificationSchedules,
+  ],
+)
 class AppDatabase extends _$AppDatabase {
   /// Opens the on-device database, in a background isolate so large queries
   /// never stutter the UI.
@@ -37,7 +83,17 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase({QueryExecutor? executor}) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  /// Timestamps are stored as ISO-8601 text rather than Unix seconds.
+  ///
+  /// A health log is something people occasionally need to inspect, export or
+  /// hand to support. `2026-08-17T11:00:00.000Z` is readable and unambiguous
+  /// about its offset; `1786662000` is neither. It also removes a whole class
+  /// of silent bug where an integer column is read back in the wrong unit.
+  @override
+  DriftDatabaseOptions get options =>
+      const DriftDatabaseOptions(storeDateTimeAsText: true);
 
   @override
   MigrationStrategy get migration {
@@ -45,10 +101,17 @@ class AppDatabase extends _$AppDatabase {
       onCreate: (Migrator m) async {
         await m.createAll();
       },
+      onUpgrade: (Migrator m, int from, int to) async {
+        // v1 shipped the connection and no tables at all (Phase 0). The domain
+        // schema arrives whole in v2, so the step is a plain create.
+        if (from < 2) {
+          await m.createAll();
+        }
+      },
       beforeOpen: (OpeningDetails details) async {
-        // SQLite disables foreign keys per connection by default. The Phase 1
-        // schema leans on them heavily (a ChangeEvent without its
-        // ConsumableInstance is corrupt data), so enable them on every open.
+        // SQLite disables foreign keys per connection by default. The schema
+        // leans on them heavily (a ChangeEvent without its ConsumableInstance
+        // is corrupt data), so enable them on every open.
         await customStatement('PRAGMA foreign_keys = ON');
       },
     );
