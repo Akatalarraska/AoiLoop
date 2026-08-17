@@ -12,21 +12,30 @@ Shared, cross-feature building blocks live in `lib/shared/`; infrastructure
 
 ## Status
 
-| Feature       | Delivered in | State |
-| ------------- | ------------ | ----- |
-| `dashboard`   | Phase 3      | Placeholder screen (Phase 0) |
-| `calendar`    | Phase 9      | Placeholder screen |
-| `body_map`    | Phase 7      | Placeholder screen |
-| `history`     | Phase 9      | Placeholder screen |
-| `inventory`   | Phase 8      | Placeholder screen |
-| `settings`    | Phase 2      | Placeholder screen |
-| `onboarding`  | Phase 2      | Not started |
-| `devices`     | Phase 1–2    | Not started |
-| `consumables` | Phase 1–2    | Not started |
-| `changes`     | Phase 4      | Not started |
-| `incidents`   | Phase 6      | Not started |
-| `travel`      | Release 0.3  | Placeholder screen |
-| `family`      | Release 0.2  | Placeholder screen |
+| Feature       | UI delivered in | State |
+| ------------- | --------------- | ----- |
+| `dashboard`   | Phase 3         | Placeholder screen |
+| `calendar`    | Phase 9         | Placeholder screen |
+| `body_map`    | Phase 7         | `data/` done, placeholder screen |
+| `history`     | Phase 9         | Placeholder screen |
+| `inventory`   | Phase 8         | `data/` done, placeholder screen |
+| `settings`    | Phase 2         | `data/` done, placeholder screen |
+| `devices`     | Phase 2         | `data/` done, no UI |
+| `consumables` | Phase 2         | `data/` done, no UI |
+| `changes`     | Phase 4         | `data/` done, no UI |
+| `incidents`   | Phase 6         | `data/` done, no UI |
+| `onboarding`  | Phase 2         | Not started |
+| `travel`      | Release 0.3     | Placeholder screen |
+| `family`      | Release 0.2     | Placeholder screen |
 
-Directories for features that have not started yet exist so the intended shape
-of the app is visible from the tree. They hold this note and nothing else.
+Phase 1 delivered the `data/` layer across the board: a repository per
+aggregate, each fully tested against an in-memory database. The `presentation/`
+layers arrive in the phase named above.
+
+`onboarding` has no directory contents yet — it is Phase 2's first job, and
+there was nothing to put there.
+
+The `UserProfile` repository lives under `settings/data/` because settings owns
+the profile once onboarding has written it. Onboarding will use the same
+repository rather than a second one.
+
