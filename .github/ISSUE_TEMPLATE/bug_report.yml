@@ -1,0 +1,94 @@
+name: Bug report
+description: Something in DT1FLOW behaves incorrectly.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting.
+
+        **Please do not include personal health information.** No glucose
+        values, no clinic or prescription details, no full-resolution
+        screenshots of another app. A description of what went wrong is
+        enough — crop or redact anything else.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you expected, and what you got instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open Home
+        2. Tap "Register change"
+        3. ...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part of the app?
+      options:
+        - Dashboard / countdowns
+        - Registering a change
+        - Incidents / early replacement
+        - Notifications and reminders
+        - Body map
+        - Inventory
+        - Calendar / history
+        - Travel
+        - Onboarding / settings
+        - Something else
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - Android
+        - iOS
+        - Both
+    validations:
+      required: true
+
+  - type: input
+    id: os-version
+    attributes:
+      label: OS version
+      placeholder: "Android 15 / iOS 18.4"
+
+  - type: input
+    id: app-version
+    attributes:
+      label: DT1FLOW version
+      description: Found in Settings → About.
+      placeholder: "0.1.0-dev"
+
+  - type: dropdown
+    id: data-loss
+    attributes:
+      label: Did anything appear to be lost or wrong in your saved data?
+      description: These are triaged first.
+      options:
+        - "No"
+        - "Yes — a change or incident disappeared"
+        - "Yes — dates or countdowns are wrong"
+        - "Yes — inventory counts are wrong"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Logs or redacted screenshots, if you have them.

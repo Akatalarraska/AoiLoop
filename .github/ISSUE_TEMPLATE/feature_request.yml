@@ -1,0 +1,60 @@
+name: Feature request
+description: Suggest something DT1FLOW should do.
+labels: ["feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        DT1FLOW is an organisation, maintenance and logistics app.
+
+        It deliberately does **not** calculate doses, recommend boluses, adjust
+        basal rates, interpret glucose for treatment, or otherwise act as a
+        medical device. Requests in that direction will be closed — not because
+        they are bad ideas, but because they are outside what this project is.
+        See PRIVACY.md and the "Medical boundaries" section of the README.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: >-
+        Describe the situation, not the solution. "I keep forgetting which arm
+        the last sensor was on" tells us more than "add a dropdown".
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What do you have in mind?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which area does this belong to?
+      options:
+        - Dashboard / countdowns
+        - Changes and cycles
+        - Incidents and replacements
+        - Notifications
+        - Body map
+        - Inventory
+        - Calendar / history
+        - Travel
+        - Family and caregivers
+        - Accessibility
+        - Something else
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Medical boundaries
+      options:
+        - label: >-
+            This request does not ask DT1FLOW to calculate doses, recommend
+            treatment, or interpret glucose values clinically.
+          required: true

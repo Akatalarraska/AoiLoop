@@ -1,0 +1,82 @@
+name: Device or consumable support
+description: Ask for a pump, CGM, pod or consumable to be supported out of the box.
+labels: ["feature", "database"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        DT1FLOW lets anyone add a custom consumable with their own duration, so
+        nothing is blocked on this. This template is for adding a device or
+        consumable to the **built-in presets**, so it works correctly without
+        setup.
+
+        Please give only publicly documented information — manufacturer
+        specifications, not your own prescription or clinic details.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of item is this?
+      options:
+        - Insulin pump
+        - CGM / sensor
+        - Transmitter
+        - Infusion set
+        - Cannula
+        - Tubing
+        - Reservoir / cartridge
+        - Pod (patch pump)
+        - Meter
+        - Other consumable
+    validations:
+      required: true
+
+  - type: input
+    id: manufacturer
+    attributes:
+      label: Manufacturer
+      placeholder: "e.g. Dexcom, Medtronic, Insulet, Ypsomed, Tandem, Abbott"
+    validations:
+      required: true
+
+  - type: input
+    id: model
+    attributes:
+      label: Model name
+      placeholder: "e.g. G7, Omnipod DASH, mylife YpsoPump"
+    validations:
+      required: true
+
+  - type: input
+    id: duration
+    attributes:
+      label: Manufacturer-stated wear or use duration
+      description: >-
+        As printed by the manufacturer. DT1FLOW uses this only as the default
+        starting value — users can change it.
+      placeholder: "e.g. 10 days, 72 hours, 3 days"
+    validations:
+      required: true
+
+  - type: input
+    id: source
+    attributes:
+      label: Link to the manufacturer's specification
+      placeholder: "https://..."
+    validations:
+      required: true
+
+  - type: input
+    id: regions
+    attributes:
+      label: Where is it sold?
+      placeholder: "e.g. EU, US, UK"
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything unusual about how it is tracked?
+      description: >-
+        For example: transmitter and sensor have separate lifetimes; the
+        reservoir and the set are changed on different schedules; a warm-up
+        period applies.
