@@ -3,23 +3,16 @@ import 'package:drift/native.dart';
 import 'package:dt1flow/core/database/app_database.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// Phase 0 declares no tables yet, so these tests deliberately cover the
-/// *wiring* rather than any schema: that the database opens, that the
-/// migration strategy runs, and that `PRAGMA foreign_keys` is actually on.
+/// Tests for the database *wiring* — the guarantees every table depends on.
 ///
-/// That last one is the point. SQLite silently ignores foreign keys unless the
-/// pragma is set per connection, and the Phase 1 schema depends on them —
-/// a ChangeEvent whose ConsumableInstance has been deleted is corrupt data.
-/// Without this test the pragma could be dropped in a refactor and nothing
-/// would fail until someone's history quietly lost its references.
+/// The foreign key test is the one that matters most. SQLite silently ignores
+/// foreign keys unless the pragma is set per connection, so without this test
+/// a refactor could drop it and nothing would fail until someone's history had
+/// quietly lost its references.
 void main() {
   late AppDatabase database;
 
   setUpAll(() {
-    // The isolation test below opens two databases on purpose. Drift's warning
-    // exists for the case where both share one QueryExecutor, which would race;
-    // here each gets its own independent in-memory store, so the warning is
-    // noise that would otherwise bury real failures in the test output.
     driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
   });
 
@@ -32,10 +25,9 @@ void main() {
   });
 
   test('opens and reports the expected schema version', () async {
-    // Forces the connection open and the migration strategy to run.
     await database.customSelect('SELECT 1').get();
 
-    expect(database.schemaVersion, 1);
+    expect(database.schemaVersion, 2);
   });
 
   test('enables foreign key enforcement on the connection', () async {
@@ -55,13 +47,78 @@ void main() {
     expect(rows.single.data.values.first, database.schemaVersion);
   });
 
+  test('creates every declared table', () async {
+    final List<QueryRow> rows = await database
+        .customSelect(
+          "SELECT name FROM sqlite_master WHERE type='table' "
+          "AND name NOT LIKE 'sqlite_%'",
+        )
+        .get();
+    final Set<String> tables = rows
+        .map((QueryRow r) => r.read<String>('name'))
+        .toSet();
+
+    expect(tables, <String>{
+      'user_profiles',
+      'devices',
+      'consumable_types',
+      'consumable_instances',
+      'change_events',
+      'incidents',
+      'body_sites',
+      'site_usages',
+      'inventory_locations',
+      'inventory_items',
+      'notification_schedules',
+    });
+  });
+
+  test(
+    'creates the partial unique indexes that enforce the invariants',
+    () async {
+      final List<QueryRow> rows = await database
+          .customSelect("SELECT name FROM sqlite_master WHERE type='index'")
+          .get();
+      final Set<String> indexes = rows
+          .map((QueryRow r) => r.read<String>('name'))
+          .toSet();
+
+      expect(indexes, contains('idx_one_active_instance_per_type'));
+      expect(indexes, contains('idx_one_open_usage_per_site'));
+    },
+  );
+
+  test('stores timestamps as readable ISO-8601 text, not epoch integers', () async {
+    // Chosen so a health log can be inspected or exported without decoding,
+    // and to remove a class of bug where an integer column is read back in the
+    // wrong unit. Asserted against what actually lands in the column rather
+    // than against the option flag, because the flag is not the promise.
+    await database.customStatement(
+      'INSERT INTO consumable_types '
+      '(id, name, category, tracks_cycle, tracks_inventory, '
+      'default_reminder_offsets, is_built_in, active, created_at, updated_at) '
+      "VALUES ('t-00000000000000000000000000001', 'Sensor', 'cgmSensor', "
+      "1, 1, '', 0, 1, '2026-08-17T09:00:00.000Z', "
+      "'2026-08-17T09:00:00.000Z')",
+    );
+
+    final List<QueryRow> rows = await database
+        .customSelect(
+          'SELECT typeof(created_at) AS kind, created_at AS raw '
+          'FROM consumable_types',
+        )
+        .get();
+
+    expect(rows.single.read<String>('kind'), 'text');
+    expect(rows.single.read<String>('raw'), startsWith('2026-08-17T09:00:00'));
+  });
+
   test('two instances do not share in-memory state', () async {
     final AppDatabase other = AppDatabase(executor: NativeDatabase.memory());
     addTearDown(other.close);
 
     await database.customStatement('CREATE TABLE probe (id INTEGER)');
 
-    // The table must not exist in the second, isolated database.
     final List<QueryRow> tables = await other
         .customSelect(
           "SELECT name FROM sqlite_master WHERE type='table' "
