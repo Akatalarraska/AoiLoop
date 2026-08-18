@@ -142,5 +142,462 @@
   "retry": "Try again",
   "@retry": {
     "description": "Label of the button that retries a failed operation."
+  },
+
+  "loading": "Loading",
+  "@loading": {
+    "description": "Screen reader label for a progress indicator shown while the app is still reading its data."
+  },
+
+  "actionContinue": "Continue",
+  "@actionContinue": {
+    "description": "Primary button that moves to the next onboarding step."
+  },
+
+  "actionBack": "Back",
+  "@actionBack": {
+    "description": "Button that returns to the previous onboarding step."
+  },
+
+  "actionSkip": "Skip",
+  "@actionSkip": {
+    "description": "Button that passes an optional onboarding step without answering it."
+  },
+
+  "actionStart": "Get started",
+  "@actionStart": {
+    "description": "Button on the onboarding welcome screen that begins the setup."
+  },
+
+  "actionCreateProfile": "Create my profile",
+  "@actionCreateProfile": {
+    "description": "Final onboarding button. Writes the profile, devices and tracked consumables."
+  },
+
+  "onboardingStepCounter": "Step {current} of {total}",
+  "@onboardingStepCounter": {
+    "description": "Position within the onboarding flow, shown next to the progress bar.",
+    "placeholders": {
+      "current": {
+        "type": "int",
+        "example": "3"
+      },
+      "total": {
+        "type": "int",
+        "example": "9"
+      }
+    }
+  },
+
+  "onboardingWelcomeTitle": "Welcome to DT1FLOW",
+  "@onboardingWelcomeTitle": {
+    "description": "Heading of the first onboarding step."
+  },
+
+  "onboardingWelcomeBody": "DT1FLOW keeps track of when your sensors, sets and supplies need changing, and tells you before they run out.",
+  "@onboardingWelcomeBody": {
+    "description": "Body of the onboarding welcome step, explaining what the app is for."
+  },
+
+  "onboardingWelcomePrivacy": "Everything stays on this device. No account, no cloud, nothing sent anywhere.",
+  "@onboardingWelcomePrivacy": {
+    "description": "Privacy reassurance on the onboarding welcome step."
+  },
+
+  "onboardingLanguageTitle": "Choose your language",
+  "@onboardingLanguageTitle": {
+    "description": "Heading of the onboarding language step."
+  },
+
+  "onboardingLanguageBody": "You can change this later in Settings.",
+  "@onboardingLanguageBody": {
+    "description": "Body of the onboarding language step."
+  },
+
+  "languageSpanish": "Español",
+  "@languageSpanish": {
+    "description": "Name of the Spanish language, always written in Spanish so a speaker can find it whatever language the app is currently in."
+  },
+
+  "languageEnglish": "English",
+  "@languageEnglish": {
+    "description": "Name of the English language, always written in English so a speaker can find it whatever language the app is currently in."
+  },
+
+  "onboardingProfileTitle": "Who is this for?",
+  "@onboardingProfileTitle": {
+    "description": "Heading of the onboarding step that collects the profile name."
+  },
+
+  "onboardingProfileBody": "The name appears on the dashboard. It never leaves this device.",
+  "@onboardingProfileBody": {
+    "description": "Body of the onboarding profile step."
+  },
+
+  "fieldName": "Name",
+  "@fieldName": {
+    "description": "Label of the profile name text field."
+  },
+
+  "onboardingNameRequired": "A name is needed to create the profile.",
+  "@onboardingNameRequired": {
+    "description": "Helper text shown when the profile name is empty and the step cannot be completed."
+  },
+
+  "fieldBirthYear": "Year of birth (optional)",
+  "@fieldBirthYear": {
+    "description": "Label of the optional year of birth field."
+  },
+
+  "fieldBirthYearHelp": "Only used to word things appropriately. DT1FLOW never asks for a full date of birth.",
+  "@fieldBirthYearHelp": {
+    "description": "Helper text under the year of birth field, explaining why so little is asked."
+  },
+
+  "glucoseUnitLabel": "Glucose unit",
+  "@glucoseUnitLabel": {
+    "description": "Label of the glucose unit choice."
+  },
+
+  "glucoseUnitMgdl": "mg/dL",
+  "@glucoseUnitMgdl": {
+    "description": "Milligrams per decilitre. A unit symbol; not translated."
+  },
+
+  "glucoseUnitMmol": "mmol/L",
+  "@glucoseUnitMmol": {
+    "description": "Millimoles per litre. A unit symbol; not translated."
+  },
+
+  "glucoseUnitHelp": "DT1FLOW stores no glucose values. This only matches the wording to what you are used to reading.",
+  "@glucoseUnitHelp": {
+    "description": "Helper text under the glucose unit choice, making clear the app is not a glucose tool."
+  },
+
+  "onboardingTreatmentTitle": "How do you manage your diabetes?",
+  "@onboardingTreatmentTitle": {
+    "description": "Heading of the onboarding treatment type step."
+  },
+
+  "onboardingTreatmentBody": "This decides what DT1FLOW tracks for you. You can change it later.",
+  "@onboardingTreatmentBody": {
+    "description": "Body of the onboarding treatment type step."
+  },
+
+  "treatmentPumpAndCgm": "Pump and CGM",
+  "@treatmentPumpAndCgm": {
+    "description": "Treatment type: insulin pump with tubing, plus a continuous glucose monitor."
+  },
+
+  "treatmentPumpOnly": "Pump, no CGM",
+  "@treatmentPumpOnly": {
+    "description": "Treatment type: insulin pump with tubing, fingersticks only."
+  },
+
+  "treatmentPodAndCgm": "Patch pump and CGM",
+  "@treatmentPodAndCgm": {
+    "description": "Treatment type: tubeless patch pump (pod), plus a continuous glucose monitor."
+  },
+
+  "treatmentPodOnly": "Patch pump, no CGM",
+  "@treatmentPodOnly": {
+    "description": "Treatment type: tubeless patch pump (pod), fingersticks only."
+  },
+
+  "treatmentInjectionsAndCgm": "Injections and CGM",
+  "@treatmentInjectionsAndCgm": {
+    "description": "Treatment type: multiple daily injections, plus a continuous glucose monitor."
+  },
+
+  "treatmentInjectionsOnly": "Injections, no CGM",
+  "@treatmentInjectionsOnly": {
+    "description": "Treatment type: multiple daily injections, fingersticks only."
+  },
+
+  "treatmentOther": "Something else",
+  "@treatmentOther": {
+    "description": "Treatment type: anything not covered by the other options. Offers every consumable."
+  },
+
+  "onboardingDevicesTitle": "Your devices",
+  "@onboardingDevicesTitle": {
+    "description": "Heading of the optional onboarding step that records pump and CGM hardware."
+  },
+
+  "onboardingDevicesBody": "Optional, and easy to add later. Recording them now makes warranty and replacement claims simpler.",
+  "@onboardingDevicesBody": {
+    "description": "Body of the onboarding devices step."
+  },
+
+  "deviceSectionPump": "Pump",
+  "@deviceSectionPump": {
+    "description": "Section heading for the insulin pump fields."
+  },
+
+  "deviceSectionPod": "Pod controller",
+  "@deviceSectionPod": {
+    "description": "Section heading for patch pump users, whose hardware is a controller rather than a pump."
+  },
+
+  "deviceSectionCgm": "CGM",
+  "@deviceSectionCgm": {
+    "description": "Section heading for the continuous glucose monitor fields."
+  },
+
+  "fieldManufacturer": "Manufacturer",
+  "@fieldManufacturer": {
+    "description": "Label of the device manufacturer field."
+  },
+
+  "fieldModel": "Model",
+  "@fieldModel": {
+    "description": "Label of the device model field."
+  },
+
+  "fieldSerialNumber": "Serial number (optional)",
+  "@fieldSerialNumber": {
+    "description": "Label of the optional device serial number field."
+  },
+
+  "deviceIncompleteHint": "A device needs both a manufacturer and a model. Leave them empty to skip it.",
+  "@deviceIncompleteHint": {
+    "description": "Helper text explaining that a half-filled device is skipped rather than saved."
+  },
+
+  "onboardingConsumablesTitle": "What should DT1FLOW track?",
+  "@onboardingConsumablesTitle": {
+    "description": "Heading of the onboarding step that selects which consumables to track."
+  },
+
+  "onboardingConsumablesBody": "Tick what you use. Anything here can be edited or removed later.",
+  "@onboardingConsumablesBody": {
+    "description": "Body of the onboarding consumables step."
+  },
+
+  "onboardingConsumablesEmpty": "Nothing selected, so there will be nothing to count down. You can add items later.",
+  "@onboardingConsumablesEmpty": {
+    "description": "Notice shown when the user has unticked every consumable."
+  },
+
+  "presetCountedOnly": "Counted, no countdown",
+  "@presetCountedOnly": {
+    "description": "Subtitle for consumables that are tracked as stock only, with no wear cycle."
+  },
+
+  "presetCgmSensor": "CGM sensor",
+  "@presetCgmSensor": {
+    "description": "Consumable preset: continuous glucose monitor sensor."
+  },
+
+  "presetCgmTransmitter": "CGM transmitter",
+  "@presetCgmTransmitter": {
+    "description": "Consumable preset: continuous glucose monitor transmitter, where it has a fixed lifetime."
+  },
+
+  "presetInfusionSet": "Infusion set",
+  "@presetInfusionSet": {
+    "description": "Consumable preset: pump infusion set."
+  },
+
+  "presetReservoir": "Reservoir",
+  "@presetReservoir": {
+    "description": "Consumable preset: pump reservoir or cartridge."
+  },
+
+  "presetPod": "Pod",
+  "@presetPod": {
+    "description": "Consumable preset: patch pump pod."
+  },
+
+  "presetInsulin": "Open insulin",
+  "@presetInsulin": {
+    "description": "Consumable preset: the vial or cartridge currently in use, which expires some weeks after opening."
+  },
+
+  "presetPenNeedle": "Pen needles",
+  "@presetPenNeedle": {
+    "description": "Consumable preset: injection pen needles."
+  },
+
+  "presetTestStrip": "Test strips",
+  "@presetTestStrip": {
+    "description": "Consumable preset: blood glucose test strips."
+  },
+
+  "presetKetoneStrip": "Ketone strips",
+  "@presetKetoneStrip": {
+    "description": "Consumable preset: ketone test strips."
+  },
+
+  "presetLancet": "Lancets",
+  "@presetLancet": {
+    "description": "Consumable preset: fingerstick lancets."
+  },
+
+  "presetGlucagon": "Glucagon",
+  "@presetGlucagon": {
+    "description": "Consumable preset: emergency glucagon."
+  },
+
+  "onboardingDurationsTitle": "How long does each one last?",
+  "@onboardingDurationsTitle": {
+    "description": "Heading of the onboarding step that sets consumable lifetimes."
+  },
+
+  "onboardingDurationsBody": "These are the usual wear times. Change any that do not match yours.",
+  "@onboardingDurationsBody": {
+    "description": "Body of the onboarding durations step."
+  },
+
+  "durationDays": "{count, plural, =1{1 day} other{{count} days}}",
+  "@durationDays": {
+    "description": "A consumable lifetime expressed in whole days.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "10"
+      }
+    }
+  },
+
+  "durationShorter": "One day less",
+  "@durationShorter": {
+    "description": "Accessibility label of the button that shortens a consumable lifetime."
+  },
+
+  "durationLonger": "One day more",
+  "@durationLonger": {
+    "description": "Accessibility label of the button that lengthens a consumable lifetime."
+  },
+
+  "onboardingChangeTimeTitle": "When do you usually make changes?",
+  "@onboardingChangeTimeTitle": {
+    "description": "Heading of the onboarding step that sets the preferred time of day for changes."
+  },
+
+  "onboardingChangeTimeBody": "When a change happens at an awkward hour, DT1FLOW can offer to move the next one back to this time. It never moves a date on its own.",
+  "@onboardingChangeTimeBody": {
+    "description": "Body of the onboarding preferred change time step."
+  },
+
+  "changeTimeNone": "No preferred time",
+  "@changeTimeNone": {
+    "description": "Shown when the user has not set a preferred time of day for changes."
+  },
+
+  "changeTimeChoose": "Choose a time",
+  "@changeTimeChoose": {
+    "description": "Button that opens the time picker for the preferred change time."
+  },
+
+  "changeTimeClear": "Clear",
+  "@changeTimeClear": {
+    "description": "Button that removes the preferred change time."
+  },
+
+  "onboardingRemindersTitle": "When should DT1FLOW remind you?",
+  "@onboardingRemindersTitle": {
+    "description": "Heading of the onboarding step that picks reminder lead times."
+  },
+
+  "onboardingRemindersBody": "Reminders arrive before a change is due. Pick as many as are useful.",
+  "@onboardingRemindersBody": {
+    "description": "Body of the onboarding reminders step."
+  },
+
+  "onboardingRemindersLater": "Saved as your defaults. Reminders start firing in a later update.",
+  "@onboardingRemindersLater": {
+    "description": "Honest notice that notification scheduling is not implemented yet; the choice is stored as the default for each tracked consumable."
+  },
+
+  "onboardingRemindersNone": "No reminders",
+  "@onboardingRemindersNone": {
+    "description": "Shown when the user has unticked every reminder lead time."
+  },
+
+  "reminderOffsetTwoDays": "2 days before",
+  "@reminderOffsetTwoDays": {
+    "description": "Reminder lead time of 48 hours."
+  },
+
+  "reminderOffsetOneDay": "1 day before",
+  "@reminderOffsetOneDay": {
+    "description": "Reminder lead time of 24 hours."
+  },
+
+  "reminderOffsetSixHours": "6 hours before",
+  "@reminderOffsetSixHours": {
+    "description": "Reminder lead time of 6 hours."
+  },
+
+  "reminderOffsetOneHour": "1 hour before",
+  "@reminderOffsetOneHour": {
+    "description": "Reminder lead time of 1 hour."
+  },
+
+  "reminderOffsetOnTime": "When it is due",
+  "@reminderOffsetOnTime": {
+    "description": "Reminder with no lead time: it fires at the moment the change is due."
+  },
+
+  "onboardingSummaryTitle": "Ready to go",
+  "@onboardingSummaryTitle": {
+    "description": "Heading of the final onboarding step, which reviews the answers."
+  },
+
+  "onboardingSummaryBody": "Nothing has been saved yet. Tap any line to change it.",
+  "@onboardingSummaryBody": {
+    "description": "Body of the onboarding summary step."
+  },
+
+  "onboardingFailed": "Your profile could not be saved. Nothing was changed, so you can try again.",
+  "@onboardingFailed": {
+    "description": "Error shown when writing the onboarding draft to the database failed."
+  },
+
+  "summaryTreatment": "Treatment",
+  "@summaryTreatment": {
+    "description": "Summary row label for the chosen treatment type."
+  },
+
+  "summaryLanguage": "Language",
+  "@summaryLanguage": {
+    "description": "Summary row label for the chosen language."
+  },
+
+  "summaryDevices": "Devices",
+  "@summaryDevices": {
+    "description": "Summary row label for the recorded devices."
+  },
+
+  "summaryTracking": "Tracking",
+  "@summaryTracking": {
+    "description": "Summary row label listing the consumables that will be tracked."
+  },
+
+  "summaryChangeTime": "Preferred time",
+  "@summaryChangeTime": {
+    "description": "Summary row label for the preferred time of day for changes."
+  },
+
+  "summaryReminders": "Reminders",
+  "@summaryReminders": {
+    "description": "Summary row label for the chosen reminder lead times."
+  },
+
+  "summaryNone": "None",
+  "@summaryNone": {
+    "description": "Value of a summary row the user left empty."
+  },
+
+  "summaryEditSection": "Edit {section}",
+  "@summaryEditSection": {
+    "description": "Accessibility label for a summary row, which returns to the step that set it.",
+    "placeholders": {
+      "section": {
+        "type": "String",
+        "example": "Treatment"
+      }
+    }
   }
 }

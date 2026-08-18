@@ -6,6 +6,13 @@
 /// The field is called `routeName` rather than `name` because Dart reserves
 /// `name` on enums.
 enum AppRoute {
+  // --- Entry points -------------------------------------------------------
+  /// Shown while the app reads the profile and decides where to send the user.
+  startup('/startup', 'startup'),
+
+  /// The first-run flow. Reachable only while no profile exists.
+  onboarding('/onboarding', 'onboarding'),
+
   // --- Primary destinations (bottom navigation) ---------------------------
   dashboard('/', 'dashboard'),
   calendar('/calendar', 'calendar'),

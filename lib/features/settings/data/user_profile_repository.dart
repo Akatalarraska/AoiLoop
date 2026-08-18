@@ -128,3 +128,14 @@ final Provider<UserProfileRepository> userProfileRepositoryProvider =
         ids: ref.watch(idGeneratorProvider),
       );
     });
+
+/// The profile the app is currently about, or null before onboarding has run.
+///
+/// Two things outside this feature depend on it — the router, which sends a
+/// profile-less launch to onboarding, and the locale, which follows the
+/// language the profile was created with — so it is exposed here next to the
+/// repository rather than owned by either of them.
+final StreamProvider<UserProfile?> primaryProfileProvider =
+    StreamProvider<UserProfile?>((Ref ref) {
+      return ref.watch(userProfileRepositoryProvider).watchPrimary();
+    });

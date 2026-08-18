@@ -35,5 +35,117 @@
   "genericErrorTitle": "Algo ha ido mal",
   "genericErrorBody": "Tus datos siguen a salvo en este dispositivo. Vuelve a intentarlo.",
 
-  "retry": "Reintentar"
+  "retry": "Reintentar",
+
+  "loading": "Cargando",
+
+  "actionContinue": "Continuar",
+  "actionBack": "Atrás",
+  "actionSkip": "Omitir",
+  "actionStart": "Empezar",
+  "actionCreateProfile": "Crear mi perfil",
+
+  "onboardingStepCounter": "Paso {current} de {total}",
+
+  "onboardingWelcomeTitle": "Te damos la bienvenida a DT1FLOW",
+  "onboardingWelcomeBody": "DT1FLOW lleva la cuenta de cuándo toca cambiar tus sensores, equipos y material, y te avisa antes de que se te acaben.",
+  "onboardingWelcomePrivacy": "Todo se queda en este dispositivo. Sin cuenta, sin nube, sin enviar nada a ninguna parte.",
+
+  "onboardingLanguageTitle": "Elige tu idioma",
+  "onboardingLanguageBody": "Puedes cambiarlo más adelante en Ajustes.",
+
+  "languageSpanish": "Español",
+  "languageEnglish": "English",
+
+  "onboardingProfileTitle": "¿Para quién es?",
+  "onboardingProfileBody": "El nombre aparece en la pantalla de inicio. No sale nunca de este dispositivo.",
+
+  "fieldName": "Nombre",
+  "onboardingNameRequired": "Hace falta un nombre para crear el perfil.",
+
+  "fieldBirthYear": "Año de nacimiento (opcional)",
+  "fieldBirthYearHelp": "Solo se usa para adaptar los textos. DT1FLOW nunca pide la fecha de nacimiento completa.",
+
+  "glucoseUnitLabel": "Unidad de glucosa",
+  "glucoseUnitMgdl": "mg/dL",
+  "glucoseUnitMmol": "mmol/L",
+  "glucoseUnitHelp": "DT1FLOW no guarda valores de glucosa. Esto solo ajusta los textos a lo que tú sueles leer.",
+
+  "onboardingTreatmentTitle": "¿Cómo llevas tu diabetes?",
+  "onboardingTreatmentBody": "Esto decide qué controla DT1FLOW por ti. Puedes cambiarlo más adelante.",
+
+  "treatmentPumpAndCgm": "Bomba y MCG",
+  "treatmentPumpOnly": "Bomba, sin MCG",
+  "treatmentPodAndCgm": "Bomba parche y MCG",
+  "treatmentPodOnly": "Bomba parche, sin MCG",
+  "treatmentInjectionsAndCgm": "Inyecciones y MCG",
+  "treatmentInjectionsOnly": "Inyecciones, sin MCG",
+  "treatmentOther": "Otra cosa",
+
+  "onboardingDevicesTitle": "Tus dispositivos",
+  "onboardingDevicesBody": "Opcional, y fácil de añadir después. Anotarlos ahora facilita las garantías y las reclamaciones.",
+
+  "deviceSectionPump": "Bomba",
+  "deviceSectionPod": "Controlador de la bomba parche",
+  "deviceSectionCgm": "MCG",
+
+  "fieldManufacturer": "Fabricante",
+  "fieldModel": "Modelo",
+  "fieldSerialNumber": "Número de serie (opcional)",
+  "deviceIncompleteHint": "Un dispositivo necesita fabricante y modelo. Déjalos vacíos para omitirlo.",
+
+  "onboardingConsumablesTitle": "¿Qué quieres que controle DT1FLOW?",
+  "onboardingConsumablesBody": "Marca lo que uses. Todo esto se puede editar o quitar más adelante.",
+  "onboardingConsumablesEmpty": "No has marcado nada, así que no habrá ninguna cuenta atrás. Puedes añadir cosas después.",
+
+  "presetCountedOnly": "Solo recuento, sin cuenta atrás",
+  "presetCgmSensor": "Sensor MCG",
+  "presetCgmTransmitter": "Transmisor MCG",
+  "presetInfusionSet": "Equipo de infusión",
+  "presetReservoir": "Reservorio",
+  "presetPod": "Pod",
+  "presetInsulin": "Insulina abierta",
+  "presetPenNeedle": "Agujas de pluma",
+  "presetTestStrip": "Tiras reactivas",
+  "presetKetoneStrip": "Tiras de cetonas",
+  "presetLancet": "Lancetas",
+  "presetGlucagon": "Glucagón",
+
+  "onboardingDurationsTitle": "¿Cuánto dura cada cosa?",
+  "onboardingDurationsBody": "Estas son las duraciones habituales. Cambia las que no encajen con las tuyas.",
+
+  "durationDays": "{count, plural, =1{1 día} other{{count} días}}",
+  "durationShorter": "Un día menos",
+  "durationLonger": "Un día más",
+
+  "onboardingChangeTimeTitle": "¿A qué hora sueles hacer los cambios?",
+  "onboardingChangeTimeBody": "Cuando un cambio cae a una hora incómoda, DT1FLOW puede proponerte mover el siguiente a esta hora. Nunca cambia una fecha por su cuenta.",
+
+  "changeTimeNone": "Sin hora preferida",
+  "changeTimeChoose": "Elegir una hora",
+  "changeTimeClear": "Quitar",
+
+  "onboardingRemindersTitle": "¿Cuándo quieres que te avise?",
+  "onboardingRemindersBody": "Los avisos llegan antes de que toque el cambio. Marca los que te sirvan.",
+  "onboardingRemindersLater": "Se guardan como tus valores por defecto. Los avisos empezarán a sonar en una versión posterior.",
+  "onboardingRemindersNone": "Sin avisos",
+
+  "reminderOffsetTwoDays": "2 días antes",
+  "reminderOffsetOneDay": "1 día antes",
+  "reminderOffsetSixHours": "6 horas antes",
+  "reminderOffsetOneHour": "1 hora antes",
+  "reminderOffsetOnTime": "Cuando toque",
+
+  "onboardingSummaryTitle": "Todo listo",
+  "onboardingSummaryBody": "Todavía no se ha guardado nada. Toca cualquier línea para cambiarla.",
+  "onboardingFailed": "No se ha podido guardar tu perfil. No se ha cambiado nada, así que puedes volver a intentarlo.",
+
+  "summaryTreatment": "Tratamiento",
+  "summaryLanguage": "Idioma",
+  "summaryDevices": "Dispositivos",
+  "summaryTracking": "Se controla",
+  "summaryChangeTime": "Hora preferida",
+  "summaryReminders": "Avisos",
+  "summaryNone": "Nada",
+  "summaryEditSection": "Editar {section}"
 }
