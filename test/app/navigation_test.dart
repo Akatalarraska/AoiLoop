@@ -1,17 +1,15 @@
-import 'package:dt1flow/app/app.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../support/test_app.dart';
 
 /// Phase 0's deliverable is a navigable skeleton. These tests are what make
 /// "navigable" a fact rather than a claim: every destination in the spec is
 /// reachable, and the shell preserves each tab's own stack.
+///
+/// Since Phase 2 the app only shows that skeleton to someone who has a
+/// profile, so every test here launches with one already seeded.
 void main() {
-  Future<void> pumpApp(WidgetTester tester) async {
-    await tester.pumpWidget(const ProviderScope(child: DT1FlowApp()));
-    await tester.pumpAndSettle();
-  }
-
   testWidgets('starts on Home', (WidgetTester tester) async {
     await pumpApp(tester);
 
@@ -128,16 +126,16 @@ void main() {
     );
   });
 
-  testWidgets('runs in Spanish when the locale is Spanish', (
+  testWidgets('runs in the language the profile was created with', (
     WidgetTester tester,
   ) async {
-    await tester.pumpWidget(const ProviderScope(child: DT1FlowApp()));
-    await tester.pumpAndSettle();
-
-    // Force the locale the way the OS would.
-    tester.platformDispatcher.localesTestValue = const <Locale>[Locale('es')];
+    // The OS says English; the profile says Spanish. The explicit choice made
+    // during onboarding wins — reverting it on the next launch would read as
+    // the app having forgotten.
+    tester.platformDispatcher.localesTestValue = const <Locale>[Locale('en')];
     addTearDown(tester.platformDispatcher.clearLocalesTestValue);
-    await tester.pumpAndSettle();
+
+    await pumpApp(tester, languageCode: 'es');
 
     expect(
       find.descendant(

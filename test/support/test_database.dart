@@ -68,6 +68,18 @@ class TestHarness {
   NotificationScheduleRepository get notifications =>
       NotificationScheduleRepository(db: db, clock: clock, ids: ids);
 
+  /// Every consumable type, as a plain future.
+  ///
+  /// Widget tests run on a fake clock, and listening to a Drift *stream*
+  /// inside one leaves work scheduled that the test framework never gets to
+  /// run — the test then hangs at teardown rather than failing usefully.
+  /// Reading with a future sidesteps that entirely, and a test that only wants
+  /// to know what was written has no use for a stream anyway.
+  Future<List<ConsumableType>> allConsumableTypes() =>
+      db.select(db.consumableTypes).get();
+
+  Future<List<Device>> allDevices() => db.select(db.devices).get();
+
   /// A profile with sensible defaults, for tests that need one but do not care
   /// about its details.
   Future<UserProfile> seedProfile({
