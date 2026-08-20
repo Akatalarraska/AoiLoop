@@ -45,9 +45,9 @@ export 'tables/user_profiles.dart';
 
 part 'app_database.g.dart';
 
-/// The single local SQLite database behind DT1FLOW.
+/// The single local SQLite database behind AoiLoop.
 ///
-/// DT1FLOW is offline-first: this database is the source of truth, not a
+/// AoiLoop is offline-first: this database is the source of truth, not a
 /// cache. Every feature reads and writes through a repository that wraps this
 /// class; no widget touches Drift directly.
 ///

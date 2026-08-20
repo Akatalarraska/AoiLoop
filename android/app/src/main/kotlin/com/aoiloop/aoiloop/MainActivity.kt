@@ -1,4 +1,4 @@
-package com.dt1flow.dt1flow
+package com.aoiloop.aoiloop
 
 import io.flutter.embedding.android.FlutterActivity
 

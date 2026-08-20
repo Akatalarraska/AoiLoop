@@ -1,6 +1,6 @@
 # Architecture
 
-This document explains how DT1FLOW is put together and, more usefully, *why*.
+This document explains how AoiLoop is put together and, more usefully, *why*.
 It is meant to be read before making a non-trivial change.
 
 ## Principles
@@ -76,12 +76,12 @@ An injectable "now". Feature code never calls `DateTime.now()`; it reads
 boundary, or sit exactly on a deadline.
 
 This is the single most important abstraction in the codebase. Every date bug
-DT1FLOW could possibly have is reachable through it.
+AoiLoop could possibly have is reachable through it.
 
 ### `Ticker` — `core/utils/ticker.dart`
 
 `Clock` answers *what time is it*; `Ticker` answers *tell me again when it
-changes*. A countdown rendered once is wrong a minute later, and DT1FLOW is an
+changes*. A countdown rendered once is wrong a minute later, and AoiLoop is an
 app people leave open.
 
 Ticks are aligned to wall-clock boundaries rather than to whenever the stream
@@ -182,7 +182,7 @@ that hurts legibility fails the build.
 
 ### `CycleCountdown` — `shared/models/cycle_countdown.dart`
 
-The whole of DT1FLOW's countdown arithmetic, in pure Dart: a deadline and an
+The whole of AoiLoop's countdown arithmetic, in pure Dart: a deadline and an
 instant in, a `CycleStatus`, a signed remaining `Duration` and a clamped
 progress fraction out.
 
@@ -222,7 +222,7 @@ do not duplicate any part of it.
 ### Preferred change time
 
 If a sensor fails at 03:17 and a new one goes on, the next change would fall at
-03:17. DT1FLOW asks whether to shift to the user's usual time — it does not
+03:17. AoiLoop asks whether to shift to the user's usual time — it does not
 silently move the date either way. The engine exposes both outcomes; the user
 picks.
 

@@ -8,7 +8,7 @@ import 'user_profiles.dart';
 /// Something that went wrong with a specific consumable.
 ///
 /// Recorded so the user can see patterns in their own history and so they have
-/// the facts a manufacturer asks for. DT1FLOW does not interpret incidents,
+/// the facts a manufacturer asks for. AoiLoop does not interpret incidents,
 /// does not tell the user what caused one, and does not suggest what to do
 /// about it.
 @TableIndex(

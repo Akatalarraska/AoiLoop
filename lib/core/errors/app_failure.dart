@@ -1,4 +1,4 @@
-/// Failure types DT1FLOW can present to the user.
+/// Failure types AoiLoop can present to the user.
 ///
 /// The app is offline-first: almost nothing the user does can fail because of
 /// the network, and error copy should never imply data loss. Keeping the

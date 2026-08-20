@@ -2,7 +2,7 @@
 
 ## Our pledge
 
-We want DT1FLOW to be a project where people with Type 1 Diabetes, their
+We want AoiLoop to be a project where people with Type 1 Diabetes, their
 families, carers and anyone else can take part without harassment.
 
 That means everyone, regardless of age, body size, disability, ethnicity, sex

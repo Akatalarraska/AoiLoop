@@ -2,7 +2,7 @@ import 'cycle_status.dart';
 
 /// How far through its life one consumable is, at one instant.
 ///
-/// This is the whole of DT1FLOW's countdown arithmetic, and it is deliberately
+/// This is the whole of AoiLoop's countdown arithmetic, and it is deliberately
 /// plain Dart: no Flutter, no database, no clock of its own. Everything it
 /// knows comes in as arguments, so every boundary it draws — on track, due
 /// soon, due now, overdue — can be tested at an exact instant rather than

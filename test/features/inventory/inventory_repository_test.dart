@@ -1,4 +1,4 @@
-import 'package:dt1flow/core/database/app_database.dart';
+import 'package:aoiloop/core/database/app_database.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../support/test_database.dart';
@@ -45,7 +45,7 @@ void main() {
     });
 
     test('supports several locations for one profile', () async {
-      // A child between two homes and a school is the situation DT1FLOW
+      // A child between two homes and a school is the situation AoiLoop
       // exists for.
       for (final String name in <String>[
         "Mum's house",

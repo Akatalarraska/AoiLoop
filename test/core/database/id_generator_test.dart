@@ -1,4 +1,4 @@
-import 'package:dt1flow/core/database/id_generator.dart';
+import 'package:aoiloop/core/database/id_generator.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

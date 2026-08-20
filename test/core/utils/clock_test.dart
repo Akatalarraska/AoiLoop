@@ -1,7 +1,7 @@
-import 'package:dt1flow/core/utils/clock.dart';
+import 'package:aoiloop/core/utils/clock.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// The clock is the seam that makes every date calculation in DT1FLOW
+/// The clock is the seam that makes every date calculation in AoiLoop
 /// testable — cycle countdowns, preferred change time, notification offsets,
 /// travel windows. If it misbehaves, every one of those does too.
 void main() {

@@ -3,7 +3,7 @@ import 'dart:ui';
 
 /// WCAG 2.1 relative luminance and contrast ratio.
 ///
-/// DT1FLOW asserts contrast in tests rather than eyeballing it, because the
+/// AoiLoop asserts contrast in tests rather than eyeballing it, because the
 /// status palette is the one place where a well-meaning colour tweak can push
 /// text below legibility for a user with reduced vision — and nothing else in
 /// the build would notice.

@@ -1,5 +1,5 @@
-import 'package:dt1flow/core/database/app_database.dart';
-import 'package:dt1flow/features/dashboard/presentation/widgets/countdown_card.dart';
+import 'package:aoiloop/core/database/app_database.dart';
+import 'package:aoiloop/features/dashboard/presentation/widgets/countdown_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -96,7 +96,7 @@ void main() {
       expect(find.text('Nothing is counting down yet'), findsOneWidget);
       expect(
         find.text(
-          'Register a change and DT1FLOW starts the countdown from there.',
+          'Register a change and AoiLoop starts the countdown from there.',
         ),
         findsOneWidget,
       );
@@ -310,7 +310,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      find.text('DT1FLOW does not calculate doses or give treatment advice.'),
+      find.text('AoiLoop does not calculate doses or give treatment advice.'),
       findsOneWidget,
     );
   });

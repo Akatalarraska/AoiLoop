@@ -1,4 +1,4 @@
-import 'package:dt1flow/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:aoiloop/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -150,7 +150,7 @@ void main() {
     await pumpApp(tester);
 
     expect(
-      find.text('DT1FLOW does not calculate doses or give treatment advice.'),
+      find.text('AoiLoop does not calculate doses or give treatment advice.'),
       findsOneWidget,
     );
   });

@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
 
-  "appTitle": "DT1FLOW",
+  "appTitle": "AoiLoop",
   "@appTitle": {
     "description": "The application name. Not translated."
   },
@@ -114,7 +114,7 @@
     }
   },
 
-  "medicalDisclaimerShort": "DT1FLOW does not calculate doses or give treatment advice.",
+  "medicalDisclaimerShort": "AoiLoop does not calculate doses or give treatment advice.",
   "@medicalDisclaimerShort": {
     "description": "Short medical boundary notice. Must stay visible somewhere reachable in the app."
   },
@@ -179,12 +179,12 @@
     }
   },
 
-  "onboardingWelcomeTitle": "Welcome to DT1FLOW",
+  "onboardingWelcomeTitle": "Welcome to AoiLoop",
   "@onboardingWelcomeTitle": {
     "description": "Heading of the first onboarding step."
   },
 
-  "onboardingWelcomeBody": "DT1FLOW keeps track of when your sensors, sets and supplies need changing, and tells you before they run out.",
+  "onboardingWelcomeBody": "AoiLoop keeps track of when your sensors, sets and supplies need changing, and tells you before they run out.",
   "@onboardingWelcomeBody": {
     "description": "Body of the onboarding welcome step, explaining what the app is for."
   },
@@ -239,7 +239,7 @@
     "description": "Label of the optional year of birth field."
   },
 
-  "fieldBirthYearHelp": "Only used to word things appropriately. DT1FLOW never asks for a full date of birth.",
+  "fieldBirthYearHelp": "Only used to word things appropriately. AoiLoop never asks for a full date of birth.",
   "@fieldBirthYearHelp": {
     "description": "Helper text under the year of birth field, explaining why so little is asked."
   },
@@ -259,7 +259,7 @@
     "description": "Millimoles per litre. A unit symbol; not translated."
   },
 
-  "glucoseUnitHelp": "DT1FLOW stores no glucose values. This only matches the wording to what you are used to reading.",
+  "glucoseUnitHelp": "AoiLoop stores no glucose values. This only matches the wording to what you are used to reading.",
   "@glucoseUnitHelp": {
     "description": "Helper text under the glucose unit choice, making clear the app is not a glucose tool."
   },
@@ -269,7 +269,7 @@
     "description": "Heading of the onboarding treatment type step."
   },
 
-  "onboardingTreatmentBody": "This decides what DT1FLOW tracks for you. You can change it later.",
+  "onboardingTreatmentBody": "This decides what AoiLoop tracks for you. You can change it later.",
   "@onboardingTreatmentBody": {
     "description": "Body of the onboarding treatment type step."
   },
@@ -354,7 +354,7 @@
     "description": "Helper text explaining that a half-filled device is skipped rather than saved."
   },
 
-  "onboardingConsumablesTitle": "What should DT1FLOW track?",
+  "onboardingConsumablesTitle": "What should AoiLoop track?",
   "@onboardingConsumablesTitle": {
     "description": "Heading of the onboarding step that selects which consumables to track."
   },
@@ -465,7 +465,7 @@
     "description": "Heading of the onboarding step that sets the preferred time of day for changes."
   },
 
-  "onboardingChangeTimeBody": "When a change happens at an awkward hour, DT1FLOW can offer to move the next one back to this time. It never moves a date on its own.",
+  "onboardingChangeTimeBody": "When a change happens at an awkward hour, AoiLoop can offer to move the next one back to this time. It never moves a date on its own.",
   "@onboardingChangeTimeBody": {
     "description": "Body of the onboarding preferred change time step."
   },
@@ -485,7 +485,7 @@
     "description": "Button that removes the preferred change time."
   },
 
-  "onboardingRemindersTitle": "When should DT1FLOW remind you?",
+  "onboardingRemindersTitle": "When should AoiLoop remind you?",
   "@onboardingRemindersTitle": {
     "description": "Heading of the onboarding step that picks reminder lead times."
   },
@@ -632,7 +632,7 @@
     "description": "Heading of the summary card when consumables are set up but no change has ever been registered, so there is no deadline to count towards."
   },
 
-  "dashboardNothingScheduledBody": "Register a change and DT1FLOW starts the countdown from there.",
+  "dashboardNothingScheduledBody": "Register a change and AoiLoop starts the countdown from there.",
   "@dashboardNothingScheduledBody": {
     "description": "Body of the summary card when nothing has been registered yet."
   },
@@ -657,7 +657,7 @@
     "description": "The main call to action on Home. Logs that a consumable has just been replaced."
   },
 
-  "registerChangeNotReady": "Registering a change arrives in phase 4. DT1FLOW can show what you set up, but cannot log it yet.",
+  "registerChangeNotReady": "Registering a change arrives in phase 4. AoiLoop can show what you set up, but cannot log it yet.",
   "@registerChangeNotReady": {
     "description": "Notice shown when the register-change button is pressed before the cycle engine exists. Says plainly what does not work rather than failing silently."
   },

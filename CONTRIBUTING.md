@@ -1,4 +1,4 @@
-# Contributing to DT1FLOW
+# Contributing to AoiLoop
 
 Thanks for wanting to help. Contributions from people who live with T1D — or
 care for someone who does — are especially valuable, including ones that are
@@ -6,7 +6,7 @@ just "this flow is annoying and here's why".
 
 ## Before you start
 
-Read the **medical boundaries** in the [README](README.md). DT1FLOW does not
+Read the **medical boundaries** in the [README](README.md). AoiLoop does not
 calculate doses or give treatment advice, and never will. This is a hard
 constraint on what can be merged.
 
@@ -59,7 +59,7 @@ fix(cycle): handle change logged exactly at the deadline
 test(cycle): cover DST transition
 ```
 
-**Tests for logic that computes dates.** This is where DT1FLOW's real risk
+**Tests for logic that computes dates.** This is where AoiLoop's real risk
 lives. If you touch cycles, deadlines, reminders or travel estimates, cover the
 awkward cases: a change logged exactly on the deadline, one second past it, a
 cycle crossing midnight, a leap day, a DST transition, a custom duration, a

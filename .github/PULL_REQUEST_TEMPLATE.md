@@ -1,5 +1,5 @@
 <!--
-Thanks for contributing to DT1FLOW.
+Thanks for contributing to AoiLoop.
 Keep pull requests focused: one coherent change per PR.
 -->
 

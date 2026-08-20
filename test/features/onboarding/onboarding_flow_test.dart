@@ -1,4 +1,4 @@
-import 'package:dt1flow/core/database/app_database.dart';
+import 'package:aoiloop/core/database/app_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -27,7 +27,7 @@ void main() {
   ) async {
     await pumpApp(tester, onboarded: false);
 
-    expect(find.text('Welcome to DT1FLOW'), findsOneWidget);
+    expect(find.text('Welcome to AoiLoop'), findsOneWidget);
     expect(find.byType(NavigationBar), findsNothing);
   });
 
@@ -37,7 +37,7 @@ void main() {
     await pumpApp(tester, onboarded: false);
 
     expect(
-      find.text('DT1FLOW does not calculate doses or give treatment advice.'),
+      find.text('AoiLoop does not calculate doses or give treatment advice.'),
       findsOneWidget,
     );
     expect(
@@ -172,7 +172,7 @@ void main() {
     expect(find.text('Step 4 of 6'), findsOneWidget);
 
     await tapText(tester, 'Continue');
-    expect(find.text('What should DT1FLOW track?'), findsOneWidget);
+    expect(find.text('What should AoiLoop track?'), findsOneWidget);
   });
 
   testWidgets('the name is required before the flow will move on', (
@@ -294,7 +294,7 @@ void main() {
   ) async {
     await pumpApp(tester);
 
-    expect(find.text('Welcome to DT1FLOW'), findsNothing);
+    expect(find.text('Welcome to AoiLoop'), findsNothing);
     expect(find.byType(NavigationBar), findsOneWidget);
   });
 }

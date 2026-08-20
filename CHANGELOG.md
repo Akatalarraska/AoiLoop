@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to DT1FLOW are recorded here.
+All notable changes to AoiLoop are recorded here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -49,6 +49,14 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Changed
 
+- **Renamed to AoiLoop.** Every spelling of the old name: the Dart package
+  (`package:aoiloop/…`), the root widget, the launcher label on both
+  platforms, the Android namespace and application id, the iOS bundle
+  identifier, the Kotlin source package, the local database filename, all
+  user-facing copy in both languages, and the documentation
+- The old name survives in one place on purpose: `.claude/settings.local.json`
+  holds a scratchpad path from an earlier session, which is local tooling
+  state rather than project content
 - `appTagline` and `devStatusVocabulary` removed. The first had no call site
   left once Home became a real screen; the second was the Phase 0 status
   reference card, always marked for removal here
@@ -122,7 +130,7 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added — Phase 0: Foundation
 
-- Flutter project targeting Android and iOS, organisation `com.dt1flow`
+- Flutter project targeting Android and iOS, organisation `com.aoiloop`
 - Feature-first project structure: `app/`, `core/`, `features/`, `shared/`
 - Material 3 light and dark themes seeded from a muted teal, with a
   `StatusPalette` theme extension carrying colour, icon and container tokens
@@ -159,5 +167,10 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   settings screen in general, belongs to Phase 10.
 - Nothing writes a `ConsumableInstance` yet, so a fresh install shows a card
   per tracked type with no countdown running. Registering a change is Phase 4.
+- The rename changed the database filename, so an existing development install
+  opens an empty database and runs onboarding again. Nothing has shipped, so
+  no migration was written for it.
+- The repository still has to be renamed on GitHub. Every `Akatalarraska/…`
+  link here already points at the new name.
 - `ManufacturerReplacement` is specified but not implemented; it belongs with
   the replacement flow in Phase 6.

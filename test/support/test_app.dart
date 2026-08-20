@@ -1,9 +1,9 @@
-import 'package:dt1flow/app/app.dart';
-import 'package:dt1flow/core/database/database_providers.dart';
-import 'package:dt1flow/core/database/id_generator.dart';
-import 'package:dt1flow/core/utils/clock.dart';
-import 'package:dt1flow/core/utils/ticker.dart';
-import 'package:dt1flow/core/utils/timezone_source.dart';
+import 'package:aoiloop/app/app.dart';
+import 'package:aoiloop/core/database/database_providers.dart';
+import 'package:aoiloop/core/database/id_generator.dart';
+import 'package:aoiloop/core/utils/clock.dart';
+import 'package:aoiloop/core/utils/ticker.dart';
+import 'package:aoiloop/core/utils/timezone_source.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Riverpod 3 moved `Override` out of the main entrypoint.
 import 'package:flutter_riverpod/misc.dart';
@@ -46,7 +46,7 @@ class AppUnderTest {
 /// Widget tests that build a screen directly cannot see the thing Phase 2
 /// actually changed: *where a launch lands*. That is decided by the router
 /// reading the profile, so anything that cares has to build the real
-/// [DT1FlowApp].
+/// [AoiLoopApp].
 ///
 /// [onboarded] seeds a profile, which is the whole difference between landing
 /// on the dashboard and landing in onboarding.
@@ -87,7 +87,7 @@ Future<AppUnderTest> pumpApp(
   );
 
   await tester.pumpWidget(
-    UncontrolledProviderScope(container: container, child: const DT1FlowApp()),
+    UncontrolledProviderScope(container: container, child: const AoiLoopApp()),
   );
   await tester.pumpAndSettle();
 

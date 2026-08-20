@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Raw colour constants for DT1FLOW.
+/// Raw colour constants for AoiLoop.
 ///
 /// This file answers "which colours exist". It deliberately says nothing about
 /// what they mean — that mapping lives in `status_palette.dart`.

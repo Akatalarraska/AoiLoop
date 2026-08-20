@@ -8,5 +8,5 @@ void main() {
   // Drift to locate the database file, needs it.
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const ProviderScope(child: DT1FlowApp()));
+  runApp(const ProviderScope(child: AoiLoopApp()));
 }

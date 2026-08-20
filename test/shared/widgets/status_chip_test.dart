@@ -1,6 +1,6 @@
-import 'package:dt1flow/app/theme/status_palette.dart';
-import 'package:dt1flow/shared/models/cycle_status.dart';
-import 'package:dt1flow/shared/widgets/status_chip.dart';
+import 'package:aoiloop/app/theme/status_palette.dart';
+import 'package:aoiloop/shared/models/cycle_status.dart';
+import 'package:aoiloop/shared/widgets/status_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

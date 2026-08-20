@@ -71,7 +71,7 @@ class CycleStatusThresholds {
   ///
   /// Two hours is the default: long enough to finish what you were doing and
   /// get to it, short enough that it is not a way of forgetting. Something
-  /// that is due is due, and DT1FLOW would rather say so than be polite about
+  /// that is due is due, and AoiLoop would rather say so than be polite about
   /// it.
   ///
   /// The cost of a window this narrow is that cards reach the overdue colour

@@ -5,7 +5,7 @@ import 'app_colors.dart';
 
 /// The visual tokens for a single [CycleStatus].
 ///
-/// Note that an [icon] is part of the token set, not an afterthought. DT1FLOW
+/// Note that an [icon] is part of the token set, not an afterthought. AoiLoop
 /// must never encode a status in colour alone (colour vision deficiency,
 /// greyscale screenshots, high-contrast modes), so every status carries a
 /// distinct **shape** as well as a distinct hue. The third channel — a

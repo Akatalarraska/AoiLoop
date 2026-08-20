@@ -1,6 +1,6 @@
 /// Enumerations for the body map.
 ///
-/// DT1FLOW records **where things were placed and when**. It does not
+/// AoiLoop records **where things were placed and when**. It does not
 /// recommend sites, does not rank them, and does not interpret reactions.
 /// The most it will ever say is "least recently used", which is arithmetic,
 /// not advice.

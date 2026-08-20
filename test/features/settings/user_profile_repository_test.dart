@@ -1,5 +1,5 @@
+import 'package:aoiloop/core/database/app_database.dart';
 import 'package:drift/drift.dart' hide isNotNull, isNull;
-import 'package:dt1flow/core/database/app_database.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../support/test_database.dart';

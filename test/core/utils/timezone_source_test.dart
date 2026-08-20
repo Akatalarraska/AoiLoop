@@ -1,5 +1,5 @@
-import 'package:dt1flow/core/utils/clock.dart';
-import 'package:dt1flow/core/utils/timezone_source.dart';
+import 'package:aoiloop/core/utils/clock.dart';
+import 'package:aoiloop/core/utils/timezone_source.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// The zone stored on a profile has to mean something later, when Phase 5

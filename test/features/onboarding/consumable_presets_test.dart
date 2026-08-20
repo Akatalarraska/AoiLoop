@@ -1,6 +1,6 @@
-import 'package:dt1flow/features/onboarding/domain/consumable_preset.dart';
-import 'package:dt1flow/shared/models/consumable_enums.dart';
-import 'package:dt1flow/shared/models/profile_enums.dart';
+import 'package:aoiloop/features/onboarding/domain/consumable_preset.dart';
+import 'package:aoiloop/shared/models/consumable_enums.dart';
+import 'package:aoiloop/shared/models/profile_enums.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// The presets decide what a new user's dashboard looks like on day one, and

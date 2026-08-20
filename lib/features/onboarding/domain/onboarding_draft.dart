@@ -5,7 +5,7 @@ import 'consumable_preset.dart';
 
 /// A device the user described during onboarding, before it is written.
 ///
-/// Both fields are free text on purpose. DT1FLOW ships no hardware catalogue,
+/// Both fields are free text on purpose. AoiLoop ships no hardware catalogue,
 /// and an onboarding flow that cannot cope with a pump it has never heard of
 /// is worse than one that simply asks.
 @immutable

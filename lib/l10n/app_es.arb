@@ -1,7 +1,7 @@
 {
   "@@locale": "es",
 
-  "appTitle": "DT1FLOW",
+  "appTitle": "AoiLoop",
 
   "navHome": "Inicio",
   "navCalendar": "Calendario",
@@ -27,7 +27,7 @@
   "notBuiltYetInPhase": "Prevista para la fase {phase} de la hoja de ruta.",
   "notBuiltYetAfterMvp": "Prevista para la versión {release}, después del MVP 0.1.0.",
 
-  "medicalDisclaimerShort": "DT1FLOW no calcula dosis ni da indicaciones de tratamiento.",
+  "medicalDisclaimerShort": "AoiLoop no calcula dosis ni da indicaciones de tratamiento.",
 
   "genericErrorTitle": "Algo ha ido mal",
   "genericErrorBody": "Tus datos siguen a salvo en este dispositivo. Vuelve a intentarlo.",
@@ -44,8 +44,8 @@
 
   "onboardingStepCounter": "Paso {current} de {total}",
 
-  "onboardingWelcomeTitle": "Te damos la bienvenida a DT1FLOW",
-  "onboardingWelcomeBody": "DT1FLOW lleva la cuenta de cuándo toca cambiar tus sensores, equipos y material, y te avisa antes de que se te acaben.",
+  "onboardingWelcomeTitle": "Te damos la bienvenida a AoiLoop",
+  "onboardingWelcomeBody": "AoiLoop lleva la cuenta de cuándo toca cambiar tus sensores, equipos y material, y te avisa antes de que se te acaben.",
   "onboardingWelcomePrivacy": "Todo se queda en este dispositivo. Sin cuenta, sin nube, sin enviar nada a ninguna parte.",
 
   "onboardingLanguageTitle": "Elige tu idioma",
@@ -61,15 +61,15 @@
   "onboardingNameRequired": "Hace falta un nombre para crear el perfil.",
 
   "fieldBirthYear": "Año de nacimiento (opcional)",
-  "fieldBirthYearHelp": "Solo se usa para adaptar los textos. DT1FLOW nunca pide la fecha de nacimiento completa.",
+  "fieldBirthYearHelp": "Solo se usa para adaptar los textos. AoiLoop nunca pide la fecha de nacimiento completa.",
 
   "glucoseUnitLabel": "Unidad de glucosa",
   "glucoseUnitMgdl": "mg/dL",
   "glucoseUnitMmol": "mmol/L",
-  "glucoseUnitHelp": "DT1FLOW no guarda valores de glucosa. Esto solo ajusta los textos a lo que tú sueles leer.",
+  "glucoseUnitHelp": "AoiLoop no guarda valores de glucosa. Esto solo ajusta los textos a lo que tú sueles leer.",
 
   "onboardingTreatmentTitle": "¿Cómo llevas tu diabetes?",
-  "onboardingTreatmentBody": "Esto decide qué controla DT1FLOW por ti. Puedes cambiarlo más adelante.",
+  "onboardingTreatmentBody": "Esto decide qué controla AoiLoop por ti. Puedes cambiarlo más adelante.",
 
   "treatmentPumpAndCgm": "Bomba y MCG",
   "treatmentPumpOnly": "Bomba, sin MCG",
@@ -91,7 +91,7 @@
   "fieldSerialNumber": "Número de serie (opcional)",
   "deviceIncompleteHint": "Un dispositivo necesita fabricante y modelo. Déjalos vacíos para omitirlo.",
 
-  "onboardingConsumablesTitle": "¿Qué quieres que controle DT1FLOW?",
+  "onboardingConsumablesTitle": "¿Qué quieres que controle AoiLoop?",
   "onboardingConsumablesBody": "Marca lo que uses. Todo esto se puede editar o quitar más adelante.",
   "onboardingConsumablesEmpty": "No has marcado nada, así que no habrá ninguna cuenta atrás. Puedes añadir cosas después.",
 
@@ -116,7 +116,7 @@
   "durationLonger": "Un día más",
 
   "onboardingChangeTimeTitle": "¿A qué hora sueles hacer los cambios?",
-  "onboardingChangeTimeBody": "Cuando un cambio cae a una hora incómoda, DT1FLOW puede proponerte mover el siguiente a esta hora. Nunca cambia una fecha por su cuenta.",
+  "onboardingChangeTimeBody": "Cuando un cambio cae a una hora incómoda, AoiLoop puede proponerte mover el siguiente a esta hora. Nunca cambia una fecha por su cuenta.",
 
   "changeTimeNone": "Sin hora preferida",
   "changeTimeChoose": "Elegir una hora",
@@ -151,13 +151,13 @@
   "dashboardAttentionCount": "{count, plural, =1{1 elemento por cambiar} other{{count} elementos por cambiar}}",
   "dashboardAllOnTrack": "Ahora mismo no hay nada que cambiar.",
   "dashboardNothingScheduled": "Todavía no hay ninguna cuenta atrás",
-  "dashboardNothingScheduledBody": "Registra un cambio y DT1FLOW empieza a contar desde ahí.",
+  "dashboardNothingScheduledBody": "Registra un cambio y AoiLoop empieza a contar desde ahí.",
   "dashboardTracking": "Lo que controlas",
   "dashboardEmptyTitle": "Nada que controlar",
   "dashboardEmptyBody": "Nada de lo que configuraste tiene cuenta atrás, así que no hay nada que mostrar aquí. Poder elegir qué controlar llegará con la pantalla de ajustes.",
 
   "actionRegisterChange": "Registrar cambio",
-  "registerChangeNotReady": "Registrar un cambio llegará en la fase 4. DT1FLOW puede mostrar lo que configuraste, pero todavía no puede anotarlo.",
+  "registerChangeNotReady": "Registrar un cambio llegará en la fase 4. AoiLoop puede mostrar lo que configuraste, pero todavía no puede anotarlo.",
 
   "countdownDaysLeft": "{count, plural, =1{Queda 1 día} other{Quedan {count} días}}",
   "countdownHoursLeft": "{count, plural, =1{Queda 1 hora} other{Quedan {count} horas}}",

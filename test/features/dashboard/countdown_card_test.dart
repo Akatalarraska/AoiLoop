@@ -1,16 +1,16 @@
-import 'package:dt1flow/core/database/app_database.dart';
-import 'package:dt1flow/features/dashboard/domain/dashboard_view.dart';
-import 'package:dt1flow/features/dashboard/presentation/widgets/countdown_card.dart';
-import 'package:dt1flow/shared/models/cycle_countdown.dart';
-import 'package:dt1flow/shared/models/cycle_status.dart';
-import 'package:dt1flow/shared/widgets/status_chip.dart';
+import 'package:aoiloop/core/database/app_database.dart';
+import 'package:aoiloop/features/dashboard/domain/dashboard_view.dart';
+import 'package:aoiloop/features/dashboard/presentation/widgets/countdown_card.dart';
+import 'package:aoiloop/shared/models/cycle_countdown.dart';
+import 'package:aoiloop/shared/models/cycle_status.dart';
+import 'package:aoiloop/shared/widgets/status_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../support/pump_app.dart';
 import '../../support/test_database.dart';
 
-/// A countdown card is the smallest unit of what DT1FLOW is for, so these
+/// A countdown card is the smallest unit of what AoiLoop is for, so these
 /// tests hold it to the rules the whole app is judged by: never colour alone,
 /// never a number rounded in the user's favour, and one sentence to a screen
 /// reader rather than three fragments.

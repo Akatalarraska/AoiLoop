@@ -1,4 +1,4 @@
-import 'package:dt1flow/core/database/converters/reminder_offsets_converter.dart';
+import 'package:aoiloop/core/database/converters/reminder_offsets_converter.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

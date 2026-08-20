@@ -1,5 +1,5 @@
 name: Bug report
-description: Something in DT1FLOW behaves incorrectly.
+description: Something in AoiLoop behaves incorrectly.
 labels: ["bug"]
 body:
   - type: markdown
@@ -69,7 +69,7 @@ body:
   - type: input
     id: app-version
     attributes:
-      label: DT1FLOW version
+      label: AoiLoop version
       description: Found in Settings → About.
       placeholder: "0.1.0-dev"
 

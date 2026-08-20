@@ -1,4 +1,4 @@
-import 'package:dt1flow/core/database/app_database.dart';
+import 'package:aoiloop/core/database/app_database.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqlite3/common.dart' show SqliteException;
 

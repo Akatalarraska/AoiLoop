@@ -1,6 +1,6 @@
-import 'package:dt1flow/core/database/app_database.dart';
-import 'package:dt1flow/features/dashboard/domain/dashboard_view.dart';
-import 'package:dt1flow/shared/models/cycle_status.dart';
+import 'package:aoiloop/core/database/app_database.dart';
+import 'package:aoiloop/features/dashboard/domain/dashboard_view.dart';
+import 'package:aoiloop/shared/models/cycle_status.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../support/test_database.dart';

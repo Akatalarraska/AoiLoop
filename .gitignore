@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# DT1FLOW — .gitignore
+# AoiLoop — .gitignore
 # ---------------------------------------------------------------------------
 
 # Dart / Flutter tooling
@@ -13,7 +13,7 @@ build/
 coverage/
 doc/api/
 
-# Generated code. DT1FLOW regenerates these with:
+# Generated code. AoiLoop regenerates these with:
 #   dart run build_runner build --delete-conflicting-outputs
 # CI does the same, so they are intentionally not committed.
 *.g.dart

@@ -14,7 +14,7 @@ class RouteErrorScreen extends StatelessWidget {
   const RouteErrorScreen({required this.location, super.key});
 
   /// The unresolved location. Shown only in debug builds — a URI can carry
-  /// record identifiers, and DT1FLOW does not put health data on screen for
+  /// record identifiers, and AoiLoop does not put health data on screen for
   /// no reason.
   final String location;
 

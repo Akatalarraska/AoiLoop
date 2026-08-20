@@ -1,8 +1,8 @@
-# DT1FLOW
+# AoiLoop
 
-> Diabetes has enough numbers. DT1FLOW remembers the dates.
+> Diabetes has enough numbers. AoiLoop remembers the dates.
 
-DT1FLOW is an offline-first mobile app for people with Type 1 Diabetes who use
+AoiLoop is an offline-first mobile app for people with Type 1 Diabetes who use
 pumps, CGMs, infusion sets, reservoirs, pods, transmitters and the rest of the
 consumables that come with them.
 
@@ -29,7 +29,7 @@ and someone has to work out how much to pack.
 
 None of this is medically hard. All of it is mental load, and it never stops.
 
-DT1FLOW takes that part.
+AoiLoop takes that part.
 
 ## What it does
 
@@ -49,7 +49,7 @@ device is the source of truth, not a cache.
 
 ## Medical boundaries
 
-**DT1FLOW is not a medical device and does not give medical advice.**
+**AoiLoop is not a medical device and does not give medical advice.**
 
 It does not, and will not:
 
@@ -68,7 +68,7 @@ as one.
 
 ## Privacy
 
-DT1FLOW handles information about your health, so it collects as little as it
+AoiLoop handles information about your health, so it collects as little as it
 can and keeps it on your device.
 
 - Offline-first: no account, no server, no sync in the MVP
@@ -86,8 +86,8 @@ You need the **Flutter SDK 3.47.0 or later** (Dart 3.13+).
 Check with `flutter doctor`.
 
 ```bash
-git clone https://github.com/Akatalarraska/DT1FLOW.git
-cd DT1FLOW
+git clone https://github.com/Akatalarraska/AoiLoop.git
+cd AoiLoop
 
 flutter pub get
 

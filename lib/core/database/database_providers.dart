@@ -13,7 +13,7 @@ import 'app_database.dart';
 ///       AppDatabase(executor: NativeDatabase.memory()),
 ///     ),
 ///   ],
-///   child: const DT1FlowApp(),
+///   child: const AoiLoopApp(),
 /// );
 /// ```
 final Provider<AppDatabase> appDatabaseProvider = Provider<AppDatabase>((ref) {

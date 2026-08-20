@@ -8,7 +8,7 @@ import 'user_profiles.dart';
 ///
 /// Multiple locations are in the schema from Phase 1 even though the UI for
 /// them lands in Phase 8, because a divorced family or a child at school is
-/// exactly the situation DT1FLOW exists for, and retrofitting locations onto
+/// exactly the situation AoiLoop exists for, and retrofitting locations onto
 /// a flat count later would mean migrating every row.
 @TableIndex(name: 'idx_inventory_locations_profile', columns: {#userProfileId})
 class InventoryLocations extends Table with UuidPrimaryKey, RowTimestamps {

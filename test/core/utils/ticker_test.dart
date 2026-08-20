@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:dt1flow/core/utils/clock.dart';
-import 'package:dt1flow/core/utils/ticker.dart';
+import 'package:aoiloop/core/utils/clock.dart';
+import 'package:aoiloop/core/utils/ticker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,4 +1,4 @@
-import 'package:dt1flow/shared/models/cycle_status.dart';
+import 'package:aoiloop/shared/models/cycle_status.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -1,5 +1,5 @@
-import 'package:dt1flow/core/database/app_database.dart';
-import 'package:dt1flow/core/notifications/data/notification_schedule_repository.dart';
+import 'package:aoiloop/core/database/app_database.dart';
+import 'package:aoiloop/core/notifications/data/notification_schedule_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../support/test_database.dart';
