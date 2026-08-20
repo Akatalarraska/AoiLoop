@@ -117,6 +117,7 @@ class OnboardingDraft {
     this.selectedConsumables = const <ConsumablePresetKey>{},
     this.durationOverrides = const <ConsumablePresetKey, Duration>{},
     this.productChoices = const <ConsumablePresetKey, BrandModel>{},
+    this.changeTimeOverrides = const <ConsumablePresetKey, int>{},
     this.preferredChangeMinuteOfDay,
     this.reminderOffsets = defaultReminderOffsets,
   });
@@ -173,7 +174,16 @@ class OnboardingDraft {
   /// existed.
   final Map<ConsumablePresetKey, BrandModel> productChoices;
 
-  /// Minutes since local midnight, or null for no preference.
+  /// Per-consumable change times, as minutes since local midnight.
+  ///
+  /// Only the ones the user singled out. Anything absent inherits
+  /// [preferredChangeMinuteOfDay], and is written to the database as null so
+  /// it goes on inheriting it — the same arrangement as [durationOverrides],
+  /// where absent means "whatever the default is now", not "no answer".
+  final Map<ConsumablePresetKey, int> changeTimeOverrides;
+
+  /// Minutes since local midnight, or null for no preference. The default
+  /// every consumable follows unless [changeTimeOverrides] says otherwise.
   final int? preferredChangeMinuteOfDay;
 
   final List<Duration> reminderOffsets;
@@ -208,6 +218,23 @@ class OnboardingDraft {
     return durationOverrides[key] ??
         ConsumablePresets.byKey(key).defaultDuration;
   }
+
+  /// The change time to **persist** for [key]: the override if the user set
+  /// one, otherwise null so the type inherits the profile's.
+  ///
+  /// Deliberately not the same as [effectiveChangeTimeFor]. This one answers
+  /// "what goes in the column", and null is a meaningful value there.
+  int? changeTimeOverrideFor(ConsumablePresetKey key) =>
+      changeTimeOverrides[key];
+
+  /// The change time to **show** for [key]: the override if there is one,
+  /// otherwise the profile-wide preference, otherwise null.
+  ///
+  /// This is what the onboarding step puts on each line, which is why a user
+  /// sees the general time already filled in against every consumable even
+  /// though nothing has been written against them.
+  int? effectiveChangeTimeFor(ConsumablePresetKey key) =>
+      changeTimeOverrides[key] ?? preferredChangeMinuteOfDay;
 
   /// The product chosen for [key], or an empty selection.
   BrandModel productFor(ConsumablePresetKey key) =>
@@ -303,6 +330,7 @@ class OnboardingDraft {
     Set<ConsumablePresetKey>? selectedConsumables,
     Map<ConsumablePresetKey, Duration>? durationOverrides,
     Map<ConsumablePresetKey, BrandModel>? productChoices,
+    Map<ConsumablePresetKey, int>? changeTimeOverrides,
     int? preferredChangeMinuteOfDay,
     bool clearPreferredChangeTime = false,
     List<Duration>? reminderOffsets,
@@ -318,6 +346,7 @@ class OnboardingDraft {
       selectedConsumables: selectedConsumables ?? this.selectedConsumables,
       durationOverrides: durationOverrides ?? this.durationOverrides,
       productChoices: productChoices ?? this.productChoices,
+      changeTimeOverrides: changeTimeOverrides ?? this.changeTimeOverrides,
       preferredChangeMinuteOfDay: clearPreferredChangeTime
           ? null
           : (preferredChangeMinuteOfDay ?? this.preferredChangeMinuteOfDay),
@@ -338,6 +367,7 @@ class OnboardingDraft {
         setEquals(other.selectedConsumables, selectedConsumables) &&
         mapEquals(other.durationOverrides, durationOverrides) &&
         mapEquals(other.productChoices, productChoices) &&
+        mapEquals(other.changeTimeOverrides, changeTimeOverrides) &&
         other.preferredChangeMinuteOfDay == preferredChangeMinuteOfDay &&
         listEquals(other.reminderOffsets, reminderOffsets);
   }
@@ -362,6 +392,11 @@ class OnboardingDraft {
       productChoices.entries.map(
         (MapEntry<ConsumablePresetKey, BrandModel> e) =>
             Object.hash(e.key, e.value),
+      ),
+    ),
+    Object.hashAllUnordered(
+      changeTimeOverrides.entries.map(
+        (MapEntry<ConsumablePresetKey, int> e) => Object.hash(e.key, e.value),
       ),
     ),
     preferredChangeMinuteOfDay,

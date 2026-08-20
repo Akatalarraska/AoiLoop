@@ -27,7 +27,7 @@ void main() {
   test('opens and reports the expected schema version', () async {
     await database.customSelect('SELECT 1').get();
 
-    expect(database.schemaVersion, 2);
+    expect(database.schemaVersion, 3);
   });
 
   test('enables foreign key enforcement on the connection', () async {

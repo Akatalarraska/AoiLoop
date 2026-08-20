@@ -525,6 +525,31 @@
     "description": "Button that removes the preferred change time."
   },
 
+  "changeTimePerConsumableTitle": "Fine-tune per consumable",
+  "@changeTimePerConsumableTitle": {
+    "description": "Heading above the list that sets a change time for each consumable individually."
+  },
+
+  "changeTimePerConsumableBody": "Each one follows the time above unless you give it its own. A sensor on a Sunday morning and a set before bed are different questions.",
+  "@changeTimePerConsumableBody": {
+    "description": "Explains that per-consumable change times are optional and inherit the general one."
+  },
+
+  "changeTimeFollowsGeneral": "Follows the general time",
+  "@changeTimeFollowsGeneral": {
+    "description": "State of a consumable whose change time is inherited from the profile rather than set on its own."
+  },
+
+  "changeTimeOwnTime": "Its own time",
+  "@changeTimeOwnTime": {
+    "description": "State of a consumable that has been given a change time of its own."
+  },
+
+  "changeTimeResetToGeneral": "Follow the general time again",
+  "@changeTimeResetToGeneral": {
+    "description": "Button that clears a consumable's own change time so it inherits the profile's again."
+  },
+
   "onboardingRemindersTitle": "When should BlauLoop remind you?",
   "@onboardingRemindersTitle": {
     "description": "Heading of the onboarding step that picks reminder lead times."

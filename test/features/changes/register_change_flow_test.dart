@@ -35,8 +35,12 @@ void main() {
     Duration? dueIn,
     Duration installedAgo = const Duration(days: 1),
     bool inUse = true,
+    int? preferredChangeMinuteOfDay,
   }) async {
-    final ConsumableType type = await app.harness.seedType(name: name);
+    final ConsumableType type = await app.harness.seedType(
+      name: name,
+      preferredChangeMinuteOfDay: preferredChangeMinuteOfDay,
+    );
     if (inUse) {
       await app.harness.instances.create(
         userProfileId: (await app.harness.profiles.findPrimary())!.id,
@@ -290,6 +294,78 @@ void main() {
       expect(due.isBefore(now.add(const Duration(days: 10))), isTrue);
       expect(due.toLocal().hour, 9);
       expect(due.toLocal().minute, 0);
+    });
+  });
+
+  group("a consumable with a change time of its own", () {
+    testWidgets("the offer names the type's hour, not the profile's", (
+      WidgetTester tester,
+    ) async {
+      // 20:00 on the profile, 08:00 on the type. Formatted for the en locale
+      // in a widget test that is 8:00 PM versus 8:00 AM, so a sheet reading
+      // the wrong one is unmistakable rather than off by a rounding.
+      final AppUnderTest app = await pumpTallApp(
+        tester,
+        preferredChangeMinuteOfDay: 20 * 60,
+      );
+      await seedType(
+        app,
+        name: 'CGM sensor',
+        dueIn: const Duration(days: 2),
+        preferredChangeMinuteOfDay: 8 * 60,
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Register change').first);
+      await tester.pumpAndSettle();
+
+      final Finder offer = find.byType(CheckboxListTile);
+      expect(
+        offer,
+        findsOneWidget,
+        reason: '08:00 is always a shift away from a 09:00 UTC deadline',
+      );
+
+      final String label = tester
+          .widget<Text>(
+            find.descendant(of: offer, matching: find.byType(Text)).first,
+          )
+          .data!;
+      expect(label, contains('8:00 AM'));
+      expect(
+        label,
+        isNot(contains('PM')),
+        reason: 'the profile 20:00 must not reach this label',
+      );
+    });
+
+    testWidgets('and the stored deadline uses that hour', (
+      WidgetTester tester,
+    ) async {
+      final AppUnderTest app = await pumpTallApp(
+        tester,
+        preferredChangeMinuteOfDay: 20 * 60,
+      );
+      await seedType(
+        app,
+        name: 'CGM sensor',
+        dueIn: const Duration(days: 2),
+        preferredChangeMinuteOfDay: 8 * 60,
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Register change').first);
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(CheckboxListTile));
+      await tester.pumpAndSettle();
+      await tester.tap(confirmChange);
+      await tester.pumpAndSettle();
+
+      final ConsumableInstance opened = (await instances(app)).firstWhere(
+        (ConsumableInstance i) => i.status == ConsumableStatus.active,
+      );
+      expect(opened.expectedChangeAt!.toLocal().hour, 8);
+      expect(opened.expectedChangeAt!.toLocal().minute, 0);
     });
   });
 }

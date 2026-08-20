@@ -1,6 +1,7 @@
 import 'package:blauloop/core/database/app_database.dart';
 import 'package:blauloop/core/errors/app_failure.dart';
 import 'package:blauloop/features/changes/data/cycle_engine.dart';
+import 'package:blauloop/features/changes/domain/cycle_schedule.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../support/test_database.dart';
@@ -29,7 +30,7 @@ void main() {
   Future<CycleTransition> register({
     DateTime? changedAt,
     bool usePreferredTime = false,
-    int? preferredMinuteOfDay,
+    int? profileMinuteOfDay,
     ConsumableType? type,
   }) {
     return engine.registerChange(
@@ -37,7 +38,7 @@ void main() {
       type: type ?? sensor,
       changedAt: changedAt ?? installedAt,
       usePreferredTime: usePreferredTime,
-      preferredMinuteOfDay: preferredMinuteOfDay,
+      profileMinuteOfDay: profileMinuteOfDay,
     );
   }
 
@@ -193,7 +194,7 @@ void main() {
   group('the preferred change time', () {
     test('is only applied when the user accepts it', () async {
       final CycleTransition declined = await register(
-        preferredMinuteOfDay: nineAm,
+        profileMinuteOfDay: nineAm,
       );
 
       expect(declined.schedule.offersPreferredTime, isTrue);
@@ -205,7 +206,7 @@ void main() {
 
     test('shortens the stored deadline when accepted', () async {
       final CycleTransition accepted = await register(
-        preferredMinuteOfDay: nineAm,
+        profileMinuteOfDay: nineAm,
         usePreferredTime: true,
       );
 
@@ -225,7 +226,7 @@ void main() {
         // The deadline already lands at 12:00, so a 12:00 preference has
         // nothing to move. A stale checkbox must not invent a date.
         final CycleTransition transition = await register(
-          preferredMinuteOfDay: 12 * 60,
+          profileMinuteOfDay: 12 * 60,
           usePreferredTime: true,
         );
 
@@ -236,6 +237,111 @@ void main() {
         );
       },
     );
+  });
+
+  group('a type with its own change time', () {
+    /// 08:00, deliberately different from the profile's 09:00 so that any
+    /// test passing here could not have passed by reading the wrong one.
+    const int eightAm = 8 * 60;
+
+    test('wins over the profile-wide time', () async {
+      final ConsumableType own = await h.seedType(
+        name: 'Infusion set',
+        defaultDuration: tenDays,
+        preferredChangeMinuteOfDay: eightAm,
+      );
+
+      final CycleTransition transition = await register(
+        type: own,
+        profileMinuteOfDay: nineAm,
+        usePreferredTime: true,
+      );
+
+      expect(transition.schedule.preferredMinuteOfDay, eightAm);
+      expect(
+        transition.opened.expectedChangeAt,
+        DateTime(2026, 8, 27, 8).toUtc(),
+      );
+    });
+
+    test('applies even when the profile has no preference at all', () async {
+      final ConsumableType own = await h.seedType(
+        name: 'Reservoir',
+        defaultDuration: tenDays,
+        preferredChangeMinuteOfDay: eightAm,
+      );
+
+      final CycleTransition transition = await register(
+        type: own,
+        usePreferredTime: true,
+      );
+
+      expect(transition.schedule.offersPreferredTime, isTrue);
+      expect(
+        transition.opened.expectedChangeAt,
+        DateTime(2026, 8, 27, 8).toUtc(),
+      );
+    });
+
+    test('falls back to the profile when the type has none', () async {
+      // The seeded sensor leaves the column null, which means inherit rather
+      // than "no preference" — the distinction the whole design rests on.
+      expect(sensor.preferredChangeMinuteOfDay, isNull);
+
+      final CycleTransition transition = await register(
+        profileMinuteOfDay: nineAm,
+        usePreferredTime: true,
+      );
+
+      expect(transition.schedule.preferredMinuteOfDay, nineAm);
+      expect(
+        transition.opened.expectedChangeAt,
+        DateTime(2026, 8, 27, 9).toUtc(),
+      );
+    });
+
+    test(
+      'offers nothing when neither the type nor the profile has one',
+      () async {
+        final CycleTransition transition = await register(
+          usePreferredTime: true,
+        );
+
+        expect(transition.schedule.preferredMinuteOfDay, isNull);
+        expect(transition.schedule.offersPreferredTime, isFalse);
+        expect(
+          transition.opened.expectedChangeAt,
+          installedAt.toUtc().add(tenDays),
+        );
+      },
+    );
+
+    test('preview agrees with what registerChange writes', () async {
+      final ConsumableType own = await h.seedType(
+        name: 'Pod',
+        defaultDuration: tenDays,
+        preferredChangeMinuteOfDay: eightAm,
+      );
+
+      // The sheet shows the preview and the engine writes the row. If these
+      // two ever disagree the user is shown one date and given another.
+      final CycleSchedule previewed = engine.preview(
+        type: own,
+        changedAt: installedAt,
+        profileMinuteOfDay: nineAm,
+      );
+      final CycleTransition written = await register(
+        type: own,
+        profileMinuteOfDay: nineAm,
+        usePreferredTime: true,
+      );
+
+      expect(written.schedule, previewed);
+      expect(
+        written.opened.expectedChangeAt,
+        previewed.changeAt(usePreferredTime: true),
+      );
+    });
   });
 
   group('types that are counted rather than timed', () {

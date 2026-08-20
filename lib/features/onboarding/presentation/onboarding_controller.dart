@@ -175,6 +175,24 @@ class OnboardingController extends Notifier<OnboardingFlow> {
     );
   }
 
+  /// Pins [key] to its own change time, or with null hands it back to the
+  /// profile-wide one.
+  ///
+  /// Clearing removes the entry rather than storing null in the map, so
+  /// "inherits" has exactly one representation and two drafts that inherit
+  /// compare equal.
+  void setChangeTimeOverride(ConsumablePresetKey key, int? minuteOfDay) {
+    final Map<ConsumablePresetKey, int> next = <ConsumablePresetKey, int>{
+      ...state.draft.changeTimeOverrides,
+    };
+    if (minuteOfDay == null) {
+      next.remove(key);
+    } else {
+      next[key] = minuteOfDay;
+    }
+    _updateDraft(state.draft.copyWith(changeTimeOverrides: next));
+  }
+
   void toggleReminderOffset(Duration offset) {
     final List<Duration> next = <Duration>[...state.draft.reminderOffsets];
     if (!next.remove(offset)) {

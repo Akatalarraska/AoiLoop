@@ -83,7 +83,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase({QueryExecutor? executor}) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   /// Timestamps are stored as ISO-8601 text rather than Unix seconds.
   ///
@@ -104,8 +104,27 @@ class AppDatabase extends _$AppDatabase {
       onUpgrade: (Migrator m, int from, int to) async {
         // v1 shipped the connection and no tables at all (Phase 0). The domain
         // schema arrives whole in v2, so the step is a plain create.
+        //
+        // The early return matters. `createAll` builds the schema as it stands
+        // *today*, which already contains every column added since v2 — so
+        // falling through to the incremental steps below would try to add a
+        // column that createAll just created, and SQLite aborts the upgrade
+        // with "duplicate column name". Analysis cannot catch that; only a
+        // v1 database can, which is what the migration test opens.
         if (from < 2) {
           await m.createAll();
+          return;
+        }
+
+        // v3 gives each consumable type its own preferred change time.
+        // Nullable, and left null on upgrade: every existing type keeps
+        // inheriting the profile's time, so nobody's deadlines move because
+        // they installed an update.
+        if (from < 3) {
+          await m.addColumn(
+            consumableTypes,
+            consumableTypes.preferredChangeMinuteOfDay,
+          );
         }
       },
       beforeOpen: (OpeningDetails details) async {

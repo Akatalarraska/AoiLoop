@@ -59,6 +59,7 @@ class ConsumableTypeRepository extends Repository {
     bool tracksInventory = true,
     List<Duration> defaultReminderOffsets = const <Duration>[],
     bool isBuiltIn = false,
+    int? preferredChangeMinuteOfDay,
   }) {
     final DateTime timestamp = now;
     return db
@@ -71,6 +72,10 @@ class ConsumableTypeRepository extends Repository {
             defaultDurationMinutes: Value<int?>(defaultDuration?.inMinutes),
             tracksCycle: Value<bool>(tracksCycle),
             tracksInventory: Value<bool>(tracksInventory),
+            // Left null unless the caller singled this type out. Null is the
+            // instruction to follow the profile, so writing the profile's
+            // current value here would freeze it instead.
+            preferredChangeMinuteOfDay: Value<int?>(preferredChangeMinuteOfDay),
             defaultReminderOffsets: Value<List<Duration>>(
               defaultReminderOffsets,
             ),
@@ -98,6 +103,24 @@ class ConsumableTypeRepository extends Repository {
       id,
       ConsumableTypesCompanion(
         defaultDurationMinutes: Value<int?>(duration?.inMinutes),
+      ),
+    );
+  }
+
+  /// Sets — or with null, clears — the time of day this type should be
+  /// changed at, as minutes since local midnight.
+  ///
+  /// Clearing restores inheritance from the profile rather than removing the
+  /// preference altogether, which is the whole meaning of null in this column.
+  ///
+  /// Like [setDefaultDuration], this does **not** touch instances already in
+  /// use. Someone who decides their sets suit 22:00 has not changed when the
+  /// one currently on their body is due; that applies from the next change.
+  Future<void> setPreferredChangeMinuteOfDay(String id, int? minuteOfDay) {
+    return update(
+      id,
+      ConsumableTypesCompanion(
+        preferredChangeMinuteOfDay: Value<int?>(minuteOfDay),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../l10n/generated/app_localizations.dart';
 import '../../../../shared/extensions/build_context_x.dart';
+import '../../../../shared/extensions/date_time_format.dart';
 import '../../../../shared/extensions/profile_enums_l10n.dart';
 import '../../domain/consumable_preset.dart';
 import '../../domain/onboarding_draft.dart';
@@ -70,16 +71,7 @@ class SummaryStep extends ConsumerWidget {
             label: l10n.summaryChangeTime,
             value: draft.preferredChangeMinuteOfDay == null
                 ? l10n.changeTimeNone
-                : MaterialLocalizations.of(context).formatTimeOfDay(
-                    TimeOfDay(
-                      hour:
-                          draft.preferredChangeMinuteOfDay! ~/
-                          TimeOfDay.minutesPerHour,
-                      minute:
-                          draft.preferredChangeMinuteOfDay! %
-                          TimeOfDay.minutesPerHour,
-                    ),
-                  ),
+                : context.formatMinuteOfDay(draft.preferredChangeMinuteOfDay!),
             onTap: () => goTo(OnboardingStep.changeTime),
           ),
         if (steps.contains(OnboardingStep.reminders))

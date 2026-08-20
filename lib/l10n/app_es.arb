@@ -130,6 +130,11 @@
   "changeTimeNone": "Sin hora preferida",
   "changeTimeChoose": "Elegir una hora",
   "changeTimeClear": "Quitar",
+  "changeTimePerConsumableTitle": "Afinar por consumible",
+  "changeTimePerConsumableBody": "Cada uno sigue la hora de arriba salvo que le des la suya. Un sensor un domingo por la mañana y un equipo antes de dormir no son la misma pregunta.",
+  "changeTimeFollowsGeneral": "Sigue la hora general",
+  "changeTimeOwnTime": "Hora propia",
+  "changeTimeResetToGeneral": "Volver a la hora general",
 
   "onboardingRemindersTitle": "¿Cuándo quieres que te avise?",
   "onboardingRemindersBody": "Los avisos llegan antes de que toque el cambio. Marca los que te sirvan.",

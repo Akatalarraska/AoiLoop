@@ -20,14 +20,18 @@ class CycleSchedule {
     required this.installedAt,
     required this.naturalChangeAt,
     required this.preferredChangeAt,
+    this.preferredMinuteOfDay,
   });
 
   /// The schedule for something installed at [installedAt].
   ///
   /// [duration] is the type's expected life, null for an item that is counted
   /// rather than timed — a box of strips has no deadline to compute.
-  /// [preferredMinuteOfDay] is the profile's preferred change time as minutes
-  /// since local midnight, null when they never expressed one.
+  /// [preferredMinuteOfDay] is the preferred change time as minutes since
+  /// local midnight, already resolved: the type's own time where it has one,
+  /// the profile's otherwise, null when neither exists. Resolving it is
+  /// `CycleEngine`'s job, because that is what holds both rows; this type
+  /// takes one number and does arithmetic with it.
   ///
   /// All instants are handled in UTC; [preferredMinuteOfDay] is interpreted
   /// against the device's local zone. That is a knowing simplification: the
@@ -46,6 +50,7 @@ class CycleSchedule {
         installedAt: installed,
         naturalChangeAt: null,
         preferredChangeAt: null,
+        preferredMinuteOfDay: preferredMinuteOfDay,
       );
     }
 
@@ -59,6 +64,7 @@ class CycleSchedule {
         naturalChangeAt: natural,
         preferredMinuteOfDay: preferredMinuteOfDay,
       ),
+      preferredMinuteOfDay: preferredMinuteOfDay,
     );
   }
 
@@ -75,6 +81,16 @@ class CycleSchedule {
   /// deadline to move, the deadline already falls at the preferred time, or
   /// the shift would land at or before the install.
   final DateTime? preferredChangeAt;
+
+  /// The preferred time this schedule was built from, as minutes since local
+  /// midnight. Null when no preference applied.
+  ///
+  /// Carried so the screen offering the shift can name the hour without
+  /// going back to the profile to guess at it. Since v3 the profile is not
+  /// the only source — a type can carry its own — and a sheet that read the
+  /// profile directly would cheerfully offer "move to 20:00" next to a date
+  /// computed at 08:00.
+  final int? preferredMinuteOfDay;
 
   /// Whether this cycle counts down at all.
   bool get isTracked => naturalChangeAt != null;
@@ -160,14 +176,20 @@ class CycleSchedule {
       other is CycleSchedule &&
       other.installedAt == installedAt &&
       other.naturalChangeAt == naturalChangeAt &&
-      other.preferredChangeAt == preferredChangeAt;
+      other.preferredChangeAt == preferredChangeAt &&
+      other.preferredMinuteOfDay == preferredMinuteOfDay;
 
   @override
-  int get hashCode =>
-      Object.hash(installedAt, naturalChangeAt, preferredChangeAt);
+  int get hashCode => Object.hash(
+    installedAt,
+    naturalChangeAt,
+    preferredChangeAt,
+    preferredMinuteOfDay,
+  );
 
   @override
   String toString() =>
       'CycleSchedule(installedAt: $installedAt, naturalChangeAt: '
-      '$naturalChangeAt, preferredChangeAt: $preferredChangeAt)';
+      '$naturalChangeAt, preferredChangeAt: $preferredChangeAt, '
+      'preferredMinuteOfDay: $preferredMinuteOfDay)';
 }

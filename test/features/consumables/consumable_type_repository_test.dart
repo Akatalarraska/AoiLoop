@@ -189,4 +189,56 @@ void main() {
   test('countAll returns zero on an empty database', () async {
     expect(await h.types.countAll(), 0);
   });
+
+  group('a change time of its own', () {
+    test('a new type inherits by default', () async {
+      final ConsumableType type = await h.seedType();
+
+      expect(
+        type.preferredChangeMinuteOfDay,
+        null,
+        reason: 'null is the instruction to follow the profile',
+      );
+    });
+
+    test('can be pinned and read back', () async {
+      final ConsumableType type = await h.seedType();
+
+      await h.types.setPreferredChangeMinuteOfDay(type.id, 8 * 60);
+
+      expect(
+        (await h.types.findById(type.id))!.preferredChangeMinuteOfDay,
+        480,
+      );
+    });
+
+    test('clearing it restores inheritance', () async {
+      final ConsumableType type = await h.seedType(
+        preferredChangeMinuteOfDay: 8 * 60,
+      );
+
+      await h.types.setPreferredChangeMinuteOfDay(type.id, null);
+
+      expect(
+        (await h.types.findById(type.id))!.preferredChangeMinuteOfDay,
+        null,
+      );
+    });
+
+    test('pinning one type leaves the others alone', () async {
+      final ConsumableType sensor = await h.seedType(name: 'Sensor');
+      final ConsumableType set = await h.seedType(name: 'Set');
+
+      await h.types.setPreferredChangeMinuteOfDay(set.id, 22 * 60);
+
+      expect(
+        (await h.types.findById(sensor.id))!.preferredChangeMinuteOfDay,
+        null,
+      );
+      expect(
+        (await h.types.findById(set.id))!.preferredChangeMinuteOfDay,
+        1320,
+      );
+    });
+  });
 }

@@ -250,4 +250,81 @@ void main() {
       expect(const DraftDevice(manufacturer: '  ', model: '').isEmpty, isTrue);
     });
   });
+
+  group('change times per consumable', () {
+    const OnboardingDraft general = OnboardingDraft(
+      preferredChangeMinuteOfDay: 20 * 60,
+    );
+
+    test('a consumable with no override shows the general time', () {
+      expect(
+        general.effectiveChangeTimeFor(ConsumablePresetKey.cgmSensor),
+        20 * 60,
+      );
+    });
+
+    test('but stores null, so it goes on following it', () {
+      expect(
+        general.changeTimeOverrideFor(ConsumablePresetKey.cgmSensor),
+        null,
+      );
+    });
+
+    test('an override wins for both showing and storing', () {
+      final OnboardingDraft pinned = general.copyWith(
+        changeTimeOverrides: const <ConsumablePresetKey, int>{
+          ConsumablePresetKey.cgmSensor: 8 * 60,
+        },
+      );
+
+      expect(
+        pinned.effectiveChangeTimeFor(ConsumablePresetKey.cgmSensor),
+        8 * 60,
+      );
+      expect(
+        pinned.changeTimeOverrideFor(ConsumablePresetKey.cgmSensor),
+        8 * 60,
+      );
+      expect(
+        pinned.effectiveChangeTimeFor(ConsumablePresetKey.pod),
+        20 * 60,
+        reason: 'one override must not leak onto the others',
+      );
+    });
+
+    test('with no general time and no override there is nothing to show', () {
+      expect(
+        const OnboardingDraft().effectiveChangeTimeFor(
+          ConsumablePresetKey.cgmSensor,
+        ),
+        null,
+      );
+    });
+
+    test('an override survives copyWith of an unrelated field', () {
+      final OnboardingDraft pinned = general.copyWith(
+        changeTimeOverrides: const <ConsumablePresetKey, int>{
+          ConsumablePresetKey.pod: 8 * 60,
+        },
+      );
+
+      expect(
+        pinned
+            .copyWith(displayName: 'Robert')
+            .changeTimeOverrideFor(ConsumablePresetKey.pod),
+        8 * 60,
+      );
+    });
+
+    test('drafts differing only by an override are not equal', () {
+      expect(
+        general.copyWith(
+          changeTimeOverrides: const <ConsumablePresetKey, int>{
+            ConsumablePresetKey.pod: 8 * 60,
+          },
+        ),
+        isNot(general),
+      );
+    });
+  });
 }

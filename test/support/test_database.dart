@@ -106,6 +106,7 @@ class TestHarness {
     Duration? defaultDuration = const Duration(days: 10),
     bool tracksCycle = true,
     bool tracksInventory = true,
+    int? preferredChangeMinuteOfDay,
   }) {
     return types.create(
       name: name,
@@ -113,6 +114,7 @@ class TestHarness {
       defaultDuration: defaultDuration,
       tracksCycle: tracksCycle,
       tracksInventory: tracksInventory,
+      preferredChangeMinuteOfDay: preferredChangeMinuteOfDay,
     );
   }
 }

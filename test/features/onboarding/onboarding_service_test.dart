@@ -202,6 +202,58 @@ void main() {
       );
     });
 
+    test(
+      'leave the change time null unless the user singled one out',
+      () async {
+        await complete(
+          draftFor(TreatmentType.podAndCgm)
+              .copyWith(preferredChangeMinuteOfDay: 20 * 60),
+          presetName: (ConsumablePresetKey key) => key.name,
+        );
+
+        final List<ConsumableType> types = await harness.types
+            .watchActive()
+            .first;
+
+        // The profile's 20:00 must not be copied into the rows. Null is what
+        // keeps them following it when the user later moves it.
+        expect(
+          types.every(
+            (ConsumableType type) => type.preferredChangeMinuteOfDay == null,
+          ),
+          isTrue,
+        );
+      },
+    );
+
+    test('carry a change time the user did single out', () async {
+      await complete(
+        draftFor(TreatmentType.podAndCgm).copyWith(
+          preferredChangeMinuteOfDay: 20 * 60,
+          changeTimeOverrides: const <ConsumablePresetKey, int>{
+            ConsumablePresetKey.cgmSensor: 8 * 60,
+          },
+        ),
+        presetName: (ConsumablePresetKey key) => key.name,
+      );
+
+      final ConsumableType sensor = await _typeNamed(
+        harness,
+        ConsumablePresetKey.cgmSensor.name,
+      );
+      final ConsumableType pod = await _typeNamed(
+        harness,
+        ConsumablePresetKey.pod.name,
+      );
+
+      expect(sensor.preferredChangeMinuteOfDay, 480);
+      expect(
+        pod.preferredChangeMinuteOfDay,
+        null,
+        reason: 'pinning one consumable must not pin the rest',
+      );
+    });
+
     test('timed items keep their duration and reminders', () async {
       await complete(
         draftFor(TreatmentType.pumpAndCgm)

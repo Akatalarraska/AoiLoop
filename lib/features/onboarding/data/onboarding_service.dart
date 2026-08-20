@@ -106,6 +106,12 @@ class OnboardingService {
               ? draft.reminderOffsets
               : const <Duration>[],
           isBuiltIn: true,
+          // The override only, never the profile's own time. Absent here means
+          // the type follows the profile, so a user who later moves their
+          // general change time moves everything they did not single out.
+          preferredChangeMinuteOfDay: preset.tracksCycle
+              ? draft.changeTimeOverrideFor(preset.key)
+              : null,
         );
       }
 

@@ -105,7 +105,7 @@ class _RegisterChangeSheetState extends ConsumerState<RegisterChangeSheet> {
       .preview(
         type: widget.card.type,
         changedAt: _changedAt,
-        preferredMinuteOfDay: widget.profile.preferredChangeMinuteOfDay,
+        profileMinuteOfDay: widget.profile.preferredChangeMinuteOfDay,
       );
 
   @override
@@ -143,7 +143,11 @@ class _RegisterChangeSheetState extends ConsumerState<RegisterChangeSheet> {
             if (schedule.offersPreferredTime) ...<Widget>[
               const SizedBox(height: AppSpacing.sm),
               _PreferredTimeOffer(
-                minuteOfDay: widget.profile.preferredChangeMinuteOfDay!,
+                // From the schedule, not from the profile. Since v3 a type can
+                // carry its own change time, and the label has to name the
+                // hour the date was actually computed at — otherwise the offer
+                // reads "move to 20:00" above a deadline of 08:00.
+                minuteOfDay: schedule.preferredMinuteOfDay!,
                 value: _usePreferredTime,
                 onChanged: _saving
                     ? null
@@ -241,7 +245,7 @@ class _RegisterChangeSheetState extends ConsumerState<RegisterChangeSheet> {
             userProfileId: widget.profile.id,
             type: widget.card.type,
             changedAt: _changedAt,
-            preferredMinuteOfDay: widget.profile.preferredChangeMinuteOfDay,
+            profileMinuteOfDay: widget.profile.preferredChangeMinuteOfDay,
             usePreferredTime: _usePreferredTime,
           );
     } on ValidationFailure {
@@ -418,11 +422,6 @@ class _PreferredTimeOffer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TimeOfDay preferred = TimeOfDay(
-      hour: minuteOfDay ~/ TimeOfDay.minutesPerHour,
-      minute: minuteOfDay % TimeOfDay.minutesPerHour,
-    );
-
     return CheckboxListTile(
       value: value,
       onChanged: onChanged == null
@@ -432,7 +431,7 @@ class _PreferredTimeOffer extends StatelessWidget {
       controlAffinity: ListTileControlAffinity.leading,
       title: Text(
         context.l10n.registerChangePreferredOffer(
-          MaterialLocalizations.of(context).formatTimeOfDay(preferred),
+          context.formatMinuteOfDay(minuteOfDay),
         ),
       ),
     );

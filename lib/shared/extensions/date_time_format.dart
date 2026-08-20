@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 /// Locale-aware date formatting for instants read out of the database.
@@ -25,4 +25,22 @@ extension DateTimeFormatX on BuildContext {
   /// A weekday and a date, with no time of day.
   String formatDay(DateTime instant) =>
       DateFormat.MMMEd(_locale).format(instant.toLocal());
+
+  /// A time of day held as minutes since local midnight — "08:00", "8:00 PM".
+  ///
+  /// Minutes since midnight rather than an instant because this is a
+  /// wall-clock preference, not a moment: 20:00 stays 20:00 on the night the
+  /// clocks go back.
+  ///
+  /// Formatted through [MaterialLocalizations] rather than [DateFormat],
+  /// because whether to show a 24-hour clock is a device setting the user
+  /// chose, not a property of their language.
+  String formatMinuteOfDay(int minuteOfDay) {
+    return MaterialLocalizations.of(this).formatTimeOfDay(
+      TimeOfDay(
+        hour: minuteOfDay ~/ TimeOfDay.minutesPerHour,
+        minute: minuteOfDay % TimeOfDay.minutesPerHour,
+      ),
+    );
+  }
 }

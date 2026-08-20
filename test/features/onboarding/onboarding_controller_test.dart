@@ -182,6 +182,37 @@ void main() {
       controller().setPreferredChangeMinuteOfDay(null);
       expect(flow().draft.preferredChangeMinuteOfDay, isNull);
     });
+
+    test('a consumable can be given its own change time and handed back', () {
+      controller().setPreferredChangeMinuteOfDay(20 * 60);
+      controller().setChangeTimeOverride(ConsumablePresetKey.cgmSensor, 8 * 60);
+
+      expect(
+        flow().draft.changeTimeOverrideFor(ConsumablePresetKey.cgmSensor),
+        480,
+      );
+
+      controller().setChangeTimeOverride(ConsumablePresetKey.cgmSensor, null);
+
+      expect(
+        flow().draft.changeTimeOverrideFor(ConsumablePresetKey.cgmSensor),
+        isNull,
+      );
+      expect(
+        flow().draft.effectiveChangeTimeFor(ConsumablePresetKey.cgmSensor),
+        1200,
+        reason: 'handing it back means following the general time again',
+      );
+    });
+
+    test('clearing an override removes the entry rather than nulling it', () {
+      controller().setChangeTimeOverride(ConsumablePresetKey.pod, 8 * 60);
+      controller().setChangeTimeOverride(ConsumablePresetKey.pod, null);
+
+      // One representation of "inherits", so two drafts that inherit compare
+      // equal instead of differing by a map entry nobody can see.
+      expect(flow().draft.changeTimeOverrides, isEmpty);
+    });
   });
 
   group('submitting', () {

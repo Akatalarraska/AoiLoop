@@ -37,6 +37,22 @@ class ConsumableTypes extends Table with UuidPrimaryKey, RowTimestamps {
   BoolColumn get tracksInventory =>
       boolean().withDefault(const Constant<bool>(true))();
 
+  /// The time of day changes of *this* type should land on, as minutes since
+  /// local midnight. Null means "whatever the profile prefers".
+  ///
+  /// Null is inheritance, not absence. The profile's
+  /// `preferredChangeMinuteOfDay` stays the live default rather than being
+  /// copied in here at creation, so a user who later moves their general
+  /// change time moves every type they never singled out — which is the only
+  /// behaviour that makes the word *default* mean anything.
+  ///
+  /// It exists because one hour does not fit every product. A sensor is
+  /// comfortably changed on a Sunday morning; a set at 22:00 before bed. A
+  /// single profile-wide time forces one of the two to be wrong, and a
+  /// deadline the user quietly disagrees with is a deadline they start
+  /// ignoring.
+  IntColumn get preferredChangeMinuteOfDay => integer().nullable()();
+
   /// Lead times for reminders before the expected change, normalised
   /// longest-first. An entry of `Duration.zero` means "at the moment it is
   /// due".

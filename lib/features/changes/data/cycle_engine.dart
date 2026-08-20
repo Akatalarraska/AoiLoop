@@ -85,15 +85,18 @@ class CycleEngine {
   /// commit to it, which means computing it twice: once for the preview and
   /// once for the write. Both go through here, so the date on the button is
   /// the date in the database.
+  ///
+  /// [profileMinuteOfDay] is the profile-wide preference. It is the fallback,
+  /// not the answer: [_preferredMinuteOf] gives the type its own time first.
   CycleSchedule preview({
     required ConsumableType type,
     required DateTime changedAt,
-    int? preferredMinuteOfDay,
+    int? profileMinuteOfDay,
   }) {
     return CycleSchedule.forInstall(
       installedAt: changedAt,
       duration: _durationOf(type),
-      preferredMinuteOfDay: preferredMinuteOfDay,
+      preferredMinuteOfDay: _preferredMinuteOf(type, profileMinuteOfDay),
     );
   }
 
@@ -115,7 +118,7 @@ class CycleEngine {
     required String userProfileId,
     required ConsumableType type,
     required DateTime changedAt,
-    int? preferredMinuteOfDay,
+    int? profileMinuteOfDay,
     bool usePreferredTime = false,
     String? notes,
   }) async {
@@ -123,7 +126,7 @@ class CycleEngine {
       userProfileId: userProfileId,
       type: type,
       changedAt: changedAt,
-      preferredMinuteOfDay: preferredMinuteOfDay,
+      profileMinuteOfDay: profileMinuteOfDay,
       usePreferredTime: usePreferredTime,
       notes: notes,
     );
@@ -142,7 +145,7 @@ class CycleEngine {
     required String userProfileId,
     required ConsumableType type,
     required DateTime changedAt,
-    int? preferredMinuteOfDay,
+    int? profileMinuteOfDay,
     bool usePreferredTime = false,
     String? notes,
   }) {
@@ -161,7 +164,7 @@ class CycleEngine {
       final CycleSchedule schedule = preview(
         type: type,
         changedAt: changed,
-        preferredMinuteOfDay: preferredMinuteOfDay,
+        profileMinuteOfDay: profileMinuteOfDay,
       );
 
       final bool onTime = _wasOnTime(previous, changed);
@@ -224,6 +227,18 @@ class CycleEngine {
       return true;
     }
     return !changedAt.isBefore(due.subtract(thresholds.dueSoon));
+  }
+
+  /// The preferred change time that applies to [type]: its own if it has one,
+  /// otherwise the profile's [profileMinuteOfDay].
+  ///
+  /// Null on the type means *inherit*, not *no preference* — that is the whole
+  /// point of the column being nullable. So the two are not interchangeable
+  /// and the order matters: a sensor told to land at 09:00 keeps 09:00 even
+  /// though the profile says 20:00, and a type nobody singled out follows the
+  /// profile wherever it moves.
+  static int? _preferredMinuteOf(ConsumableType type, int? profileMinuteOfDay) {
+    return type.preferredChangeMinuteOfDay ?? profileMinuteOfDay;
   }
 
   /// A type's expected life, or null when it is counted rather than timed.
