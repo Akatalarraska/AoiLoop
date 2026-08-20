@@ -55,7 +55,7 @@ enum CycleStatus {
 class CycleStatusThresholds {
   const CycleStatusThresholds({
     this.dueSoon = const Duration(hours: 24),
-    this.overdueAfter = const Duration(hours: 6),
+    this.overdueAfter = const Duration(hours: 2),
   });
 
   /// Remaining time at or below which a consumable becomes
@@ -67,11 +67,19 @@ class CycleStatusThresholds {
   ///
   /// Read literally, "the date has been reached" and "the date has passed"
   /// meet at a single instant, which would make [CycleStatus.dueNow] a status
-  /// no one ever sees. A grace period is what makes it mean something: a
-  /// change is *due now* for the part of the day you would reasonably get to
-  /// it, and *overdue* once it has clearly slipped. Six hours is the default
-  /// because a set that came due over breakfast should not be shouting by
-  /// lunch, and one still on at bedtime should be.
+  /// no one ever sees. A grace period is what makes it mean something.
+  ///
+  /// Two hours is the default: long enough to finish what you were doing and
+  /// get to it, short enough that it is not a way of forgetting. Something
+  /// that is due is due, and DT1FLOW would rather say so than be polite about
+  /// it.
+  ///
+  /// The cost of a window this narrow is that cards reach the overdue colour
+  /// often, and a red that appears every few days stops being read as
+  /// serious. That is the trade this default takes deliberately, and it is
+  /// the reason this is a field rather than a constant: when the settings
+  /// screen lands in Phase 10 it can be widened per user, without touching a
+  /// single call site.
   final Duration overdueAfter;
 
   static const CycleStatusThresholds defaults = CycleStatusThresholds();

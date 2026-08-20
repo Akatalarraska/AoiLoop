@@ -194,8 +194,13 @@ week and still be right.
 The one judgement call worth naming is the overdue grace. Read literally,
 "the date has been reached" and "the date has passed" meet at a single instant,
 which would make `dueNow` a status nobody ever sees. `CycleStatusThresholds`
-carries a grace period — six hours by default — so *due now* covers the part of
-the day you would reasonably get to it, and *overdue* means it has slipped.
+carries a grace period — two hours by default — so *due now* is long enough to
+finish what you were doing, and *overdue* means it has slipped.
+
+That window is deliberately narrow, and the cost is real: cards reach the
+overdue colour often, and a red that shows up every few days stops reading as
+serious. It is a field rather than a constant precisely so the settings screen
+can widen it per user in Phase 10.
 
 ### `CycleEngine` — Phase 4
 

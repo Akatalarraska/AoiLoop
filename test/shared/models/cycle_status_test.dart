@@ -48,10 +48,10 @@ void main() {
       expect(CycleStatusThresholds.defaults.dueSoon, const Duration(hours: 24));
     });
 
-    test('defaults to a 6 hour grace before something counts as overdue', () {
+    test('defaults to a 2 hour grace before something counts as overdue', () {
       expect(
         CycleStatusThresholds.defaults.overdueAfter,
-        const Duration(hours: 6),
+        const Duration(hours: 2),
       );
     });
 

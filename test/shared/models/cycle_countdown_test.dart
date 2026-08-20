@@ -46,13 +46,13 @@ void main() {
 
     test('is still dueNow just inside the grace period', () {
       expect(
-        at(DateTime.utc(2026, 8, 20, 13, 59, 59)).status,
+        at(DateTime.utc(2026, 8, 20, 9, 59, 59)).status,
         CycleStatus.dueNow,
       );
     });
 
     test('is overdue once the grace period has run out', () {
-      expect(at(DateTime.utc(2026, 8, 20, 14)).status, CycleStatus.overdue);
+      expect(at(DateTime.utc(2026, 8, 20, 10)).status, CycleStatus.overdue);
     });
 
     test('honours a custom dueSoon window', () {

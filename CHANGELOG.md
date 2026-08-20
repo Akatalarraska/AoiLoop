@@ -26,9 +26,11 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   deadline and an instant in, a status, a signed remaining duration and a
   clamped progress fraction out. It derives and never stores, so a phone left
   in a drawer for a week is right when it comes out
-- An overdue grace period on `CycleStatusThresholds`. Read literally, "the
+- A two hour overdue grace on `CycleStatusThresholds`. Read literally, "the
   date has been reached" and "the date has passed" meet at one instant, which
-  would make `dueNow` a status nobody ever sees
+  would make `dueNow` a status nobody ever sees. Two hours is long enough to
+  finish what you were doing and no longer; it is a field rather than a
+  constant so Phase 10 can widen it per user
 - Countdowns rounded **down** in both directions. Someone deciding whether to
   pack a spare is not helped by being told they have longer than they do
 - `Ticker`, an injectable repeating "now", aligned to wall-clock boundaries so
