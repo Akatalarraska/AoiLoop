@@ -7,6 +7,41 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Added — Phase 4: Change engine
+
+- Registering a change: the *Register change* button on Home now closes the
+  cycle that was running, opens the next one and dates it, instead of
+  explaining that it cannot
+- `CycleSchedule`, the cycle's date arithmetic in pure Dart. An install, a
+  duration and a preferred time of day in; the natural deadline and the offer
+  to move it out. No Flutter, no database, no clock of its own, so every
+  boundary is tested at an exact instant
+- The preferred change time is **offered, never applied**. A sensor replaced
+  at 03:17 would otherwise hand the user 03:17 forever; the sheet shows both
+  dates and the checkbox starts unticked
+- The offer never runs past the natural deadline. Given a 10 day sensor due at
+  03:17 and a preferred time of 09:00, the choice is 09:00 that morning — six
+  hours beyond what the sensor is rated for — or 09:00 the morning before.
+  AoiLoop takes the shorter cycle every time, because proposing that someone
+  wear a consumable past its rated life is not a call this app gets to make
+- `CycleEngine`, which closes the old instance, opens the new one and writes
+  the `ChangeEvent` linking them inside a single transaction. A half-applied
+  change would leave either two active instances of one type — which the
+  partial unique index rejects outright — or none at all
+- A change is on time from the moment the card says *due soon*, sharing the
+  dashboard's own 24 hour threshold. Swapping a sensor the evening before it
+  expires is following the app's prompt, and recording that as an early
+  removal would put a mark in someone's history for doing as they were asked
+- A change dated before the install it would close is rejected, and the
+  transaction leaves the database exactly as it was
+- Home redraws itself. Nothing calls a refresh: `watchActive` is a Drift
+  stream, so the write is what updates the screen
+- A chooser when Home's summary button is pressed and nothing is counting
+  down — the state every user is in immediately after onboarding, where "the
+  next change" does not exist yet and guessing wrong costs more than a tap
+- Site and device carry forward across a routine change, so a pod or a worn
+  sensor keeps its association. Choosing a *different* site is Phase 7's
+
 ### Added — Phase 3: Dashboard
 
 - Home, which answers one question above the fold: is there anything that

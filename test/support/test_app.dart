@@ -67,11 +67,15 @@ Future<AppUnderTest> pumpApp(
   WidgetTester tester, {
   bool onboarded = true,
   String languageCode = 'en',
+  int? preferredChangeMinuteOfDay,
   List<Override> overrides = const <Override>[],
 }) async {
   final TestHarness harness = TestHarness.create();
   if (onboarded) {
-    await harness.seedProfile(languageCode: languageCode);
+    await harness.seedProfile(
+      languageCode: languageCode,
+      preferredChangeMinuteOfDay: preferredChangeMinuteOfDay,
+    );
   }
 
   final ManualTicker ticker = ManualTicker(harness.clock);

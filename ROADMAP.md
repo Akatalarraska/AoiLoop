@@ -3,7 +3,7 @@
 The MVP is `0.1.0`. It is built in phases, and **each phase is finished — it
 analyzes, it tests, it runs — before the next one starts.**
 
-Current position: **Phase 3 complete.**
+Current position: **Phase 4 complete.**
 
 ---
 
@@ -36,10 +36,13 @@ Countdown cards per active consumable, cycle states, next-change summary, the
 the app — a minute ticker while Home is on screen, and a refresh when the app
 returns from the background, where the OS freezes timers.
 
-### Phase 4 — Change engine
+### Phase 4 — Change engine ✅
 
-`CycleEngine`: close the old cycle, open the new one, recompute dates, apply
-the preferred change time, refresh the dashboard.
+`CycleEngine` closes the old cycle, opens the next one and writes the event
+linking them, in one transaction. `CycleSchedule` holds the date arithmetic in
+pure Dart. The preferred change time is offered rather than applied, and the
+offer never runs past the natural deadline. Home redraws off the Drift stream
+rather than being told to.
 
 ### Phase 5 — Notifications
 

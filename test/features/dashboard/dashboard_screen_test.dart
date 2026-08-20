@@ -273,20 +273,20 @@ void main() {
   });
 
   group('the register change call to action', () {
-    testWidgets('says what does not work yet instead of doing nothing', (
+    testWidgets('opens the sheet for whatever is due next', (
       WidgetTester tester,
     ) async {
       final AppUnderTest app = await pumpTallApp(tester);
       await seedType(app, name: 'CGM sensor', dueIn: const Duration(days: 2));
+      await seedType(app, name: 'Infusion set', dueIn: const Duration(days: 5));
       await tester.pumpAndSettle();
 
+      // The summary button, not a card's — it must land on the sensor
+      // because that is the one the summary is about.
       await tester.tap(find.text('Register change').first);
       await tester.pumpAndSettle();
 
-      expect(
-        find.textContaining('Registering a change arrives in phase 4'),
-        findsOneWidget,
-      );
+      expect(find.text('Change CGM sensor'), findsOneWidget);
     });
 
     testWidgets('is offered on every card as well as on the summary', (

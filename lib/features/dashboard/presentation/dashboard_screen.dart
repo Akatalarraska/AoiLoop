@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/theme/app_spacing.dart';
 import '../../../shared/extensions/build_context_x.dart';
+import '../../changes/presentation/register_change_sheet.dart';
 import '../domain/dashboard_view.dart';
 import 'dashboard_providers.dart';
 import 'widgets/countdown_card.dart';
@@ -92,7 +93,8 @@ class _DashboardBody extends StatelessWidget {
         else ...<Widget>[
           NextChangeCard(
             view: view,
-            onRegisterChange: () => _showRegisterChangeNotice(context),
+            onRegisterChange: () =>
+                RegisterChangeSheet.showForView(context, view: view),
           ),
           const SizedBox(height: AppSpacing.sm),
           _AttentionSummary(view: view),
@@ -106,7 +108,11 @@ class _DashboardBody extends StatelessWidget {
             CountdownCard(
               key: ValueKey<String>(card.id),
               card: card,
-              onRegisterChange: () => _showRegisterChangeNotice(context),
+              onRegisterChange: () => RegisterChangeSheet.show(
+                context,
+                card: card,
+                profile: view.profile,
+              ),
             ),
         ],
 
@@ -119,20 +125,6 @@ class _DashboardBody extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  /// Says what does not work yet, rather than doing nothing.
-  ///
-  /// The button is part of Phase 3's deliverable and the engine behind it is
-  /// Phase 4's. A call to action that silently ignores a tap is how an app
-  /// teaches people it is broken; one that explains itself is merely
-  /// unfinished. Replaced by the real flow in Phase 4.
-  void _showRegisterChangeNotice(BuildContext context) {
-    ScaffoldMessenger.of(context)
-      ..clearSnackBars()
-      ..showSnackBar(
-        SnackBar(content: Text(context.l10n.registerChangeNotReady)),
-      );
   }
 }
 

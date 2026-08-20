@@ -657,9 +657,82 @@
     "description": "The main call to action on Home. Logs that a consumable has just been replaced."
   },
 
-  "registerChangeNotReady": "Registering a change arrives in phase 4. AoiLoop can show what you set up, but cannot log it yet.",
-  "@registerChangeNotReady": {
-    "description": "Notice shown when the register-change button is pressed before the cycle engine exists. Says plainly what does not work rather than failing silently."
+  "actionCancel": "Cancel",
+  "@actionCancel": {
+    "description": "Dismisses a sheet or dialog without saving anything."
+  },
+
+  "registerChangeChooseTitle": "What did you change?",
+  "@registerChangeChooseTitle": {
+    "description": "Heading of the sheet that asks which consumable was replaced. Shown when the Home summary button is pressed and nothing is counting down, so there is no obvious answer — the state every user is in right after onboarding."
+  },
+
+  "registerChangeTitle": "Change {name}",
+  "@registerChangeTitle": {
+    "description": "Heading of the register-change sheet. Names the consumable so a sheet opened from the wrong card is obvious immediately.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "CGM sensor"
+      }
+    }
+  },
+
+  "registerChangeWhen": "When",
+  "@registerChangeWhen": {
+    "description": "Label of the row holding the moment the change happened."
+  },
+
+  "registerChangeNow": "Now",
+  "@registerChangeNow": {
+    "description": "Shown beside the date when the change is being logged as it happens, which is the default."
+  },
+
+  "registerChangeEditTime": "Edit",
+  "@registerChangeEditTime": {
+    "description": "Opens the date and time pickers, for a change being logged after the fact."
+  },
+
+  "registerChangeNextTitle": "Next change",
+  "@registerChangeNextTitle": {
+    "description": "Label of the row showing the deadline this change will set. Always reflects the date that will actually be stored."
+  },
+
+  "registerChangeNoCountdown": "This one is counted, not timed, so there is no next date to set.",
+  "@registerChangeNoCountdown": {
+    "description": "Replaces the next-change date for a consumable type whose countdown is off. Explains the absence rather than showing an empty row."
+  },
+
+  "registerChangePreferredOffer": "End it at {time} instead, when you prefer to make changes",
+  "@registerChangePreferredOffer": {
+    "description": "Label of the checkbox offering to move the new deadline to the user's preferred time of day. Phrased as an offer because AoiLoop never shifts a date on its own.",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "09:00"
+      }
+    }
+  },
+
+  "registerChangeSaved": "{name} change registered.",
+  "@registerChangeSaved": {
+    "description": "Confirmation shown after a change is written.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "CGM sensor"
+      }
+    }
+  },
+
+  "registerChangeFailed": "The change could not be saved, so nothing was recorded. Try again.",
+  "@registerChangeFailed": {
+    "description": "Error shown when writing a change fails. States explicitly that nothing was half-written, because the transaction guarantees it and a user who fears partial data will stop trusting the log."
+  },
+
+  "registerChangeTooEarly": "That is before the one you are replacing went on. Pick a later time.",
+  "@registerChangeTooEarly": {
+    "description": "Error shown when the chosen moment precedes the install it would be closing."
   },
 
   "countdownDaysLeft": "{count, plural, =1{1 day left} other{{count} days left}}",
