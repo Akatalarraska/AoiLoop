@@ -1,3 +1,4 @@
+import 'package:dt1flow/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -13,10 +14,7 @@ void main() {
   testWidgets('starts on Home', (WidgetTester tester) async {
     await pumpApp(tester);
 
-    expect(
-      find.text('Diabetes has enough numbers. DT1FLOW remembers the dates.'),
-      findsOneWidget,
-    );
+    expect(find.byType(DashboardScreen), findsOneWidget);
   });
 
   testWidgets('offers exactly the four primary destinations', (
@@ -120,10 +118,7 @@ void main() {
     await tapTab('History');
     await tapTab('Home');
 
-    expect(
-      find.text('Diabetes has enough numbers. DT1FLOW remembers the dates.'),
-      findsOneWidget,
-    );
+    expect(find.byType(DashboardScreen), findsOneWidget);
   });
 
   testWidgets('runs in the language the profile was created with', (
@@ -144,13 +139,9 @@ void main() {
       ),
       findsOneWidget,
     );
-    expect(
-      find.text(
-        'La diabetes ya tiene suficientes números. '
-        'DT1FLOW recuerda las fechas.',
-      ),
-      findsOneWidget,
-    );
+    // Home greets by name, so a Spanish profile proves the locale reached
+    // past the navigation chrome and into the screen itself.
+    expect(find.text('Hola, Test'), findsOneWidget);
   });
 
   testWidgets('shows the medical boundary notice on Home', (

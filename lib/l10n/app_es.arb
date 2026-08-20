@@ -2,7 +2,6 @@
   "@@locale": "es",
 
   "appTitle": "DT1FLOW",
-  "appTagline": "La diabetes ya tiene suficientes números. DT1FLOW recuerda las fechas.",
 
   "navHome": "Inicio",
   "navCalendar": "Calendario",
@@ -27,8 +26,6 @@
   "notBuiltYetTitle": "Todavía no disponible",
   "notBuiltYetInPhase": "Prevista para la fase {phase} de la hoja de ruta.",
   "notBuiltYetAfterMvp": "Prevista para la versión {release}, después del MVP 0.1.0.",
-
-  "devStatusVocabulary": "Vocabulario de estados",
 
   "medicalDisclaimerShort": "DT1FLOW no calcula dosis ni da indicaciones de tratamiento.",
 
@@ -147,5 +144,31 @@
   "summaryChangeTime": "Hora preferida",
   "summaryReminders": "Avisos",
   "summaryNone": "Nada",
-  "summaryEditSection": "Editar {section}"
+  "summaryEditSection": "Editar {section}",
+  "dashboardGreeting": "Hola, {name}",
+  "dashboardNextChange": "Próximo cambio",
+  "dashboardNeedsAttention": "Requiere atención",
+  "dashboardAttentionCount": "{count, plural, =1{1 elemento por cambiar} other{{count} elementos por cambiar}}",
+  "dashboardAllOnTrack": "Ahora mismo no hay nada que cambiar.",
+  "dashboardNothingScheduled": "Todavía no hay ninguna cuenta atrás",
+  "dashboardNothingScheduledBody": "Registra un cambio y DT1FLOW empieza a contar desde ahí.",
+  "dashboardTracking": "Lo que controlas",
+  "dashboardEmptyTitle": "Nada que controlar",
+  "dashboardEmptyBody": "Nada de lo que configuraste tiene cuenta atrás, así que no hay nada que mostrar aquí. Poder elegir qué controlar llegará con la pantalla de ajustes.",
+
+  "actionRegisterChange": "Registrar cambio",
+  "registerChangeNotReady": "Registrar un cambio llegará en la fase 4. DT1FLOW puede mostrar lo que configuraste, pero todavía no puede anotarlo.",
+
+  "countdownDaysLeft": "{count, plural, =1{Queda 1 día} other{Quedan {count} días}}",
+  "countdownHoursLeft": "{count, plural, =1{Queda 1 hora} other{Quedan {count} horas}}",
+  "countdownMinutesLeft": "{count, plural, =1{Queda 1 minuto} other{Quedan {count} minutos}}",
+  "countdownDueAnyMoment": "Toca de un momento a otro",
+  "countdownDaysLate": "{count, plural, =1{1 día de retraso} other{{count} días de retraso}}",
+  "countdownHoursLate": "{count, plural, =1{1 hora de retraso} other{{count} horas de retraso}}",
+  "countdownMinutesLate": "{count, plural, =1{1 minuto de retraso} other{{count} minutos de retraso}}",
+  "countdownNothingInUse": "Nada en uso",
+
+  "cardDueOn": "Toca el {when}",
+  "cardInUseSince": "En uso desde el {when}",
+  "cardSemanticLabel": "{name}. {status}. {countdown}."
 }

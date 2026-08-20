@@ -2,6 +2,7 @@ import 'package:dt1flow/app/app.dart';
 import 'package:dt1flow/core/database/database_providers.dart';
 import 'package:dt1flow/core/database/id_generator.dart';
 import 'package:dt1flow/core/utils/clock.dart';
+import 'package:dt1flow/core/utils/ticker.dart';
 import 'package:dt1flow/core/utils/timezone_source.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Riverpod 3 moved `Override` out of the main entrypoint.
@@ -20,14 +21,23 @@ class FixedTimezoneSource implements TimezoneSource {
   String currentZone() => zone;
 }
 
-/// A running application under test: its database and its providers.
+/// A running application under test: its database, its providers and its
+/// tick source.
 class AppUnderTest {
-  const AppUnderTest({required this.harness, required this.container});
+  const AppUnderTest({
+    required this.harness,
+    required this.container,
+    required this.ticker,
+  });
 
   final TestHarness harness;
 
   /// Read providers from here to assert on state the UI does not show.
   final ProviderContainer container;
+
+  /// Drives anything that redraws with the passing of time. Move
+  /// `harness.clock` first, then call `ticker.tick()`.
+  final ManualTicker ticker;
 }
 
 /// Pumps the whole application — router, redirects and all — against an
@@ -40,6 +50,11 @@ class AppUnderTest {
 ///
 /// [onboarded] seeds a profile, which is the whole difference between landing
 /// on the dashboard and landing in onboarding.
+///
+/// Time never moves on its own here. The ticker is a [ManualTicker], because
+/// a real one leaves a periodic timer running that the test framework reports
+/// as pending at teardown — failing a test that did nothing wrong, and hiding
+/// the one that did.
 ///
 /// The container is created with [ProviderContainer.test] and handed to an
 /// `UncontrolledProviderScope` rather than letting a `ProviderScope` widget
@@ -59,12 +74,14 @@ Future<AppUnderTest> pumpApp(
     await harness.seedProfile(languageCode: languageCode);
   }
 
+  final ManualTicker ticker = ManualTicker(harness.clock);
   final ProviderContainer container = ProviderContainer.test(
     overrides: <Override>[
       appDatabaseProvider.overrideWithValue(harness.db),
       clockProvider.overrideWithValue(harness.clock),
       idGeneratorProvider.overrideWithValue(harness.ids),
       timezoneSourceProvider.overrideWithValue(const FixedTimezoneSource()),
+      tickerProvider.overrideWithValue(ticker),
       ...overrides,
     ],
   );
@@ -74,5 +91,5 @@ Future<AppUnderTest> pumpApp(
   );
   await tester.pumpAndSettle();
 
-  return AppUnderTest(harness: harness, container: container);
+  return AppUnderTest(harness: harness, container: container, ticker: ticker);
 }

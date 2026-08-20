@@ -6,11 +6,6 @@
     "description": "The application name. Not translated."
   },
 
-  "appTagline": "Diabetes has enough numbers. DT1FLOW remembers the dates.",
-  "@appTagline": {
-    "description": "Product tagline, shown on the welcome screen and in the about section."
-  },
-
   "navHome": "Home",
   "@navHome": {
     "description": "Bottom navigation label for the dashboard tab."
@@ -117,11 +112,6 @@
         "example": "0.3"
       }
     }
-  },
-
-  "devStatusVocabulary": "Status vocabulary",
-  "@devStatusVocabulary": {
-    "description": "Heading of the temporary Phase 0 reference card on Home that shows every cycle status. Removed in Phase 3."
   },
 
   "medicalDisclaimerShort": "DT1FLOW does not calculate doses or give treatment advice.",
@@ -597,6 +587,194 @@
       "section": {
         "type": "String",
         "example": "Treatment"
+      }
+    }
+  },
+  "dashboardGreeting": "Hello, {name}",
+  "@dashboardGreeting": {
+    "description": "Greeting at the top of Home, using the profile name entered during onboarding.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Alex"
+      }
+    }
+  },
+
+  "dashboardNextChange": "Next change",
+  "@dashboardNextChange": {
+    "description": "Heading of the summary card that points at the single most urgent change."
+  },
+
+  "dashboardNeedsAttention": "Needs attention",
+  "@dashboardNeedsAttention": {
+    "description": "Heading of the summary card when the most urgent change is already due or overdue, replacing the neutral 'Next change'."
+  },
+
+  "dashboardAttentionCount": "{count, plural, =1{1 item needs changing} other{{count} items need changing}}",
+  "@dashboardAttentionCount": {
+    "description": "How many tracked consumables are due soon, due now or overdue.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "2"
+      }
+    }
+  },
+
+  "dashboardAllOnTrack": "Nothing needs changing right now.",
+  "@dashboardAllOnTrack": {
+    "description": "Shown on the summary card when every tracked consumable is comfortably within its expected life."
+  },
+
+  "dashboardNothingScheduled": "Nothing is counting down yet",
+  "@dashboardNothingScheduled": {
+    "description": "Heading of the summary card when consumables are set up but no change has ever been registered, so there is no deadline to count towards."
+  },
+
+  "dashboardNothingScheduledBody": "Register a change and DT1FLOW starts the countdown from there.",
+  "@dashboardNothingScheduledBody": {
+    "description": "Body of the summary card when nothing has been registered yet."
+  },
+
+  "dashboardTracking": "What you are tracking",
+  "@dashboardTracking": {
+    "description": "Heading above the list of countdown cards on Home."
+  },
+
+  "dashboardEmptyTitle": "Nothing to track",
+  "@dashboardEmptyTitle": {
+    "description": "Heading of the Home empty state, shown when no consumable with a countdown is set up."
+  },
+
+  "dashboardEmptyBody": "Nothing you set up has a countdown, so there is nothing for Home to show. Choosing what to track arrives with the settings screen.",
+  "@dashboardEmptyBody": {
+    "description": "Body of the Home empty state. Honest that the consumables cannot be changed yet, because the settings screen is a later phase."
+  },
+
+  "actionRegisterChange": "Register change",
+  "@actionRegisterChange": {
+    "description": "The main call to action on Home. Logs that a consumable has just been replaced."
+  },
+
+  "registerChangeNotReady": "Registering a change arrives in phase 4. DT1FLOW can show what you set up, but cannot log it yet.",
+  "@registerChangeNotReady": {
+    "description": "Notice shown when the register-change button is pressed before the cycle engine exists. Says plainly what does not work rather than failing silently."
+  },
+
+  "countdownDaysLeft": "{count, plural, =1{1 day left} other{{count} days left}}",
+  "@countdownDaysLeft": {
+    "description": "Time remaining before a change is due, in whole days, always rounded down.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+
+  "countdownHoursLeft": "{count, plural, =1{1 hour left} other{{count} hours left}}",
+  "@countdownHoursLeft": {
+    "description": "Time remaining before a change is due, in whole hours, always rounded down.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "6"
+      }
+    }
+  },
+
+  "countdownMinutesLeft": "{count, plural, =1{1 minute left} other{{count} minutes left}}",
+  "@countdownMinutesLeft": {
+    "description": "Time remaining before a change is due, in whole minutes, always rounded down.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "20"
+      }
+    }
+  },
+
+  "countdownDueAnyMoment": "Due any moment",
+  "@countdownDueAnyMoment": {
+    "description": "Shown in the last minute before a change is due, and in the first minute after."
+  },
+
+  "countdownDaysLate": "{count, plural, =1{1 day late} other{{count} days late}}",
+  "@countdownDaysLate": {
+    "description": "How long a change has been overdue, in whole days, always rounded down.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "2"
+      }
+    }
+  },
+
+  "countdownHoursLate": "{count, plural, =1{1 hour late} other{{count} hours late}}",
+  "@countdownHoursLate": {
+    "description": "How long a change has been overdue, in whole hours, always rounded down.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "8"
+      }
+    }
+  },
+
+  "countdownMinutesLate": "{count, plural, =1{1 minute late} other{{count} minutes late}}",
+  "@countdownMinutesLate": {
+    "description": "How long a change has been overdue, in whole minutes, always rounded down.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "30"
+      }
+    }
+  },
+
+  "countdownNothingInUse": "Nothing in use",
+  "@countdownNothingInUse": {
+    "description": "Shown on a card for a consumable that is set up but has never been registered, so no countdown is running."
+  },
+
+  "cardDueOn": "Due {when}",
+  "@cardDueOn": {
+    "description": "The date and time a change is expected, on a countdown card.",
+    "placeholders": {
+      "when": {
+        "type": "String",
+        "example": "Tue 25 Aug, 08:00"
+      }
+    }
+  },
+
+  "cardInUseSince": "In use since {when}",
+  "@cardInUseSince": {
+    "description": "When the consumable currently in use was installed.",
+    "placeholders": {
+      "when": {
+        "type": "String",
+        "example": "Sat 15 Aug, 08:00"
+      }
+    }
+  },
+
+  "cardSemanticLabel": "{name}. {status}. {countdown}.",
+  "@cardSemanticLabel": {
+    "description": "Single screen reader announcement for a countdown card, so the name, the status and the time left are read as one sentence rather than three fragments. All three parts are already translated.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "CGM sensor"
+      },
+      "status": {
+        "type": "String",
+        "example": "Due soon"
+      },
+      "countdown": {
+        "type": "String",
+        "example": "6 hours left"
       }
     }
   }

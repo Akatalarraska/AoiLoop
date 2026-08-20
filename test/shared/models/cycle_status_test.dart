@@ -48,6 +48,22 @@ void main() {
       expect(CycleStatusThresholds.defaults.dueSoon, const Duration(hours: 24));
     });
 
+    test('defaults to a 6 hour grace before something counts as overdue', () {
+      expect(
+        CycleStatusThresholds.defaults.overdueAfter,
+        const Duration(hours: 6),
+      );
+    });
+
+    test('the grace is positive, or dueNow would be unreachable', () {
+      // Read literally the spec gives dueNow a zero-width window. The grace is
+      // what makes it a status a user can actually be in.
+      expect(
+        CycleStatusThresholds.defaults.overdueAfter,
+        greaterThan(Duration.zero),
+      );
+    });
+
     test('copyWith overrides only what is given', () {
       const CycleStatusThresholds custom = CycleStatusThresholds();
 
@@ -56,6 +72,11 @@ void main() {
       );
 
       expect(widened.dueSoon, const Duration(hours: 48));
+      expect(
+        widened.overdueAfter,
+        custom.overdueAfter,
+        reason: 'the field that was not passed must be carried over',
+      );
       expect(custom.dueSoon, const Duration(hours: 24));
     });
 
@@ -71,6 +92,11 @@ void main() {
       expect(
         const CycleStatusThresholds(dueSoon: Duration(hours: 6)),
         isNot(const CycleStatusThresholds(dueSoon: Duration(hours: 12))),
+      );
+      expect(
+        const CycleStatusThresholds(overdueAfter: Duration(hours: 1)),
+        isNot(const CycleStatusThresholds(overdueAfter: Duration(hours: 12))),
+        reason: 'both fields have to take part, or a change to one is lost',
       );
     });
   });

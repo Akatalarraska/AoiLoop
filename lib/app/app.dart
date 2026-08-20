@@ -9,9 +9,9 @@ import 'theme/app_theme.dart';
 
 /// Root widget.
 ///
-/// Everything configurable is read from Riverpod so tests and Phase 2 settings
-/// can override it: the router, and later the locale and theme mode chosen
-/// during onboarding.
+/// Everything configurable is read from Riverpod so tests and the settings
+/// screen can override it: the router, the locale chosen during onboarding,
+/// and later the theme mode.
 class DT1FlowApp extends ConsumerWidget {
   const DT1FlowApp({super.key});
 
@@ -29,7 +29,7 @@ class DT1FlowApp extends ConsumerWidget {
       locale: ref.watch(appLocaleProvider),
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
-      // Follows the OS. A manual override lands with settings in Phase 2.
+      // Follows the OS. A manual override lands with settings in Phase 10.
       themeMode: ThemeMode.system,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

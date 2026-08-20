@@ -7,6 +7,53 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Added — Phase 3: Dashboard
+
+- Home, which answers one question above the fold: is there anything that
+  needs dealing with?
+- A summary card leading with the most urgent consumable rather than the
+  chronologically nearest one — a sensor two days overdue outranks a set due
+  tomorrow — and saying so plainly when nothing is counting down
+- A countdown card per tracked consumable: name, status, time remaining, a
+  progress bar through its expected life, and the date it is due
+- Cards are built from *types*, not from instances, so someone who has just
+  finished onboarding sees the five things they set up rather than an empty
+  screen at the exact moment they are deciding whether the app was worth
+  installing
+- Cards ordered by urgency, then by nearest deadline, then by name — the last
+  tiebreak being what stops the list reshuffling itself between rebuilds
+- `CycleCountdown`, the whole of the countdown arithmetic in pure Dart: a
+  deadline and an instant in, a status, a signed remaining duration and a
+  clamped progress fraction out. It derives and never stores, so a phone left
+  in a drawer for a week is right when it comes out
+- An overdue grace period on `CycleStatusThresholds`. Read literally, "the
+  date has been reached" and "the date has passed" meet at one instant, which
+  would make `dueNow` a status nobody ever sees
+- Countdowns rounded **down** in both directions. Someone deciding whether to
+  pack a spare is not helped by being told they have longer than they do
+- `Ticker`, an injectable repeating "now", aligned to wall-clock boundaries so
+  two cards never change their minds seconds apart. Auto-disposed with the
+  screen, so leaving Home stops the timer
+- A refresh when the app returns from the background, because the OS suspends
+  timers there and a ticker alone would show last night's numbers until the
+  next minute elapsed
+- The *Register change* call to action, which says the cycle engine arrives in
+  Phase 4 rather than silently ignoring the tap
+- An empty state for anyone who unticked every timed consumable, honest that
+  editing what is tracked belongs to a later phase
+- 80 further tests, including every status boundary to the second, the
+  ordering rules, the tri-channel rendering, both locales, and the two ways a
+  countdown goes stale
+
+### Changed
+
+- `appTagline` and `devStatusVocabulary` removed. The first had no call site
+  left once Home became a real screen; the second was the Phase 0 status
+  reference card, always marked for removal here
+- The Settings placeholder named Phase 2, which has shipped. Onboarding
+  collects those answers but offers no way to revisit them, so editing them is
+  Phase 10 work and the screen now says so
+
 ### Added — Phase 2: Onboarding
 
 - A first-run flow of ten steps — welcome, language, profile, treatment,
@@ -108,5 +155,7 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   `flutter gen-l10n` and `dart run build_runner build` after cloning.
 - Onboarding seeds the consumable types. Editing them afterwards, and the
   settings screen in general, belongs to Phase 10.
+- Nothing writes a `ConsumableInstance` yet, so a fresh install shows a card
+  per tracked type with no countdown running. Registering a change is Phase 4.
 - `ManufacturerReplacement` is specified but not implemented; it belongs with
   the replacement flow in Phase 6.

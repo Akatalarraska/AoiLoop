@@ -3,7 +3,7 @@
 The MVP is `0.1.0`. It is built in phases, and **each phase is finished — it
 analyzes, it tests, it runs — before the next one starts.**
 
-Current position: **Phase 2 complete.**
+Current position: **Phase 3 complete.**
 
 ---
 
@@ -29,11 +29,12 @@ non-essential is skippable. The flow is a state machine over a draft, so the
 steps a user sees follow the answers they gave, and the whole draft is written
 in one transaction.
 
-### Phase 3 — Dashboard
+### Phase 3 — Dashboard ✅
 
 Countdown cards per active consumable, cycle states, next-change summary, the
 *Register change* call to action. Countdowns stay correct without restarting
-the app.
+the app — a minute ticker while Home is on screen, and a refresh when the app
+returns from the background, where the OS freezes timers.
 
 ### Phase 4 — Change engine
 

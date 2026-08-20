@@ -78,6 +78,24 @@ boundary, or sit exactly on a deadline.
 This is the single most important abstraction in the codebase. Every date bug
 DT1FLOW could possibly have is reachable through it.
 
+### `Ticker` — `core/utils/ticker.dart`
+
+`Clock` answers *what time is it*; `Ticker` answers *tell me again when it
+changes*. A countdown rendered once is wrong a minute later, and DT1FLOW is an
+app people leave open.
+
+Ticks are aligned to wall-clock boundaries rather than to whenever the stream
+was subscribed, so two cards never change their minds a few seconds apart.
+
+It is injected for the same reason as the clock, plus one of its own: a real
+periodic timer in a widget test is reported as a pending timer at teardown,
+failing a test that did nothing wrong. Tests override `tickerProvider` with
+`ManualTicker` and tick on purpose.
+
+A ticker alone is not enough. The OS suspends timers in the background, so
+Home also refreshes on `AppLifecycleListener.onResume` — otherwise a phone that
+spent the night in a drawer wakes up showing last night's numbers.
+
 ### `AppDatabase` — `core/database/app_database.dart`
 
 One Drift database, opened on a background isolate. It takes an optional
@@ -162,16 +180,36 @@ Tests assert that every status has a unique icon and that every colour pair
 clears WCAG AA contrast, in both light and dark. A well-meaning colour tweak
 that hurts legibility fails the build.
 
+### `CycleCountdown` — `shared/models/cycle_countdown.dart`
+
+The whole of DT1FLOW's countdown arithmetic, in pure Dart: a deadline and an
+instant in, a `CycleStatus`, a signed remaining `Duration` and a clamped
+progress fraction out.
+
+It **derives, and never stores**. `expectedChangeAt` is written once by the
+cycle engine and never moves on its own; the status is recomputed from it
+whenever anything asks. That split is what lets a phone sit unopened for a
+week and still be right.
+
+The one judgement call worth naming is the overdue grace. Read literally,
+"the date has been reached" and "the date has passed" meet at a single instant,
+which would make `dueNow` a status nobody ever sees. `CycleStatusThresholds`
+carries a grace period — six hours by default — so *due now* covers the part of
+the day you would reasonably get to it, and *overdue* means it has slipped.
+
 ### `CycleEngine` — Phase 4
 
 Not yet written. When it lands it owns, exclusively:
 
 - the next change date for a consumable
-- remaining time and the resulting `CycleStatus`
 - custom durations and early changes
 - applying the user's preferred change time
 - cancelling and rescheduling notifications
 - time zone handling
+
+Note what is *not* in that list: turning a stored deadline into a status is
+`CycleCountdown`'s job, and both the engine and the dashboard read it rather
+than each keeping their own version.
 
 It takes a `Clock` and returns values. It does not touch widgets, and widgets
 do not duplicate any part of it.
@@ -187,13 +225,22 @@ picks.
 
 | Layer | What is tested |
 | --- | --- |
-| Pure Dart (`Clock`, `CycleEngine`, `TravelPlanner`) | Unit tests at fixed instants: exact deadline, one second past, day boundary, leap day, DST, custom duration |
+| Pure Dart (`Clock`, `CycleCountdown`, `CycleEngine`, `TravelPlanner`) | Unit tests at fixed instants: exact deadline, one second past, day boundary, leap day, DST, custom duration |
+| View models (`DashboardView`) | Joining, ordering and summarising, with no frame pumped |
 | Database | In-memory Drift: migrations, constraints, repository behaviour |
 | Widgets | Rendering, navigation, localisation, semantics labels, large text scale, dark mode |
 
-`test/support/` holds the shared harness: `pumpInApp` builds widgets with the
-real theme and real localizations, and `contrast.dart` implements WCAG contrast
-ratios.
+`test/support/` holds the shared harness. `pumpInApp` builds one widget with
+the real theme and real localizations; `pumpApp` builds the entire application
+against an in-memory database, a pinned clock and a `ManualTicker`, which is
+the only way to test what a launch actually does; `contrast.dart` implements
+WCAG contrast ratios.
+
+Two mechanics of the widget tester are worth knowing before writing a test
+that involves time. `pump` with nothing mounted has no frame to wait for and
+never returns. And `await subscription.cancel()` deadlocks, because the future
+completes on a microtask and the fake async zone only drains microtasks when
+the clock is pumped — cancel without awaiting, then pump.
 
 ## Deliberate non-goals
 

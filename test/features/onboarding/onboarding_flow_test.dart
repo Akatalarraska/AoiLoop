@@ -105,12 +105,12 @@ void main() {
 
     await tapText(tester, 'Create my profile');
 
-    // The router notices the profile and moves the user on.
+    // The router notices the profile and moves the user on. Home greets them
+    // by the name they just typed, and says plainly that nothing is counting
+    // down yet — they have set up what they use, but registered no change.
     expect(find.byType(NavigationBar), findsOneWidget);
-    expect(
-      find.text('Diabetes has enough numbers. DT1FLOW remembers the dates.'),
-      findsOneWidget,
-    );
+    expect(find.text('Hello, Robert'), findsOneWidget);
+    expect(find.text('Nothing is counting down yet'), findsOneWidget);
 
     final UserProfile? profile = await app.harness.profiles.findPrimary();
     expect(profile, isNotNull);
