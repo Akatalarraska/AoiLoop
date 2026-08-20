@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/locale/locale_providers.dart';
+import '../../../core/catalog/brand_model.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/errors/app_failure.dart';
 import '../../../core/utils/timezone_source.dart';
@@ -146,6 +147,22 @@ class OnboardingController extends Notifier<OnboardingFlow> {
 
   void setDuration(ConsumablePresetKey key, Duration duration) {
     _updateDraft(state.draft.withDuration(key, duration));
+  }
+
+  /// Records which product this consumable actually is.
+  ///
+  /// [catalogDuration] is the manufacturer's stated wear time when the
+  /// catalogue knows it, and null otherwise. The draft writes it as an
+  /// ordinary override, so the number moves in front of the user and stays
+  /// theirs to change.
+  void setProduct(
+    ConsumablePresetKey key,
+    BrandModel product, {
+    Duration? catalogDuration,
+  }) {
+    _updateDraft(
+      state.draft.withProduct(key, product, catalogDuration: catalogDuration),
+    );
   }
 
   /// Minutes since local midnight, or null for no preference.

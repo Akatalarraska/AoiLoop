@@ -90,7 +90,11 @@ class OnboardingService {
 
       for (final ConsumablePreset preset in draft.selectedPresets) {
         await types.create(
-          name: presetName(preset.key),
+          // The product the user named, when they named one. "Dexcom G7" on a
+          // dashboard card says more than "Glucose sensor (CGM)" — it is what
+          // is printed on the box in their hand. The generic label is the
+          // fallback, not the preference.
+          name: draft.nameFor(preset.key, presetName(preset.key)),
           category: preset.category,
           defaultDuration: preset.tracksCycle
               ? draft.durationFor(preset.key)

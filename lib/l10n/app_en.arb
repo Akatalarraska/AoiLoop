@@ -334,6 +334,11 @@
     "description": "Section heading for the continuous glucose monitor fields."
   },
 
+  "catalogOther": "Other",
+  "@catalogOther": {
+    "description": "Last row of the brand and model dropdowns. Choosing it reveals a text field. The catalogue is always behind reality, so this is the row that lets someone with a device released last month finish onboarding today."
+  },
+
   "fieldManufacturer": "Manufacturer",
   "@fieldManufacturer": {
     "description": "Label of the device manufacturer field."
@@ -467,6 +472,11 @@
   "onboardingDurationsBody": "These are the usual wear times. Change any that do not match yours.",
   "@onboardingDurationsBody": {
     "description": "Body of the onboarding durations step."
+  },
+
+  "onboardingDurationsLasts": "Lasts",
+  "@onboardingDurationsLasts": {
+    "description": "Label of the duration stepper in the durations step. Short, because it sits beside the consumable's own heading and does not need to repeat it."
   },
 
   "durationDays": "{count, plural, =1{1 day} other{{count} days}}",

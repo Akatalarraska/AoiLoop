@@ -86,6 +86,7 @@
   "deviceSectionPod": "Controlador de la bomba parche",
   "deviceSectionCgm": "Sensor de glucosa (MCG)",
 
+  "catalogOther": "Otro",
   "fieldManufacturer": "Fabricante",
   "fieldModel": "Modelo",
   "fieldSerialNumber": "Número de serie (opcional)",
@@ -118,6 +119,7 @@
   "onboardingDurationsTitle": "¿Cuánto dura cada cosa?",
   "onboardingDurationsBody": "Estas son las duraciones habituales. Cambia las que no encajen con las tuyas.",
 
+  "onboardingDurationsLasts": "Dura",
   "durationDays": "{count, plural, =1{1 día} other{{count} días}}",
   "durationShorter": "Un día menos",
   "durationLonger": "Un día más",

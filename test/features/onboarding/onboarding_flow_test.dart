@@ -71,16 +71,18 @@ void main() {
     await tapText(tester, 'Pump and CGM');
     await tapText(tester, 'Continue');
 
-    // Devices.
+    // Devices: picked from the catalogue rather than typed. The brand
+    // dropdown narrows the model list to that brand's products, which is the
+    // whole reason the catalogue exists.
     expect(find.text('Pump'), findsOneWidget);
-    await tester.enterText(
-      find.widgetWithText(TextFormField, 'Manufacturer').first,
-      'Tandem',
-    );
-    await tester.enterText(
-      find.widgetWithText(TextFormField, 'Model').first,
-      't:slim X2',
-    );
+    await tester.tap(find.byType(DropdownButtonFormField<String>).first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Tandem').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byType(DropdownButtonFormField<String>).at(1));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('t:slim X2').last);
     await tester.pumpAndSettle();
     await tapText(tester, 'Continue');
 
