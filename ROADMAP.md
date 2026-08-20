@@ -62,6 +62,20 @@ tagging `0.1.0`.
 Early replacement, reasons, notes, lot and serial capture, the manufacturer
 replacement flow, cycle restart.
 
+Its entry point on Home is a row of circles, one per tracked consumable,
+carrying the category's icon and a ring in the status colour. Tapping one opens
+the actions for that consumable — register a change, report that it failed —
+so the common jobs are one tap from the first screen instead of a scroll and a
+card.
+
+The circles ship *with* this phase rather than before it. "It broke" is the
+action they exist for, and a menu whose other entries say "not built yet" is
+half a feature. Two constraints on them, both already load-bearing elsewhere in
+the app: a circle needs its countdown in words underneath, because a colour and
+an icon alone break the rule that a status is never carried by colour, and a
+horizontal row has to survive a 200% text scale the way `CountdownCard` already
+does.
+
 ### Phase 7 — Body map
 
 Front and back views, selectable regions, current site, last used, days since
