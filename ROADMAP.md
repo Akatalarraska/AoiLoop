@@ -3,7 +3,7 @@
 The MVP is `0.1.0`. It is built in phases, and **each phase is finished — it
 analyzes, it tests, it runs — before the next one starts.**
 
-Current position: **Phase 1 complete.**
+Current position: **Phase 2 complete.**
 
 ---
 
@@ -21,11 +21,13 @@ Eleven Drift tables with UUID keys, foreign keys, partial unique indexes and a
 tested v1→v2 migration. A repository per aggregate. Domain enums persisted by
 name.
 
-### Phase 2 — Onboarding
+### Phase 2 — Onboarding ✅
 
 Welcome, language, preferred change time, treatment type, optional pump,
 optional CGM, consumable selection, durations, reminder offsets. Everything
-non-essential is skippable.
+non-essential is skippable. The flow is a state machine over a draft, so the
+steps a user sees follow the answers they gave, and the whole draft is written
+in one transaction.
 
 ### Phase 3 — Dashboard
 
@@ -64,8 +66,10 @@ Calendar of upcoming and completed changes; timeline with filters and detail.
 
 ### Phase 10 — Polish
 
-Error, empty and loading states. Accessibility pass. Responsive layouts. Dark
-mode. Copy review. Both platforms. Test coverage. Tag `0.1.0`.
+Error, empty and loading states. A settings screen for everything onboarding
+asked — language, preferred change time, reminder offsets, units, tracked
+consumables. Accessibility pass. Responsive layouts. Dark mode. Copy review.
+Both platforms. Test coverage. Tag `0.1.0`.
 
 ---
 

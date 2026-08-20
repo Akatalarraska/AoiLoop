@@ -7,6 +7,41 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Added — Phase 2: Onboarding
+
+- A first-run flow of ten steps — welcome, language, profile, treatment,
+  devices, consumables, durations, preferred change time, reminders, summary
+- Which steps appear follows the answers: no devices step for someone on
+  injections without a CGM, no durations, change time or reminders step when
+  nothing selected has a countdown. An empty step is an obstacle, not a step
+- Only two questions are mandatory — a name, because the row requires one, and
+  the treatment type, because it shapes the rest of the flow. Everything else
+  is skippable and has a defensible default
+- The whole flow is a draft held in memory and written in a single
+  transaction, so abandoning it halfway leaves nothing behind rather than a
+  profile with two of its five consumable types — which the next launch would
+  read as a completed onboarding and quietly skip
+- Eleven consumable presets with their usual wear times, filtered by treatment
+  type and pre-ticked only where the treatment certainly involves them. They
+  are starting points the durations step exists to correct, not clinical
+  guidance
+- Presets are written as ordinary editable `ConsumableType` rows under their
+  localised name, so history never gets retranslated underneath it
+- Picking a language applies it in the same frame, and the profile keeps it —
+  a later launch under a different OS locale still opens in the language the
+  user chose
+- A pod user's hardware is recorded as a pod controller rather than a pump, so
+  the device list does not lie about what they carry
+- A summary step where every line returns to the step that set it
+- Startup routing: a launch with no profile can reach nothing but onboarding,
+  a launch with one can reach neither startup nor onboarding, and neither is
+  decided until the profile has actually been read — so no launch flashes the
+  wrong screen
+- `TimezoneSource`, a seam for the zone stored on a profile, honest about
+  storing `UTC+02:00` until Phase 5 replaces it with a platform lookup
+- 103 further tests covering the draft, the step machine, the controller, the
+  service transaction, every step widget and the startup routing
+
 ### Added — Phase 1: Domain & database
 
 - Eleven Drift tables: `UserProfiles`, `Devices`, `ConsumableTypes`,
@@ -71,7 +106,7 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Generated sources (`*.g.dart`, `lib/l10n/generated/`) are not committed. Run
   `flutter gen-l10n` and `dart run build_runner build` after cloning.
-- The schema carries no built-in catalogue of products yet. Every consumable
-  type is user-created until Phase 2 seeds the presets during onboarding.
+- Onboarding seeds the consumable types. Editing them afterwards, and the
+  settings screen in general, belongs to Phase 10.
 - `ManufacturerReplacement` is specified but not implemented; it belongs with
   the replacement flow in Phase 6.

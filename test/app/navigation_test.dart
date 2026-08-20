@@ -81,7 +81,7 @@ void main() {
       ('Inventory', 'Planned for phase 8 of the roadmap.'),
       ('Travel', 'Planned for release 0.3, after the 0.1.0 MVP.'),
       ('Family', 'Planned for release 0.2, after the 0.1.0 MVP.'),
-      ('Settings', 'Planned for phase 2 of the roadmap.'),
+      ('Settings', 'Planned for phase 10 of the roadmap.'),
     ]) {
       await tester.tap(find.byTooltip('More sections'));
       await tester.pumpAndSettle();
