@@ -202,22 +202,46 @@ overdue colour often, and a red that shows up every few days stops reading as
 serious. It is a field rather than a constant precisely so the settings screen
 can widen it per user in Phase 10.
 
-### `CycleEngine` — Phase 4
+### `CycleEngine` — `features/changes/data/cycle_engine.dart`
 
-Not yet written. When it lands it owns, exclusively:
+Owns, exclusively:
 
 - the next change date for a consumable
 - custom durations and early changes
 - applying the user's preferred change time
 - cancelling and rescheduling notifications
-- time zone handling
 
 Note what is *not* in that list: turning a stored deadline into a status is
 `CycleCountdown`'s job, and both the engine and the dashboard read it rather
-than each keeping their own version.
+than each keeping their own version. The date arithmetic is not the engine's
+either — that is `CycleSchedule`, plain Dart next door in `domain/`, which is
+where the dates are actually tested.
 
-It takes a `Clock` and returns values. It does not touch widgets, and widgets
-do not duplicate any part of it.
+The engine lives in `data/` rather than `domain/` because it orchestrates
+repositories inside a transaction, the same reason `OnboardingService` does.
+The write is one transaction; rescheduling notifications happens *after* it
+commits, because holding a database transaction open across a platform channel
+is how a write ends up waiting on a permission dialog.
+
+### `NotificationGateway` — `core/notifications/domain/`
+
+The seam between AoiLoop and the operating system. Behind it a plugin that
+cannot run in a test and cannot be verified without a device; in front of it
+every decision worth testing. Nothing above the gateway imports
+`flutter_local_notifications`.
+
+Every method is best-effort by contract. A denied permission, a revoked one, a
+platform budget already spent — all ordinary return values, not exceptions. A
+reminder that cannot be scheduled must never take down the change the user was
+logging.
+
+`NotificationScheduler` rebuilds rather than patches: each run withdraws what
+it previously asked for and schedules the whole set again. At a budget of 64
+that costs nothing, and it is the only approach that survives what actually
+happens to notifications — a permission revoked and restored, a reinstall, a
+reboot, an OS that quietly dropped some. The ledger in `NotificationSchedules`
+is what makes the rebuild possible, and what lets Home tell the difference
+between "nothing is due" and "nothing can be delivered".
 
 ### Preferred change time
 
@@ -230,7 +254,7 @@ picks.
 
 | Layer | What is tested |
 | --- | --- |
-| Pure Dart (`Clock`, `CycleCountdown`, `CycleEngine`, `TravelPlanner`) | Unit tests at fixed instants: exact deadline, one second past, day boundary, leap day, DST, custom duration |
+| Pure Dart (`Clock`, `CycleCountdown`, `CycleSchedule`, `ReminderPlan`, `TravelPlanner`) | Unit tests at fixed instants: exact deadline, one second past, day boundary, leap day, DST, custom duration |
 | View models (`DashboardView`) | Joining, ordering and summarising, with no frame pumped |
 | Database | In-memory Drift: migrations, constraints, repository behaviour |
 | Widgets | Rendering, navigation, localisation, semantics labels, large text scale, dark mode |

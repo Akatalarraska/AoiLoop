@@ -662,6 +662,74 @@
     "description": "Dismisses a sheet or dialog without saving anything."
   },
 
+  "notificationChannelName": "Change reminders",
+  "@notificationChannelName": {
+    "description": "Name of the Android notification channel, shown in system settings as the switch that turns these reminders off. Named after what it delivers, because that is what someone deciding whether to silence it needs to know."
+  },
+
+  "notificationChannelDescription": "Reminders that a consumable is due to be changed.",
+  "@notificationChannelDescription": {
+    "description": "Description of the Android notification channel, shown under its name in system settings."
+  },
+
+  "notificationCycleReminderTitle": "{name} due soon",
+  "@notificationCycleReminderTitle": {
+    "description": "Title of an advance reminder, fired at one of the configured lead times.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "CGM sensor"
+      }
+    }
+  },
+
+  "notificationCycleReminderBody": "It needs changing on {when}.",
+  "@notificationCycleReminderBody": {
+    "description": "Body of an advance reminder. Gives the date rather than the time remaining, because a notification sits in the shade for hours and a countdown would be wrong by the time it is read.",
+    "placeholders": {
+      "when": {
+        "type": "String",
+        "example": "Tue, 25 Aug, 08:00"
+      }
+    }
+  },
+
+  "notificationCycleDueTitle": "{name} is due",
+  "@notificationCycleDueTitle": {
+    "description": "Title of the reminder fired on the expected change date itself.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "CGM sensor"
+      }
+    }
+  },
+
+  "notificationCycleDueBody": "Register the change once you have done it.",
+  "@notificationCycleDueBody": {
+    "description": "Body of the reminder on the due date. Says what the app needs from the user, and does not tell them to change anything — that is their decision, not AoiLoop's."
+  },
+
+  "notificationsOffTitle": "Reminders are off",
+  "@notificationsOffTitle": {
+    "description": "Heading of the Home banner shown when the OS will not deliver notifications, so a user is not left believing reminders are running when nothing is scheduled."
+  },
+
+  "notificationsOffBody": "AoiLoop cannot tell you when something is due until notifications are allowed.",
+  "@notificationsOffBody": {
+    "description": "Body of the reminders-off banner."
+  },
+
+  "notificationsOffAction": "Allow reminders",
+  "@notificationsOffAction": {
+    "description": "Button on the reminders-off banner. Requests the OS notification permission."
+  },
+
+  "notificationsOffDenied": "Notifications are blocked in system settings. AoiLoop cannot turn them back on for you.",
+  "@notificationsOffDenied": {
+    "description": "Shown when the permission request is refused. States plainly that the fix is outside the app rather than offering to retry something that will not work."
+  },
+
   "registerChangeChooseTitle": "What did you change?",
   "@registerChangeChooseTitle": {
     "description": "Heading of the sheet that asks which consumable was replaced. Shown when the Home summary button is pressed and nothing is counting down, so there is no obvious answer — the state every user is in right after onboarding."

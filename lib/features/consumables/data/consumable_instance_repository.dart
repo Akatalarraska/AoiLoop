@@ -38,6 +38,27 @@ class ConsumableInstanceRepository extends Repository {
         .watch();
   }
 
+  /// Everything currently in use, as a plain future.
+  ///
+  /// The same question [watchActive] answers, for callers that ask once and
+  /// act rather than rendering. The notification scheduler is the reason it
+  /// exists: it runs on startup and after a change, does its work and stops,
+  /// and subscribing to a stream to read a single value would leave it
+  /// listening for the life of the app.
+  Future<List<ConsumableInstance>> findActive(String userProfileId) {
+    return (db.select(db.consumableInstances)
+          ..where(
+            ($ConsumableInstancesTable t) =>
+                t.userProfileId.equals(userProfileId) &
+                t.status.equalsValue(ConsumableStatus.active),
+          )
+          ..orderBy(<OrderClauseGenerator<$ConsumableInstancesTable>>[
+            ($ConsumableInstancesTable t) =>
+                OrderingTerm.asc(t.expectedChangeAt, nulls: NullsOrder.last),
+          ]))
+        .get();
+  }
+
   /// The instance currently in use for one consumable type, if any.
   ///
   /// At most one can exist — enforced by a partial unique index, not by this

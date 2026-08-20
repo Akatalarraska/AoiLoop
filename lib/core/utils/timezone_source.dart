@@ -57,7 +57,32 @@ class SystemTimezoneSource implements TimezoneSource {
   }
 }
 
-/// The application-wide time zone source. Override in tests.
+/// A real IANA zone name, read from the platform once at startup.
+///
+/// The lookup is asynchronous and [TimezoneSource] is not, deliberately:
+/// callers ask this question while building a profile or scheduling a
+/// reminder, and neither is a place to await a platform channel. So the answer
+/// is resolved once during startup and held.
+///
+/// Falls back to [SystemTimezoneSource] until it has one, and permanently if
+/// the platform never answers. `UTC+02:00` is a worse identifier than
+/// `Europe/Madrid`, but it is unambiguous about what it means, and a profile
+/// with an approximate zone beats a startup that failed.
+class PlatformTimezoneSource implements TimezoneSource {
+  const PlatformTimezoneSource({required this.zone});
+
+  /// The IANA name the platform reported, e.g. `Europe/Madrid`.
+  final String zone;
+
+  @override
+  String currentZone() => zone;
+}
+
+/// The application-wide time zone source.
+///
+/// Overridden during startup with a [PlatformTimezoneSource] once the platform
+/// has answered, and in tests with a fixed one. The default is the best guess
+/// Dart alone can make.
 final Provider<TimezoneSource> timezoneSourceProvider =
     Provider<TimezoneSource>(
       (Ref ref) => SystemTimezoneSource(clock: ref.watch(clockProvider)),

@@ -7,6 +7,48 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Added — Phase 5: Notifications
+
+- Reminders before a change is due, at the offsets chosen during onboarding —
+  48h, 24h, 6h, 1h and on the due date itself
+- `NotificationGateway`, the seam between AoiLoop and the OS. Behind it a
+  plugin that cannot run in a test; in front of it every decision worth
+  testing. Nothing above the gateway imports `flutter_local_notifications`
+- `ReminderPlan`, which moments a cycle deserves a warning at, in plain Dart.
+  Moments already behind the clock are dropped: a notification dated in the
+  past either never fires or fires immediately, and one that arrives the
+  instant a change is logged teaches people to silence the app
+- `NotificationScheduler` rebuilds rather than patches. Every run withdraws
+  what it previously asked for and schedules the whole set again — the only
+  approach that stays correct after the things that actually happen to
+  notifications: a permission revoked and restored, a reinstall, a reboot, an
+  OS that quietly dropped some
+- Reminders are withdrawn by their stored platform id, never with `cancelAll`,
+  so a notification AoiLoop did not schedule is never cancelled on its behalf
+- The 64 pending limit is spent soonest-first. Someone tracking ten
+  consumables needs to hear about tomorrow, not about next month
+- A refusal by the platform is recorded as `failed` rather than claimed as
+  pending, so the ledger never says a reminder exists when it does not
+- Home says plainly when the OS will not deliver, with a button to ask for
+  permission. An app that quietly stops reminding someone is worse than one
+  that never offered
+- Registering a change reschedules, outside the database transaction. The old
+  cycle's warnings would otherwise tell the user to do a thing they have just
+  done. Rescheduling is allowed to fail: the log is the product and the
+  reminders are a courtesy on top of it
+- Real IANA time zones via `flutter_timezone`, resolved once at startup and
+  held, because `TimezoneSource` is synchronous and neither creating a profile
+  nor scheduling a reminder is a place to await a platform channel
+- Notification copy is resolved in the language the profile was created in,
+  when the reminder is *scheduled*. There is no `BuildContext` at delivery
+  time, days later, with the app closed. The Android channel is named in the
+  system language instead, because it appears in the phone's own settings
+- Reminders carry a date rather than a countdown. A notification sits in the
+  shade until someone looks at it, and "in 6 hours" is a lie by then
+- Scheduling is deliberately inexact. Exact alarms cost either a permission
+  prompt the user must make sense of or an app store audit as an alarm-clock
+  app, and the shortest lead time here is an hour
+
 ### Added — Phase 4: Change engine
 
 - Registering a change: the *Register change* button on Home now closes the

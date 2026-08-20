@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/database/database_providers.dart';
 import '../../../core/errors/app_failure.dart';
+import '../../../core/notifications/data/notification_scheduler.dart';
 import '../../../shared/models/cycle_status.dart';
 import '../../consumables/data/consumable_instance_repository.dart';
 import '../domain/cycle_schedule.dart';
@@ -57,12 +58,20 @@ class CycleEngine {
     required this.db,
     required this.instances,
     required this.changes,
+    this.reminders,
     this.thresholds = CycleStatusThresholds.defaults,
   });
 
   final AppDatabase db;
   final ConsumableInstanceRepository instances;
   final ChangeEventRepository changes;
+
+  /// Rebuilds the reminders after a change. Null where notifications are not
+  /// wired up, which is every test that is only interested in the rows.
+  ///
+  /// The old cycle's reminders are no longer true the moment it is closed, and
+  /// firing them would tell someone to do a thing they have already done.
+  final NotificationScheduler? reminders;
 
   /// Shared with the dashboard, so that what Home *called* due soon is what
   /// the history *records* as an on-time change. Two boundaries would drift
@@ -103,6 +112,33 @@ class CycleEngine {
   /// Throws [ValidationFailure] if [changedAt] falls before the install it
   /// would be closing — a change cannot precede the thing it replaced.
   Future<CycleTransition> registerChange({
+    required String userProfileId,
+    required ConsumableType type,
+    required DateTime changedAt,
+    int? preferredMinuteOfDay,
+    bool usePreferredTime = false,
+    String? notes,
+  }) async {
+    final CycleTransition transition = await _write(
+      userProfileId: userProfileId,
+      type: type,
+      changedAt: changedAt,
+      preferredMinuteOfDay: preferredMinuteOfDay,
+      usePreferredTime: usePreferredTime,
+      notes: notes,
+    );
+
+    // Outside the transaction on purpose. Rescheduling talks to the operating
+    // system, and holding a database transaction open across a platform
+    // channel is how a write ends up waiting on a permission dialog. It is
+    // also allowed to fail: the change is recorded either way, because the log
+    // is the product and the reminders are a courtesy on top of it.
+    await reminders?.synchronize(userProfileId);
+
+    return transition;
+  }
+
+  Future<CycleTransition> _write({
     required String userProfileId,
     required ConsumableType type,
     required DateTime changedAt,
@@ -211,5 +247,6 @@ final Provider<CycleEngine> cycleEngineProvider = Provider<CycleEngine>((
     db: ref.watch(appDatabaseProvider),
     instances: ref.watch(consumableInstanceRepositoryProvider),
     changes: ref.watch(changeEventRepositoryProvider),
+    reminders: ref.watch(notificationSchedulerProvider),
   );
 });

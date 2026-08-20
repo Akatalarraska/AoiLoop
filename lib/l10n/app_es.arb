@@ -158,6 +158,17 @@
 
   "actionRegisterChange": "Registrar cambio",
   "actionCancel": "Cancelar",
+  "notificationChannelName": "Avisos de cambio",
+  "notificationChannelDescription": "Avisos de que toca cambiar un consumible.",
+  "notificationCycleReminderTitle": "{name}: toca pronto",
+  "notificationCycleReminderBody": "Hay que cambiarlo el {when}.",
+  "notificationCycleDueTitle": "{name}: toca ya",
+  "notificationCycleDueBody": "Registra el cambio cuando lo hayas hecho.",
+  "notificationsOffTitle": "Los avisos están desactivados",
+  "notificationsOffBody": "AoiLoop no puede avisarte de nada hasta que permitas las notificaciones.",
+  "notificationsOffAction": "Permitir avisos",
+  "notificationsOffDenied": "Las notificaciones están bloqueadas en los ajustes del sistema. AoiLoop no puede reactivarlas por ti.",
+
   "registerChangeChooseTitle": "¿Qué has cambiado?",
   "registerChangeTitle": "Cambiar {name}",
   "registerChangeWhen": "Cuándo",

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/theme/app_spacing.dart';
+import '../../../core/notifications/presentation/reminders_off_banner.dart';
 import '../../../shared/extensions/build_context_x.dart';
 import '../../changes/presentation/register_change_sheet.dart';
 import '../domain/dashboard_view.dart';
@@ -91,6 +92,9 @@ class _DashboardBody extends StatelessWidget {
         if (view.isEmpty)
           const _NothingTracked()
         else ...<Widget>[
+          // Above the summary, because a countdown nobody will be told about
+          // is the one thing more misleading than no countdown at all.
+          const RemindersOffBanner(),
           NextChangeCard(
             view: view,
             onRegisterChange: () =>

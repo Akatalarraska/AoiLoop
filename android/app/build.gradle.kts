@@ -10,6 +10,11 @@ android {
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
+        // Required by flutter_local_notifications from version 10 onwards: it
+        // uses java.time to schedule, and desugaring is what makes those APIs
+        // available on Android versions that predate them. Needed whether or
+        // not the app schedules anything.
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -42,6 +47,10 @@ kotlin {
     compilerOptions {
         jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
     }
+}
+
+dependencies {
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
 }
 
 flutter {

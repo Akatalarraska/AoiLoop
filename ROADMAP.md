@@ -3,7 +3,7 @@
 The MVP is `0.1.0`. It is built in phases, and **each phase is finished — it
 analyzes, it tests, it runs — before the next one starts.**
 
-Current position: **Phase 4 complete.**
+Current position: **Phase 5 complete.**
 
 ---
 
@@ -44,10 +44,18 @@ pure Dart. The preferred change time is offered rather than applied, and the
 offer never runs past the natural deadline. Home redraws off the Drift stream
 rather than being told to.
 
-### Phase 5 — Notifications
+### Phase 5 — Notifications ✅
 
-Scheduling, cancellation, rescheduling. Offsets at 48h, 24h, 6h, 1h and on the
-due date. Correct time zone handling.
+Scheduling, cancellation and rescheduling behind a `NotificationGateway`, so
+the decisions are testable without a device. Offsets at 48h, 24h, 6h, 1h and
+on the due date. Real IANA time zones, resolved once at startup. AoiLoop keeps
+its own ledger and rebuilds from it, and says so on Home when the OS will not
+deliver.
+
+**Delivery on a real device is unverified.** The machine this was written on
+has no Android SDK and no iOS toolchain, so the platform configuration is
+proven only by CI's `flutter build apk --debug`. Confirm on a phone before
+tagging `0.1.0`.
 
 ### Phase 6 — Incidents
 
