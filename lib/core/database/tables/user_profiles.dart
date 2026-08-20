@@ -12,7 +12,7 @@ import 'table_mixins.dart';
 class UserProfiles extends Table with UuidPrimaryKey, RowTimestamps {
   TextColumn get displayName => text().withLength(min: 1, max: 80)();
 
-  /// Optional, and only a year. AoiLoop has no use for a full date of birth,
+  /// Optional, and only a year. BlauLoop has no use for a full date of birth,
   /// so it does not ask for one — a year is enough to phrase copy
   /// appropriately for a child.
   IntColumn get birthYear => integer().nullable()();
@@ -31,7 +31,7 @@ class UserProfiles extends Table with UuidPrimaryKey, RowTimestamps {
   /// midnight. Null means they have not expressed a preference.
   ///
   /// When a sensor fails at 03:17 and is replaced immediately, the next change
-  /// would fall at 03:17 forever. AoiLoop offers to move it here instead — it
+  /// would fall at 03:17 forever. BlauLoop offers to move it here instead — it
   /// asks, and never shifts a date silently.
   IntColumn get preferredChangeMinuteOfDay => integer().nullable()();
 

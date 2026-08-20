@@ -1,11 +1,11 @@
 name: Feature request
-description: Suggest something AoiLoop should do.
+description: Suggest something BlauLoop should do.
 labels: ["feature"]
 body:
   - type: markdown
     attributes:
       value: |
-        AoiLoop is an organisation, maintenance and logistics app.
+        BlauLoop is an organisation, maintenance and logistics app.
 
         It deliberately does **not** calculate doses, recommend boluses, adjust
         basal rates, interpret glucose for treatment, or otherwise act as a
@@ -55,6 +55,6 @@ body:
       label: Medical boundaries
       options:
         - label: >-
-            This request does not ask AoiLoop to calculate doses, recommend
+            This request does not ask BlauLoop to calculate doses, recommend
             treatment, or interpret glucose values clinically.
           required: true

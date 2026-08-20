@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# AoiLoop — .gitignore
+# BlauLoop — .gitignore
 # ---------------------------------------------------------------------------
 
 # Dart / Flutter tooling
@@ -13,7 +13,7 @@ build/
 coverage/
 doc/api/
 
-# Generated code. AoiLoop regenerates these with:
+# Generated code. BlauLoop regenerates these with:
 #   dart run build_runner build --delete-conflicting-outputs
 # CI does the same, so they are intentionally not committed.
 *.g.dart
@@ -84,3 +84,9 @@ ios/Runner/GeneratedPluginRegistrant.*
 *.pem
 *.key
 secrets.json
+
+# Drift's web runtime. Version-locked to the pinned `drift` and `sqlite3`
+# packages, and re-fetched rather than committed — a stale binary here fails at
+# runtime, not at build time. See web/README.md.
+web/sqlite3.wasm
+web/drift_worker.js

@@ -1,4 +1,4 @@
-/// Every navigable location in AoiLoop, in one place.
+/// Every navigable location in BlauLoop, in one place.
 ///
 /// Navigate by name (`context.goNamed(AppRoute.calendar.routeName)`) so paths
 /// can change without a search-and-replace across features.

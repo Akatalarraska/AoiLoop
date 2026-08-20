@@ -12,8 +12,8 @@ import 'theme/app_theme.dart';
 /// Everything configurable is read from Riverpod so tests and the settings
 /// screen can override it: the router, the locale chosen during onboarding,
 /// and later the theme mode.
-class AoiLoopApp extends ConsumerWidget {
-  const AoiLoopApp({super.key});
+class BlauLoopApp extends ConsumerWidget {
+  const BlauLoopApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

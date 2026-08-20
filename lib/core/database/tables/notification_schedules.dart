@@ -5,7 +5,7 @@ import 'consumable_instances.dart';
 import 'table_mixins.dart';
 import 'user_profiles.dart';
 
-/// A local notification AoiLoop asked the operating system to deliver.
+/// A local notification BlauLoop asked the operating system to deliver.
 ///
 /// The app keeps its own ledger rather than trusting the OS, because the two
 /// diverge in practice. iOS caps an app at 64 pending notifications and

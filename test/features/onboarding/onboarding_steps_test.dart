@@ -1,7 +1,7 @@
-import 'package:aoiloop/features/onboarding/domain/consumable_preset.dart';
-import 'package:aoiloop/features/onboarding/domain/onboarding_draft.dart';
-import 'package:aoiloop/features/onboarding/domain/onboarding_step.dart';
-import 'package:aoiloop/shared/models/profile_enums.dart';
+import 'package:blauloop/features/onboarding/domain/consumable_preset.dart';
+import 'package:blauloop/features/onboarding/domain/onboarding_draft.dart';
+import 'package:blauloop/features/onboarding/domain/onboarding_step.dart';
+import 'package:blauloop/shared/models/profile_enums.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Onboarding hides the questions it cannot ask. These tests describe when a

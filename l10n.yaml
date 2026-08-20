@@ -1,4 +1,4 @@
-# Localization configuration for AoiLoop.
+# Localization configuration for BlauLoop.
 # Regenerate with: flutter gen-l10n  (also runs as part of `flutter run`)
 arb-dir: lib/l10n
 template-arb-file: app_en.arb

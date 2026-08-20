@@ -54,7 +54,7 @@ class PendingNotification {
   String toString() => 'PendingNotification($platformId, $kind at $at)';
 }
 
-/// Everything AoiLoop asks of the operating system's notification service.
+/// Everything BlauLoop asks of the operating system's notification service.
 ///
 /// This is the seam. Behind it sits a plugin that cannot run in a test and
 /// cannot be verified on a machine without a device; in front of it sits all

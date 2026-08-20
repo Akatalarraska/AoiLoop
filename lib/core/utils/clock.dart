@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// An injectable source of "now".
 ///
-/// Every date calculation in AoiLoop goes through a [Clock] rather than
+/// Every date calculation in BlauLoop goes through a [Clock] rather than
 /// calling [DateTime.now] directly. The cycle engine, notification scheduler
 /// and travel planner are all date arithmetic, and they must be testable at
 /// fixed instants, across day boundaries and across time zones.

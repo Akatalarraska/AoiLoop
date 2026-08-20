@@ -1,5 +1,5 @@
-import 'package:aoiloop/app/theme/app_theme.dart';
-import 'package:aoiloop/l10n/generated/app_localizations.dart';
+import 'package:blauloop/app/theme/app_theme.dart';
+import 'package:blauloop/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Riverpod 3 moved `Override` out of the main entrypoint.

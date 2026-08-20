@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to AoiLoop are recorded here.
+All notable changes to BlauLoop are recorded here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -11,7 +11,7 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Reminders before a change is due, at the offsets chosen during onboarding —
   48h, 24h, 6h, 1h and on the due date itself
-- `NotificationGateway`, the seam between AoiLoop and the OS. Behind it a
+- `NotificationGateway`, the seam between BlauLoop and the OS. Behind it a
   plugin that cannot run in a test; in front of it every decision worth
   testing. Nothing above the gateway imports `flutter_local_notifications`
 - `ReminderPlan`, which moments a cycle deserves a warning at, in plain Dart.
@@ -24,7 +24,7 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   notifications: a permission revoked and restored, a reinstall, a reboot, an
   OS that quietly dropped some
 - Reminders are withdrawn by their stored platform id, never with `cancelAll`,
-  so a notification AoiLoop did not schedule is never cancelled on its behalf
+  so a notification BlauLoop did not schedule is never cancelled on its behalf
 - The 64 pending limit is spent soonest-first. Someone tracking ten
   consumables needs to hear about tomorrow, not about next month
 - A refusal by the platform is recorded as `failed` rather than claimed as
@@ -64,7 +64,7 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - The offer never runs past the natural deadline. Given a 10 day sensor due at
   03:17 and a preferred time of 09:00, the choice is 09:00 that morning — six
   hours beyond what the sensor is rated for — or 09:00 the morning before.
-  AoiLoop takes the shorter cycle every time, because proposing that someone
+  BlauLoop takes the shorter cycle every time, because proposing that someone
   wear a consumable past its rated life is not a call this app gets to make
 - `CycleEngine`, which closes the old instance, opens the new one and writes
   the `ChangeEvent` linking them inside a single transaction. A half-applied
@@ -126,8 +126,8 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Changed
 
-- **Renamed to AoiLoop.** Every spelling of the old name: the Dart package
-  (`package:aoiloop/…`), the root widget, the launcher label on both
+- **Renamed to BlauLoop.** Every spelling of the old name: the Dart package
+  (`package:blauloop/…`), the root widget, the launcher label on both
   platforms, the Android namespace and application id, the iOS bundle
   identifier, the Kotlin source package, the local database filename, all
   user-facing copy in both languages, and the documentation
@@ -207,7 +207,7 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Added — Phase 0: Foundation
 
-- Flutter project targeting Android and iOS, organisation `com.aoiloop`
+- Flutter project targeting Android and iOS, organisation `com.blauloop`
 - Feature-first project structure: `app/`, `core/`, `features/`, `shared/`
 - Material 3 light and dark themes seeded from a muted teal, with a
   `StatusPalette` theme extension carrying colour, icon and container tokens

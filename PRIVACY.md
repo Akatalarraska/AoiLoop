@@ -1,9 +1,9 @@
 # Privacy
 
-AoiLoop records information about a chronic condition. That deserves more care
+BlauLoop records information about a chronic condition. That deserves more care
 than a to-do list, so the design starts from collecting as little as possible.
 
-## What AoiLoop stores
+## What BlauLoop stores
 
 On your device, in a local SQLite database:
 
@@ -15,7 +15,7 @@ On your device, in a local SQLite database:
 - supply counts and locations
 - reminders you have scheduled
 
-## What AoiLoop does not store
+## What BlauLoop does not store
 
 - glucose readings
 - insulin doses
@@ -24,7 +24,7 @@ On your device, in a local SQLite database:
 - your location
 - contacts, calendar or photos beyond a picture you explicitly attach
 
-AoiLoop has no reason to hold any of these, so it does not ask for them.
+BlauLoop has no reason to hold any of these, so it does not ask for them.
 
 ## Where it goes
 
@@ -62,13 +62,13 @@ land with Phase 10.
 
 ## Children
 
-AoiLoop is designed to be used by a parent or carer on behalf of a child. The
+BlauLoop is designed to be used by a parent or carer on behalf of a child. The
 same rules apply: local storage, minimal collection, no tracking. A child's
 records are not treated as a lesser category of data.
 
 ## Medical boundaries
 
-AoiLoop is not a medical device. It does not calculate doses, recommend
+BlauLoop is not a medical device. It does not calculate doses, recommend
 boluses, adjust basal rates, interpret glucose for treatment, or substitute for
 your diabetes team. See the README.
 

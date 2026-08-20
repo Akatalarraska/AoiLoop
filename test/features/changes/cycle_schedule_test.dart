@@ -1,4 +1,4 @@
-import 'package:aoiloop/features/changes/domain/cycle_schedule.dart';
+import 'package:blauloop/features/changes/domain/cycle_schedule.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Dates are built as *local* wall-clock values and compared after
@@ -79,7 +79,7 @@ void main() {
       );
 
       // 09:00 on the 27th would be six hours past what the sensor is rated
-      // for. AoiLoop takes the shorter cycle instead, every time.
+      // for. BlauLoop takes the shorter cycle instead, every time.
       expect(
         schedule.preferredChangeAt!.isBefore(schedule.naturalChangeAt!),
         isTrue,

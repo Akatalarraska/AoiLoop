@@ -13,7 +13,7 @@ abstract final class AppSpacing {
   static const double xxxl = 48;
 
   /// Minimum tappable edge. 48dp satisfies both the Material and the
-  /// iOS (44pt) guidance, so AoiLoop uses the stricter of the two.
+  /// iOS (44pt) guidance, so BlauLoop uses the stricter of the two.
   static const double minTapTarget = 48;
 
   /// Corner radius for cards and sheets. Soft, not playful.

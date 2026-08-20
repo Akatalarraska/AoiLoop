@@ -7,7 +7,7 @@ import '../../database/id_generator.dart';
 import '../../database/repository.dart';
 import '../../utils/clock.dart';
 
-/// AoiLoop's own ledger of the local notifications it asked the OS to deliver.
+/// BlauLoop's own ledger of the local notifications it asked the OS to deliver.
 ///
 /// The app does not trust the platform to remember. iOS caps a single app at
 /// 64 pending notifications and silently discards the rest; Android may defer
@@ -26,7 +26,7 @@ class NotificationScheduleRepository extends Repository {
 
   /// The platform's own pending-notification budget.
   ///
-  /// iOS is the binding constraint at 64. AoiLoop applies the same cap on both
+  /// iOS is the binding constraint at 64. BlauLoop applies the same cap on both
   /// platforms so behaviour does not diverge, and so the scheduler always has
   /// to decide what matters most rather than discovering the limit at run time
   /// on one platform only.

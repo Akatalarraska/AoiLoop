@@ -2,7 +2,7 @@
 
 ## Our pledge
 
-We want AoiLoop to be a project where people with Type 1 Diabetes, their
+We want BlauLoop to be a project where people with Type 1 Diabetes, their
 families, carers and anyone else can take part without harassment.
 
 That means everyone, regardless of age, body size, disability, ethnicity, sex
@@ -47,8 +47,8 @@ commits — and when someone is representing the project in public.
 
 ## Enforcement
 
-Report unacceptable behaviour to the maintainers by opening a private security
-advisory (which is not public) or contacting a maintainer directly. All reports
+Report unacceptable behaviour to the maintainers at <blauloop@gmail.com>, or
+by opening a private security advisory, which is not public either. All reports
 are reviewed and handled confidentially.
 
 Maintainers may remove comments, commits, issues and pull requests that violate

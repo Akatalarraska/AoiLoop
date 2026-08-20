@@ -1,13 +1,13 @@
-/// Enumerations describing the person using AoiLoop.
+/// Enumerations describing the person using BlauLoop.
 ///
-/// All domain enums in AoiLoop are stored in SQLite **by name**, never by
+/// All domain enums in BlauLoop are stored in SQLite **by name**, never by
 /// index. Reordering or inserting a value must never silently reinterpret
 /// existing rows — in a health log that would rewrite history.
 library;
 
 /// The unit the user reads their glucose in.
 ///
-/// AoiLoop stores no glucose values. This exists so that copy, and any future
+/// BlauLoop stores no glucose values. This exists so that copy, and any future
 /// export, match what the user is used to seeing.
 enum GlucoseUnit {
   /// Milligrams per decilitre. Common in the US, Spain, France, Japan.

@@ -10,7 +10,7 @@ import '../../../core/utils/clock.dart';
 /// Reads and writes how long each body site has been occupied.
 ///
 /// This is what lets the body map answer "how long has this spot been
-/// resting". AoiLoop reports that number. It never turns it into a
+/// resting". BlauLoop reports that number. It never turns it into a
 /// recommendation — the most it will say is which site was used least
 /// recently, which is arithmetic, not advice.
 class SiteUsageRepository extends Repository {
@@ -108,7 +108,7 @@ class SiteUsageRepository extends Repository {
 
   /// Sites ordered by how long they have been resting, longest first.
   ///
-  /// Never-used sites come first. This is the only ranking AoiLoop performs on
+  /// Never-used sites come first. This is the only ranking BlauLoop performs on
   /// body sites, and it is presented as a fact about the user's own history,
   /// not as a suggestion about where to place anything.
   Future<List<String>> siteIdsByRestDescending(String userProfileId) async {

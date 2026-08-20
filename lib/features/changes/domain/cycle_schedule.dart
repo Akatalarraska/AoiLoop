@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-/// The dates one cycle will run between, and the shift AoiLoop is willing to
+/// The dates one cycle will run between, and the shift BlauLoop is willing to
 /// offer on the end of it.
 ///
 /// Like `CycleCountdown`, this is deliberately plain Dart: no Flutter widgets,
@@ -12,7 +12,7 @@ import 'package:flutter/foundation.dart';
 ///
 /// The type carries two end dates rather than one because the preferred
 /// change time is an **offer**. A sensor replaced at 03:17 would otherwise
-/// hand the user 03:17 forever, and AoiLoop would rather show both dates and
+/// hand the user 03:17 forever, and BlauLoop would rather show both dates and
 /// let them pick than quietly move a deadline they never asked to move.
 @immutable
 class CycleSchedule {
@@ -106,7 +106,7 @@ class CycleSchedule {
   /// sensor due at 03:17 and a preferred time of 09:00, the candidates are
   /// 09:00 that morning — six hours *beyond* what the manufacturer rates the
   /// sensor for — and 09:00 the morning before, which is eighteen hours
-  /// short. AoiLoop takes the shorter cycle every time. Proposing that
+  /// short. BlauLoop takes the shorter cycle every time. Proposing that
   /// someone wear a consumable past its rated life is the one thing a tracker
   /// must not do, and it is not the app's call to make on their behalf.
   static DateTime? _preferredChangeAt({

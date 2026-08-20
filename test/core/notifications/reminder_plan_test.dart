@@ -1,5 +1,5 @@
-import 'package:aoiloop/core/notifications/domain/reminder_plan.dart';
-import 'package:aoiloop/shared/models/notification_enums.dart';
+import 'package:blauloop/core/notifications/domain/reminder_plan.dart';
+import 'package:blauloop/shared/models/notification_enums.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Which moments a cycle deserves a reminder at.

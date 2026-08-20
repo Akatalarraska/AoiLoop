@@ -9,7 +9,7 @@ import '../../../core/utils/clock.dart';
 
 /// Reads and writes records of things going wrong.
 ///
-/// AoiLoop stores incidents so the user can see their own history and so they
+/// BlauLoop stores incidents so the user can see their own history and so they
 /// have the facts a manufacturer asks for. It draws no conclusions from them.
 class IncidentRepository extends Repository {
   const IncidentRepository({
@@ -84,7 +84,7 @@ class IncidentRepository extends Repository {
 
   /// How often each kind of failure happened since [since].
   ///
-  /// The user's own data, counted. AoiLoop presents the numbers and says
+  /// The user's own data, counted. BlauLoop presents the numbers and says
   /// nothing about what they mean.
   Future<Map<IncidentType, int>> countByTypeSince(
     String userProfileId,

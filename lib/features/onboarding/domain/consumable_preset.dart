@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import '../../../shared/models/consumable_enums.dart';
 import '../../../shared/models/profile_enums.dart';
 
-/// The consumables AoiLoop knows how to suggest during onboarding.
+/// The consumables BlauLoop knows how to suggest during onboarding.
 ///
 /// A key is *not* the same thing as a [ConsumableCategory]: the category says
 /// what kind of object it is, the key identifies one concrete suggestion with
@@ -28,7 +28,7 @@ enum ConsumablePresetKey {
   glucagon,
 }
 
-/// A suggested consumable, with the defaults AoiLoop proposes for it.
+/// A suggested consumable, with the defaults BlauLoop proposes for it.
 ///
 /// The numbers here are *starting points a user can change*, not clinical
 /// guidance. Ten days for a sensor and 72 hours for a set are the manufacturer

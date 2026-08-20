@@ -1,4 +1,4 @@
-import 'package:aoiloop/core/notifications/domain/notification_gateway.dart';
+import 'package:blauloop/core/notifications/domain/notification_gateway.dart';
 
 /// A [NotificationGateway] that records instead of delivering.
 ///
@@ -39,7 +39,7 @@ class FakeNotificationGateway implements NotificationGateway {
   ///
   /// Modelled the way the real thing behaves rather than as a filter over the
   /// history: scheduling an id the platform already holds *replaces* it, and
-  /// cancelling removes it. AoiLoop reuses ids from 1 on every run, so a
+  /// cancelling removes it. BlauLoop reuses ids from 1 on every run, so a
   /// filter would report a freshly scheduled reminder as cancelled.
   final Map<int, PendingNotification> _live = <int, PendingNotification>{};
 

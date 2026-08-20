@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import '../../../shared/models/notification_enums.dart';
 import '../../database/converters/reminder_offsets_converter.dart';
 
-/// One reminder AoiLoop intends the operating system to deliver.
+/// One reminder BlauLoop intends the operating system to deliver.
 @immutable
 class ReminderMoment {
   const ReminderMoment({
@@ -37,7 +37,7 @@ class ReminderMoment {
 
 /// What should be scheduled for one cycle, worked out from its deadline.
 ///
-/// Plain Dart, like the rest of AoiLoop's date arithmetic: no plugin, no
+/// Plain Dart, like the rest of BlauLoop's date arithmetic: no plugin, no
 /// database, no clock of its own. The half of notifications that can actually
 /// go wrong is *which moments* get chosen, and this is the half that can be
 /// tested without a device.

@@ -45,9 +45,9 @@ export 'tables/user_profiles.dart';
 
 part 'app_database.g.dart';
 
-/// The single local SQLite database behind AoiLoop.
+/// The single local SQLite database behind BlauLoop.
 ///
-/// AoiLoop is offline-first: this database is the source of truth, not a
+/// BlauLoop is offline-first: this database is the source of truth, not a
 /// cache. Every feature reads and writes through a repository that wraps this
 /// class; no widget touches Drift directly.
 ///
@@ -118,6 +118,20 @@ class AppDatabase extends _$AppDatabase {
   }
 
   static QueryExecutor _openConnection() {
-    return driftDatabase(name: AppInfo.databaseName);
+    return driftDatabase(
+      name: AppInfo.databaseName,
+      // Ignored on Android and iOS, and mandatory on the web — `driftDatabase`
+      // throws outright without it. Both files are served from `web/` and must
+      // match the pinned `drift` and `sqlite3` versions; a mismatch fails at
+      // runtime, not at build time.
+      //
+      // The web target exists to look at the app during development. The
+      // shipping platforms are the two mobile ones, where this parameter does
+      // nothing at all.
+      web: DriftWebOptions(
+        sqlite3Wasm: Uri.parse('sqlite3.wasm'),
+        driftWorker: Uri.parse('drift_worker.js'),
+      ),
+    );
   }
 }

@@ -1,7 +1,7 @@
-import 'package:aoiloop/core/database/app_database.dart';
-import 'package:aoiloop/core/notifications/data/local_notification_gateway.dart';
-import 'package:aoiloop/core/notifications/domain/notification_gateway.dart';
-import 'package:aoiloop/features/changes/presentation/register_change_sheet.dart';
+import 'package:blauloop/core/database/app_database.dart';
+import 'package:blauloop/core/notifications/data/local_notification_gateway.dart';
+import 'package:blauloop/core/notifications/domain/notification_gateway.dart';
+import 'package:blauloop/features/changes/presentation/register_change_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';

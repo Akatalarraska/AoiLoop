@@ -1,6 +1,6 @@
 # Architecture
 
-This document explains how AoiLoop is put together and, more usefully, *why*.
+This document explains how BlauLoop is put together and, more usefully, *why*.
 It is meant to be read before making a non-trivial change.
 
 ## Principles
@@ -76,12 +76,12 @@ An injectable "now". Feature code never calls `DateTime.now()`; it reads
 boundary, or sit exactly on a deadline.
 
 This is the single most important abstraction in the codebase. Every date bug
-AoiLoop could possibly have is reachable through it.
+BlauLoop could possibly have is reachable through it.
 
 ### `Ticker` — `core/utils/ticker.dart`
 
 `Clock` answers *what time is it*; `Ticker` answers *tell me again when it
-changes*. A countdown rendered once is wrong a minute later, and AoiLoop is an
+changes*. A countdown rendered once is wrong a minute later, and BlauLoop is an
 app people leave open.
 
 Ticks are aligned to wall-clock boundaries rather than to whenever the stream
@@ -182,7 +182,7 @@ that hurts legibility fails the build.
 
 ### `CycleCountdown` — `shared/models/cycle_countdown.dart`
 
-The whole of AoiLoop's countdown arithmetic, in pure Dart: a deadline and an
+The whole of BlauLoop's countdown arithmetic, in pure Dart: a deadline and an
 instant in, a `CycleStatus`, a signed remaining `Duration` and a clamped
 progress fraction out.
 
@@ -225,7 +225,7 @@ is how a write ends up waiting on a permission dialog.
 
 ### `NotificationGateway` — `core/notifications/domain/`
 
-The seam between AoiLoop and the operating system. Behind it a plugin that
+The seam between BlauLoop and the operating system. Behind it a plugin that
 cannot run in a test and cannot be verified without a device; in front of it
 every decision worth testing. Nothing above the gateway imports
 `flutter_local_notifications`.
@@ -246,7 +246,7 @@ between "nothing is due" and "nothing can be delivered".
 ### Preferred change time
 
 If a sensor fails at 03:17 and a new one goes on, the next change would fall at
-03:17. AoiLoop asks whether to shift to the user's usual time — it does not
+03:17. BlauLoop asks whether to shift to the user's usual time — it does not
 silently move the date either way. The engine exposes both outcomes; the user
 picks.
 

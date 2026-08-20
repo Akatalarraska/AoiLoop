@@ -1,8 +1,8 @@
-import 'package:aoiloop/shared/models/cycle_countdown.dart';
-import 'package:aoiloop/shared/models/cycle_status.dart';
+import 'package:blauloop/shared/models/cycle_countdown.dart';
+import 'package:blauloop/shared/models/cycle_status.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// Every countdown AoiLoop shows comes out of this class, so its boundaries
+/// Every countdown BlauLoop shows comes out of this class, so its boundaries
 /// are pinned here rather than inferred from a rendered widget. The interesting
 /// cases are all on the edges: the instant a deadline arrives, the instant the
 /// grace period runs out, and the moment a status changes without anything

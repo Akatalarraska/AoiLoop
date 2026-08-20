@@ -1,4 +1,4 @@
-import 'package:aoiloop/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:blauloop/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -150,7 +150,7 @@ void main() {
     await pumpApp(tester);
 
     expect(
-      find.text('AoiLoop does not calculate doses or give treatment advice.'),
+      find.text('BlauLoop does not calculate doses or give treatment advice.'),
       findsOneWidget,
     );
   });

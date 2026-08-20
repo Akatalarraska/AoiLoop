@@ -23,7 +23,7 @@ enum NotificationKind {
 
 /// Where a scheduled notification is in its life.
 ///
-/// AoiLoop tracks this itself rather than trusting the OS, because the two
+/// BlauLoop tracks this itself rather than trusting the OS, because the two
 /// disagree in practice: notifications are dropped when permissions change,
 /// silently coalesced, or lost across a reinstall.
 enum NotificationStatus {

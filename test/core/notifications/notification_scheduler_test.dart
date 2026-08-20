@@ -1,6 +1,6 @@
-import 'package:aoiloop/core/database/app_database.dart';
-import 'package:aoiloop/core/notifications/data/notification_scheduler.dart';
-import 'package:aoiloop/core/notifications/domain/notification_gateway.dart';
+import 'package:blauloop/core/database/app_database.dart';
+import 'package:blauloop/core/notifications/data/notification_scheduler.dart';
+import 'package:blauloop/core/notifications/domain/notification_gateway.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../support/fake_notification_gateway.dart';
@@ -152,7 +152,7 @@ void main() {
         0,
         reason:
             'cancelling everything would '
-            'withdraw notifications AoiLoop did not schedule',
+            'withdraw notifications BlauLoop did not schedule',
       );
     });
 

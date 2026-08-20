@@ -1,7 +1,7 @@
-import 'package:aoiloop/core/database/app_database.dart';
-import 'package:aoiloop/features/onboarding/data/onboarding_service.dart';
-import 'package:aoiloop/features/onboarding/domain/consumable_preset.dart';
-import 'package:aoiloop/features/onboarding/domain/onboarding_draft.dart';
+import 'package:blauloop/core/database/app_database.dart';
+import 'package:blauloop/features/onboarding/data/onboarding_service.dart';
+import 'package:blauloop/features/onboarding/domain/consumable_preset.dart';
+import 'package:blauloop/features/onboarding/domain/onboarding_draft.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../support/test_database.dart';

@@ -7,11 +7,11 @@ abstract final class AppInfo {
   static const String version = '0.1.0-dev';
 
   /// Filename of the local Drift/SQLite database.
-  static const String databaseName = 'aoiloop';
+  static const String databaseName = 'blauloop';
 
   /// Public project home, shown in the about section.
   static const String repositoryUrl =
-      'https://github.com/Akatalarraska/AoiLoop';
+      'https://github.com/Akatalarraska/BlauLoop';
 
   /// Supported locales, in the order they are offered to the user.
   /// Adding one means adding an `.arb` file under `lib/l10n/`.

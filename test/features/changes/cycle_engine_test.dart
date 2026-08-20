@@ -1,6 +1,6 @@
-import 'package:aoiloop/core/database/app_database.dart';
-import 'package:aoiloop/core/errors/app_failure.dart';
-import 'package:aoiloop/features/changes/data/cycle_engine.dart';
+import 'package:blauloop/core/database/app_database.dart';
+import 'package:blauloop/core/errors/app_failure.dart';
+import 'package:blauloop/features/changes/data/cycle_engine.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../support/test_database.dart';

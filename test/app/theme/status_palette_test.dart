@@ -1,6 +1,6 @@
-import 'package:aoiloop/app/theme/app_theme.dart';
-import 'package:aoiloop/app/theme/status_palette.dart';
-import 'package:aoiloop/shared/models/cycle_status.dart';
+import 'package:blauloop/app/theme/app_theme.dart';
+import 'package:blauloop/app/theme/status_palette.dart';
+import 'package:blauloop/shared/models/cycle_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

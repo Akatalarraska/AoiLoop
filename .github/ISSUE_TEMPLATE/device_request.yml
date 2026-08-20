@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        AoiLoop lets anyone add a custom consumable with their own duration, so
+        BlauLoop lets anyone add a custom consumable with their own duration, so
         nothing is blocked on this. This template is for adding a device or
         consumable to the **built-in presets**, so it works correctly without
         setup.
@@ -52,7 +52,7 @@ body:
     attributes:
       label: Manufacturer-stated wear or use duration
       description: >-
-        As printed by the manufacturer. AoiLoop uses this only as the default
+        As printed by the manufacturer. BlauLoop uses this only as the default
         starting value — users can change it.
       placeholder: "e.g. 10 days, 72 hours, 3 days"
     validations:

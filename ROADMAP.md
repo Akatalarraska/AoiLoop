@@ -48,7 +48,7 @@ rather than being told to.
 
 Scheduling, cancellation and rescheduling behind a `NotificationGateway`, so
 the decisions are testable without a device. Offsets at 48h, 24h, 6h, 1h and
-on the due date. Real IANA time zones, resolved once at startup. AoiLoop keeps
+on the due date. Real IANA time zones, resolved once at startup. BlauLoop keeps
 its own ledger and rebuilds from it, and says so on Home when the OS will not
 deliver.
 

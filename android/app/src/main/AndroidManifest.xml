@@ -5,7 +5,7 @@
          sensor is due. POST_NOTIFICATIONS and VIBRATE come from the plugin's
          own manifest and are merged in.
 
-         Deliberately absent: SCHEDULE_EXACT_ALARM and USE_EXACT_ALARM. AoiLoop
+         Deliberately absent: SCHEDULE_EXACT_ALARM and USE_EXACT_ALARM. BlauLoop
          schedules inexactly (see NotificationGateway), because its shortest
          lead time is an hour and the OS's slack is measured in minutes. The
          first of those permissions costs the user a prompt they would have to
@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
-        android:label="AoiLoop"
+        android:label="BlauLoop"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -1,7 +1,7 @@
-import 'package:aoiloop/core/utils/clock.dart';
+import 'package:blauloop/core/utils/clock.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// The clock is the seam that makes every date calculation in AoiLoop
+/// The clock is the seam that makes every date calculation in BlauLoop
 /// testable — cycle countdowns, preferred change time, notification offsets,
 /// travel windows. If it misbehaves, every one of those does too.
 void main() {

@@ -10,7 +10,7 @@ import 'user_profiles.dart';
 /// their thighs at all, and someone else may have named spots that mean
 /// nothing to anyone else.
 ///
-/// AoiLoop records placement and reports usage. It does not recommend sites.
+/// BlauLoop records placement and reports usage. It does not recommend sites.
 @TableIndex(name: 'idx_body_sites_profile', columns: {#userProfileId})
 class BodySites extends Table with UuidPrimaryKey, RowTimestamps {
   TextColumn get userProfileId =>

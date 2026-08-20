@@ -5,7 +5,9 @@
 **Do not open a public issue for a security or privacy problem.**
 
 Use GitHub's private reporting:
-<https://github.com/Akatalarraska/AoiLoop/security/advisories/new>
+<https://github.com/Akatalarraska/BlauLoop/security/advisories/new>
+
+If you would rather not use GitHub, write to <blauloop@gmail.com> instead.
 
 Please include what you found, how to reproduce it, and what an attacker could
 reach. You will get an acknowledgement within a few days, and credit in the
@@ -13,11 +15,11 @@ release notes unless you would rather not be named.
 
 ## What counts
 
-AoiLoop stores information about a chronic condition on a personal device.
+BlauLoop stores information about a chronic condition on a personal device.
 Anything that could expose that data, or corrupt a user's record of it, is in
 scope — for example:
 
-- another app on the device reading AoiLoop's database
+- another app on the device reading BlauLoop's database
 - health data appearing somewhere it should not: logs, crash reports,
   notification previews on a locked screen, backups, screenshots
 - a bug that silently loses or falsifies change history

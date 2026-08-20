@@ -18,5 +18,5 @@ Future<void> main() async {
   // cannot fail in a way that stops the app.
   final List<Override> overrides = await bootstrapApp();
 
-  runApp(ProviderScope(overrides: overrides, child: const AoiLoopApp()));
+  runApp(ProviderScope(overrides: overrides, child: const BlauLoopApp()));
 }

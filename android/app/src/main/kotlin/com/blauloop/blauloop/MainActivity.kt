@@ -1,4 +1,4 @@
-package com.aoiloop.aoiloop
+package com.blauloop.blauloop
 
 import io.flutter.embedding.android.FlutterActivity
 

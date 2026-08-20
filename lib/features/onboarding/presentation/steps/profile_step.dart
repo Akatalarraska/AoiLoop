@@ -14,7 +14,7 @@ import '../widgets/onboarding_step_layout.dart';
 ///
 /// The name is the only thing onboarding insists on, because the profile row
 /// cannot exist without one. The year of birth is asked as a *year*, never a
-/// full date: AoiLoop has no use for the rest of it, so it does not collect it.
+/// full date: BlauLoop has no use for the rest of it, so it does not collect it.
 class ProfileStep extends ConsumerWidget {
   const ProfileStep({super.key});
 

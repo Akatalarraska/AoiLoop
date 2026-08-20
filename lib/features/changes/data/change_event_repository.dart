@@ -111,7 +111,7 @@ class ChangeEventRepository extends Repository {
 
   /// How many changes of each reason occurred since [since].
   ///
-  /// Feeds the history summary. Counting is all AoiLoop does with this — it
+  /// Feeds the history summary. Counting is all BlauLoop does with this — it
   /// does not tell the user whether a number is good or bad.
   Future<Map<ChangeType, int>> countByTypeSince(
     String userProfileId,

@@ -176,7 +176,7 @@ class NotificationScheduler {
 
   /// Withdraws every reminder this app previously asked the OS to hold.
   ///
-  /// By stored platform id rather than `cancelAll`, so a notification AoiLoop
+  /// By stored platform id rather than `cancelAll`, so a notification BlauLoop
   /// did not schedule is never cancelled on its behalf.
   Future<void> _withdrawPending(String userProfileId) async {
     final List<NotificationSchedule> pending = await ledger.findPending(

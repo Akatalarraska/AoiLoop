@@ -27,7 +27,7 @@ localeOverrideProvider = NotifierProvider<LocaleOverrideController, Locale?>(
 /// The locale the app runs in, or null to follow the operating system.
 ///
 /// Precedence is deliberate: an explicit in-app choice wins over the profile,
-/// and the profile wins over the OS. Someone who told AoiLoop "Spanish" during
+/// and the profile wins over the OS. Someone who told BlauLoop "Spanish" during
 /// onboarding on an English phone meant it, and having the app quietly revert
 /// on the next launch would read as a bug.
 final Provider<Locale?> appLocaleProvider = Provider<Locale?>((Ref ref) {

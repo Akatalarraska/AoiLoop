@@ -1,5 +1,3 @@
-import 'dart:io' show Platform;
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,13 +34,25 @@ class LocalNotificationGateway implements NotificationGateway {
 
   bool _initialized = false;
 
+  /// Which platform-specific implementation to talk to.
+  ///
+  /// `defaultTargetPlatform` rather than `dart:io`'s `Platform`, which does
+  /// not exist on the web and would stop the whole app compiling there. The
+  /// `kIsWeb` guard comes first because on the web that getter reports the
+  /// *simulated* platform — Android on an Android browser — and there is no
+  /// plugin behind it to resolve.
+  bool get _isAndroid =>
+      !kIsWeb && defaultTargetPlatform == TargetPlatform.android;
+
+  bool get _isIOS => !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
+
   /// The channel every reminder goes to.
   ///
   /// One channel, not one per kind. Android surfaces channels to the user as
   /// individual switches, and offering to turn off "due soon" separately from
   /// "due now" invites someone to disable half a reminder and then wonder why
   /// it never arrived.
-  static const String channelId = 'aoiloop_cycle_reminders';
+  static const String channelId = 'blauloop_cycle_reminders';
 
   @override
   Future<bool> initialize() async {
@@ -89,7 +99,7 @@ class LocalNotificationGateway implements NotificationGateway {
   @override
   Future<bool> requestPermission() async {
     try {
-      if (Platform.isAndroid) {
+      if (_isAndroid) {
         final bool? granted = await _plugin
             .resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin
@@ -99,7 +109,7 @@ class LocalNotificationGateway implements NotificationGateway {
         // is the same as granted: there was no runtime permission to ask for.
         return granted ?? true;
       }
-      if (Platform.isIOS) {
+      if (_isIOS) {
         final bool? granted = await _plugin
             .resolvePlatformSpecificImplementation<
               IOSFlutterLocalNotificationsPlugin
@@ -117,7 +127,7 @@ class LocalNotificationGateway implements NotificationGateway {
   @override
   Future<bool> areEnabled() async {
     try {
-      if (Platform.isAndroid) {
+      if (_isAndroid) {
         final bool? enabled = await _plugin
             .resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin
@@ -125,7 +135,7 @@ class LocalNotificationGateway implements NotificationGateway {
             ?.areNotificationsEnabled();
         return enabled ?? false;
       }
-      if (Platform.isIOS) {
+      if (_isIOS) {
         final NotificationsEnabledOptions? options = await _plugin
             .resolvePlatformSpecificImplementation<
               IOSFlutterLocalNotificationsPlugin
@@ -154,7 +164,7 @@ class LocalNotificationGateway implements NotificationGateway {
         notificationDetails: _detailsFor(notification.kind),
         // Inexact on purpose. Exact alarms cost either a permission prompt
         // the user has to make sense of (SCHEDULE_EXACT_ALARM) or an app
-        // store audit as an alarm-clock app (USE_EXACT_ALARM), and AoiLoop's
+        // store audit as an alarm-clock app (USE_EXACT_ALARM), and BlauLoop's
         // shortest lead time is an hour. `allowWhileIdle` is the part that
         // matters: without it a phone in Doze overnight delivers nothing.
         androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
@@ -218,7 +228,7 @@ class LocalNotificationGateway implements NotificationGateway {
 
 /// The application-wide gateway.
 ///
-/// Defaults to the no-op implementation. `AoiLoopApp` overrides it with the
+/// Defaults to the no-op implementation. `BlauLoopApp` overrides it with the
 /// real one during startup, once the localised channel copy is available —
 /// the channel name is what the user sees in system settings, so it cannot be
 /// built before a locale is known. Widget tests get the no-op by default,

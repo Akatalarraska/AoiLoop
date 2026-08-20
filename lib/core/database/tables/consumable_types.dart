@@ -13,7 +13,7 @@ import 'table_mixins.dart';
 ///
 /// There is no `userProfileId` here on purpose. A type describes a product,
 /// and a family sharing the same sensors should share one definition of it.
-/// [isBuiltIn] separates the presets AoiLoop ships from types the user
+/// [isBuiltIn] separates the presets BlauLoop ships from types the user
 /// created.
 @TableIndex(name: 'idx_consumable_types_active', columns: {#active})
 class ConsumableTypes extends Table with UuidPrimaryKey, RowTimestamps {
@@ -44,7 +44,7 @@ class ConsumableTypes extends Table with UuidPrimaryKey, RowTimestamps {
       .map(const ReminderOffsetsConverter())
       .withDefault(const Constant<String>(''))();
 
-  /// True for presets AoiLoop ships, false for types the user created.
+  /// True for presets BlauLoop ships, false for types the user created.
   ///
   /// Built-in types can be edited — a user whose clinic gets 7 days out of a
   /// 10 day sensor should be able to say so — but they are never deleted, so

@@ -1,6 +1,6 @@
-import 'package:aoiloop/features/onboarding/domain/consumable_preset.dart';
-import 'package:aoiloop/features/onboarding/domain/onboarding_draft.dart';
-import 'package:aoiloop/shared/models/profile_enums.dart';
+import 'package:blauloop/features/onboarding/domain/consumable_preset.dart';
+import 'package:blauloop/features/onboarding/domain/onboarding_draft.dart';
+import 'package:blauloop/shared/models/profile_enums.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// The draft is what stands between a half-finished form and a database write.

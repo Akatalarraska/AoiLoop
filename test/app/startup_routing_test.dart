@@ -1,6 +1,6 @@
-import 'package:aoiloop/app/router/app_router.dart';
-import 'package:aoiloop/app/router/app_routes.dart';
-import 'package:aoiloop/core/database/app_database.dart';
+import 'package:blauloop/app/router/app_router.dart';
+import 'package:blauloop/app/router/app_routes.dart';
+import 'package:blauloop/core/database/app_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -61,7 +61,7 @@ void main() {
     ) async {
       await pumpApp(tester, onboarded: false);
 
-      expect(find.text('Welcome to AoiLoop'), findsOneWidget);
+      expect(find.text('Welcome to BlauLoop'), findsOneWidget);
     });
 
     testWidgets('a returning launch lands on the dashboard', (
@@ -70,14 +70,14 @@ void main() {
       await pumpApp(tester);
 
       expect(find.byType(NavigationBar), findsOneWidget);
-      expect(find.text('Welcome to AoiLoop'), findsNothing);
+      expect(find.text('Welcome to BlauLoop'), findsNothing);
     });
 
     testWidgets('a profile appearing moves the user on by itself', (
       WidgetTester tester,
     ) async {
       final AppUnderTest app = await pumpApp(tester, onboarded: false);
-      expect(find.text('Welcome to AoiLoop'), findsOneWidget);
+      expect(find.text('Welcome to BlauLoop'), findsOneWidget);
 
       // What submitting onboarding does, without the ten taps.
       await app.harness.seedProfile();

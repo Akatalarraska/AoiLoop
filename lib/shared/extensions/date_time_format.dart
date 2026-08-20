@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 /// Locale-aware date formatting for instants read out of the database.
 ///
-/// Every timestamp AoiLoop stores is UTC. Every timestamp it *shows* is local,
+/// Every timestamp BlauLoop stores is UTC. Every timestamp it *shows* is local,
 /// because a deadline is a moment in the user's day, not in Greenwich — so
 /// each helper here converts before formatting rather than trusting the caller
 /// to have remembered.

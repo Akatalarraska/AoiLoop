@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
 
-  "appTitle": "AoiLoop",
+  "appTitle": "BlauLoop",
   "@appTitle": {
     "description": "The application name. Not translated."
   },
@@ -114,7 +114,7 @@
     }
   },
 
-  "medicalDisclaimerShort": "AoiLoop does not calculate doses or give treatment advice.",
+  "medicalDisclaimerShort": "BlauLoop does not calculate doses or give treatment advice.",
   "@medicalDisclaimerShort": {
     "description": "Short medical boundary notice. Must stay visible somewhere reachable in the app."
   },
@@ -179,12 +179,12 @@
     }
   },
 
-  "onboardingWelcomeTitle": "Welcome to AoiLoop",
+  "onboardingWelcomeTitle": "Welcome to BlauLoop",
   "@onboardingWelcomeTitle": {
     "description": "Heading of the first onboarding step."
   },
 
-  "onboardingWelcomeBody": "AoiLoop keeps track of when your sensors, sets and supplies need changing, and tells you before they run out.",
+  "onboardingWelcomeBody": "BlauLoop keeps track of when your sensors, sets and supplies need changing, and tells you before they run out.",
   "@onboardingWelcomeBody": {
     "description": "Body of the onboarding welcome step, explaining what the app is for."
   },
@@ -239,7 +239,7 @@
     "description": "Label of the optional year of birth field."
   },
 
-  "fieldBirthYearHelp": "Only used to word things appropriately. AoiLoop never asks for a full date of birth.",
+  "fieldBirthYearHelp": "Only used to word things appropriately. BlauLoop never asks for a full date of birth.",
   "@fieldBirthYearHelp": {
     "description": "Helper text under the year of birth field, explaining why so little is asked."
   },
@@ -259,7 +259,7 @@
     "description": "Millimoles per litre. A unit symbol; not translated."
   },
 
-  "glucoseUnitHelp": "AoiLoop stores no glucose values. This only matches the wording to what you are used to reading.",
+  "glucoseUnitHelp": "BlauLoop stores no glucose values. This only matches the wording to what you are used to reading.",
   "@glucoseUnitHelp": {
     "description": "Helper text under the glucose unit choice, making clear the app is not a glucose tool."
   },
@@ -269,7 +269,7 @@
     "description": "Heading of the onboarding treatment type step."
   },
 
-  "onboardingTreatmentBody": "This decides what AoiLoop tracks for you. You can change it later.",
+  "onboardingTreatmentBody": "This decides what BlauLoop tracks for you. You can change it later.",
   "@onboardingTreatmentBody": {
     "description": "Body of the onboarding treatment type step."
   },
@@ -354,7 +354,7 @@
     "description": "Helper text explaining that a half-filled device is skipped rather than saved."
   },
 
-  "onboardingConsumablesTitle": "What should AoiLoop track?",
+  "onboardingConsumablesTitle": "What should BlauLoop track?",
   "@onboardingConsumablesTitle": {
     "description": "Heading of the onboarding step that selects which consumables to track."
   },
@@ -465,7 +465,7 @@
     "description": "Heading of the onboarding step that sets the preferred time of day for changes."
   },
 
-  "onboardingChangeTimeBody": "When a change happens at an awkward hour, AoiLoop can offer to move the next one back to this time. It never moves a date on its own.",
+  "onboardingChangeTimeBody": "When a change happens at an awkward hour, BlauLoop can offer to move the next one back to this time. It never moves a date on its own.",
   "@onboardingChangeTimeBody": {
     "description": "Body of the onboarding preferred change time step."
   },
@@ -485,7 +485,7 @@
     "description": "Button that removes the preferred change time."
   },
 
-  "onboardingRemindersTitle": "When should AoiLoop remind you?",
+  "onboardingRemindersTitle": "When should BlauLoop remind you?",
   "@onboardingRemindersTitle": {
     "description": "Heading of the onboarding step that picks reminder lead times."
   },
@@ -632,7 +632,7 @@
     "description": "Heading of the summary card when consumables are set up but no change has ever been registered, so there is no deadline to count towards."
   },
 
-  "dashboardNothingScheduledBody": "Register a change and AoiLoop starts the countdown from there.",
+  "dashboardNothingScheduledBody": "Register a change and BlauLoop starts the countdown from there.",
   "@dashboardNothingScheduledBody": {
     "description": "Body of the summary card when nothing has been registered yet."
   },
@@ -707,7 +707,7 @@
 
   "notificationCycleDueBody": "Register the change once you have done it.",
   "@notificationCycleDueBody": {
-    "description": "Body of the reminder on the due date. Says what the app needs from the user, and does not tell them to change anything — that is their decision, not AoiLoop's."
+    "description": "Body of the reminder on the due date. Says what the app needs from the user, and does not tell them to change anything — that is their decision, not BlauLoop's."
   },
 
   "notificationsOffTitle": "Reminders are off",
@@ -715,7 +715,7 @@
     "description": "Heading of the Home banner shown when the OS will not deliver notifications, so a user is not left believing reminders are running when nothing is scheduled."
   },
 
-  "notificationsOffBody": "AoiLoop cannot tell you when something is due until notifications are allowed.",
+  "notificationsOffBody": "BlauLoop cannot tell you when something is due until notifications are allowed.",
   "@notificationsOffBody": {
     "description": "Body of the reminders-off banner."
   },
@@ -725,7 +725,7 @@
     "description": "Button on the reminders-off banner. Requests the OS notification permission."
   },
 
-  "notificationsOffDenied": "Notifications are blocked in system settings. AoiLoop cannot turn them back on for you.",
+  "notificationsOffDenied": "Notifications are blocked in system settings. BlauLoop cannot turn them back on for you.",
   "@notificationsOffDenied": {
     "description": "Shown when the permission request is refused. States plainly that the fix is outside the app rather than offering to retry something that will not work."
   },
@@ -773,7 +773,7 @@
 
   "registerChangePreferredOffer": "End it at {time} instead, when you prefer to make changes",
   "@registerChangePreferredOffer": {
-    "description": "Label of the checkbox offering to move the new deadline to the user's preferred time of day. Phrased as an offer because AoiLoop never shifts a date on its own.",
+    "description": "Label of the checkbox offering to move the new deadline to the user's preferred time of day. Phrased as an offer because BlauLoop never shifts a date on its own.",
     "placeholders": {
       "time": {
         "type": "String",

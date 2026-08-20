@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 
 /// A UUID text primary key.
 ///
-/// AoiLoop uses UUIDs rather than autoincrementing integers because the
+/// BlauLoop uses UUIDs rather than autoincrementing integers because the
 /// roadmap commits to multi-device sync with caregivers (release 0.2). Two
 /// people logging a change offline — a parent at home and a school nurse —
 /// would both be handed the same integer id and collide on merge. A UUID is

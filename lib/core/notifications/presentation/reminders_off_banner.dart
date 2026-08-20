@@ -10,7 +10,7 @@ import 'reminder_providers.dart';
 /// Says, on Home, that reminders are not running.
 ///
 /// An app that quietly fails to remind someone is worse than one that never
-/// offered to. The whole point of the ledger under this is that AoiLoop can
+/// offered to. The whole point of the ledger under this is that BlauLoop can
 /// tell the difference between "nothing is due" and "nothing can be
 /// delivered", and this is where it says so.
 ///

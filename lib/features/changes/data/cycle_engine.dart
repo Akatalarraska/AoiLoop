@@ -44,7 +44,7 @@ class CycleTransition {
 
 /// Closes one cycle and opens the next, in a single transaction.
 ///
-/// This is the only thing in AoiLoop allowed to write a change. The dashboard
+/// This is the only thing in BlauLoop allowed to write a change. The dashboard
 /// reads the rows it produces and needs no telling: `watchActive` is a Drift
 /// stream, so closing one instance and opening another refreshes Home on its
 /// own.

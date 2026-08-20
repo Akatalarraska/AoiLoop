@@ -1,8 +1,8 @@
-import 'package:aoiloop/shared/models/body_enums.dart';
-import 'package:aoiloop/shared/models/change_enums.dart';
-import 'package:aoiloop/shared/models/consumable_enums.dart';
-import 'package:aoiloop/shared/models/notification_enums.dart';
-import 'package:aoiloop/shared/models/profile_enums.dart';
+import 'package:blauloop/shared/models/body_enums.dart';
+import 'package:blauloop/shared/models/change_enums.dart';
+import 'package:blauloop/shared/models/consumable_enums.dart';
+import 'package:blauloop/shared/models/notification_enums.dart';
+import 'package:blauloop/shared/models/profile_enums.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

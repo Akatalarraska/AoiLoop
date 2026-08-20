@@ -10,7 +10,7 @@ import '../widgets/onboarding_step_layout.dart';
 ///
 /// Optional, and worth asking because of one specific situation: a sensor
 /// fails at 03:17, a new one goes on, and every future change inherits 03:17.
-/// AoiLoop offers to move it back to a civilised hour — offers, in Phase 4,
+/// BlauLoop offers to move it back to a civilised hour — offers, in Phase 4,
 /// and never shifts a date on its own.
 class ChangeTimeStep extends ConsumerWidget {
   const ChangeTimeStep({super.key});

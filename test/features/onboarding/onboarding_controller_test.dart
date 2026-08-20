@@ -1,13 +1,13 @@
-import 'package:aoiloop/app/locale/locale_providers.dart';
-import 'package:aoiloop/core/database/app_database.dart';
-import 'package:aoiloop/core/database/database_providers.dart';
-import 'package:aoiloop/core/database/id_generator.dart';
-import 'package:aoiloop/core/errors/app_failure.dart';
-import 'package:aoiloop/core/utils/clock.dart';
-import 'package:aoiloop/core/utils/timezone_source.dart';
-import 'package:aoiloop/features/onboarding/domain/consumable_preset.dart';
-import 'package:aoiloop/features/onboarding/domain/onboarding_step.dart';
-import 'package:aoiloop/features/onboarding/presentation/onboarding_controller.dart';
+import 'package:blauloop/app/locale/locale_providers.dart';
+import 'package:blauloop/core/database/app_database.dart';
+import 'package:blauloop/core/database/database_providers.dart';
+import 'package:blauloop/core/database/id_generator.dart';
+import 'package:blauloop/core/errors/app_failure.dart';
+import 'package:blauloop/core/utils/clock.dart';
+import 'package:blauloop/core/utils/timezone_source.dart';
+import 'package:blauloop/features/onboarding/domain/consumable_preset.dart';
+import 'package:blauloop/features/onboarding/domain/onboarding_step.dart';
+import 'package:blauloop/features/onboarding/presentation/onboarding_controller.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Riverpod 3 moved `Override` out of the main entrypoint.

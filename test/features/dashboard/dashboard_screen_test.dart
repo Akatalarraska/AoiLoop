@@ -1,5 +1,5 @@
-import 'package:aoiloop/core/database/app_database.dart';
-import 'package:aoiloop/features/dashboard/presentation/widgets/countdown_card.dart';
+import 'package:blauloop/core/database/app_database.dart';
+import 'package:blauloop/features/dashboard/presentation/widgets/countdown_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -96,7 +96,7 @@ void main() {
       expect(find.text('Nothing is counting down yet'), findsOneWidget);
       expect(
         find.text(
-          'Register a change and AoiLoop starts the countdown from there.',
+          'Register a change and BlauLoop starts the countdown from there.',
         ),
         findsOneWidget,
       );
@@ -310,7 +310,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      find.text('AoiLoop does not calculate doses or give treatment advice.'),
+      find.text('BlauLoop does not calculate doses or give treatment advice.'),
       findsOneWidget,
     );
   });

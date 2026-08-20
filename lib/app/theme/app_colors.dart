@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Raw colour constants for AoiLoop.
+/// Raw colour constants for BlauLoop.
 ///
 /// This file answers "which colours exist". It deliberately says nothing about
 /// what they mean — that mapping lives in `status_palette.dart`.

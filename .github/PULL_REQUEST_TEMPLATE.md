@@ -1,5 +1,5 @@
 <!--
-Thanks for contributing to AoiLoop.
+Thanks for contributing to BlauLoop.
 Keep pull requests focused: one coherent change per PR.
 -->
 

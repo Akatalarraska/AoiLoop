@@ -4,7 +4,7 @@ import 'app_colors.dart';
 import 'app_spacing.dart';
 import 'status_palette.dart';
 
-/// Light and dark themes for AoiLoop.
+/// Light and dark themes for BlauLoop.
 ///
 /// Deliberate choices:
 ///

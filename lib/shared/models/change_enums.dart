@@ -5,7 +5,7 @@ library;
 
 /// Why a consumable was changed.
 ///
-/// This is the user's own account of what happened, not a judgement. AoiLoop
+/// This is the user's own account of what happened, not a judgement. BlauLoop
 /// records it so history is honest and so manufacturer claims have the facts
 /// they need — never to score anyone's routine.
 enum ChangeType {
@@ -78,9 +78,9 @@ extension IncidentTypeX on IncidentType {
   /// Whether this kind of failure is normally eligible for a manufacturer
   /// replacement claim.
   ///
-  /// A hint for the UI, so AoiLoop can offer to capture the lot and serial
+  /// A hint for the UI, so BlauLoop can offer to capture the lot and serial
   /// number while the user still has the packaging. It is not a promise —
-  /// every manufacturer has its own policy, and AoiLoop makes no claim about
+  /// every manufacturer has its own policy, and BlauLoop makes no claim about
   /// what they will accept.
   bool get commonlyClaimable => switch (this) {
     IncidentType.adhesiveFailure ||
@@ -103,7 +103,7 @@ extension IncidentTypeX on IncidentType {
   /// Whether this incident is about the body rather than the hardware.
   ///
   /// Used by the body map to show site reactions separately from device
-  /// faults. AoiLoop reports these; it never interprets them medically.
+  /// faults. BlauLoop reports these; it never interprets them medically.
   bool get isSiteReaction => switch (this) {
     IncidentType.pain ||
     IncidentType.bleeding ||
