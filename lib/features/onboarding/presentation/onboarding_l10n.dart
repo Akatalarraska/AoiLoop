@@ -22,6 +22,25 @@ extension ConsumablePresetKeyL10n on ConsumablePresetKey {
     ConsumablePresetKey.lancet => l10n.presetLancet,
     ConsumablePresetKey.glucagon => l10n.presetGlucagon,
   };
+
+  /// A sentence explaining what this actually is, or null where the name is
+  /// already plain.
+  ///
+  /// Shown under the label in the consumables step. Half of the vocabulary on
+  /// that screen is jargon to anyone recently diagnosed — and that screen is
+  /// often somebody's first week. "Infusion set" in particular is read as "the
+  /// cannula" often enough to be worth saying otherwise in the interface
+  /// rather than in a support thread.
+  String? help(AppLocalizations l10n) => switch (this) {
+    ConsumablePresetKey.cgmSensor => l10n.presetCgmSensorHelp,
+    ConsumablePresetKey.cgmTransmitter => l10n.presetCgmTransmitterHelp,
+    ConsumablePresetKey.infusionSet => l10n.presetInfusionSetHelp,
+    ConsumablePresetKey.reservoir => l10n.presetReservoirHelp,
+    ConsumablePresetKey.pod => l10n.presetPodHelp,
+    ConsumablePresetKey.insulin => l10n.presetInsulinHelp,
+    // Pen needles, strips, lancets and glucagon say what they are.
+    _ => null,
+  };
 }
 
 /// Localised copy for reminder lead times.

@@ -36,12 +36,9 @@ class ConsumablesStep extends ConsumerWidget {
           CheckboxListTile(
             value: draft.selectedConsumables.contains(preset.key),
             onChanged: (_) => controller.toggleConsumable(preset.key),
+            isThreeLine: preset.key.help(context.l10n) != null,
             title: Text(preset.key.label(context.l10n)),
-            subtitle: Text(
-              preset.tracksCycle
-                  ? context.l10n.durationDays(preset.defaultDuration!.inDays)
-                  : context.l10n.presetCountedOnly,
-            ),
+            subtitle: _Subtitle(preset: preset),
           ),
         if (draft.selectedConsumables.isEmpty) ...<Widget>[
           const SizedBox(height: AppSpacing.lg),
@@ -52,6 +49,43 @@ class ConsumablesStep extends ConsumerWidget {
             ),
           ),
         ],
+      ],
+    );
+  }
+}
+
+/// What this consumable is, and how long it lasts.
+///
+/// The explanation comes first and the duration second. Someone reading this
+/// screen is deciding *whether they use this thing at all*; the number only
+/// matters once they have decided they do.
+class _Subtitle extends StatelessWidget {
+  const _Subtitle({required this.preset});
+
+  final ConsumablePreset preset;
+
+  @override
+  Widget build(BuildContext context) {
+    final String? help = preset.key.help(context.l10n);
+    final String duration = preset.tracksCycle
+        ? context.l10n.durationDays(preset.defaultDuration!.inDays)
+        : context.l10n.presetCountedOnly;
+
+    if (help == null) {
+      return Text(duration);
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(help),
+        const SizedBox(height: AppSpacing.xxs),
+        Text(
+          duration,
+          style: context.textStyles.bodySmall?.copyWith(
+            color: context.colors.onSurfaceVariant,
+          ),
+        ),
       ],
     );
   }

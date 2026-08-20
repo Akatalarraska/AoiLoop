@@ -84,7 +84,7 @@
 
   "deviceSectionPump": "Bomba",
   "deviceSectionPod": "Controlador de la bomba parche",
-  "deviceSectionCgm": "MCG",
+  "deviceSectionCgm": "Sensor de glucosa (MCG)",
 
   "fieldManufacturer": "Fabricante",
   "fieldModel": "Modelo",
@@ -95,9 +95,16 @@
   "onboardingConsumablesBody": "Marca lo que uses. Todo esto se puede editar o quitar más adelante.",
   "onboardingConsumablesEmpty": "No has marcado nada, así que no habrá ninguna cuenta atrás. Puedes añadir cosas después.",
 
+  "presetCgmSensorHelp": "La pieza que llevas puesta en el cuerpo. MCG es el monitor continuo de glucosa.",
+  "presetCgmTransmitterHelp": "En algunos sistemas es una pieza aparte, con su propia vida útil, más larga que la del sensor.",
+  "presetInfusionSetHelp": "El conjunto completo: cánula, tubo y conector. En algunos sistemas la cánula y el tubo se cambian por separado.",
+  "presetReservoirHelp": "El cartucho que va dentro de la bomba y contiene la insulina.",
+  "presetPodHelp": "Una bomba parche que se lleva pegada al cuerpo, sin tubo.",
+  "presetInsulinHelp": "Un vial, cartucho o pluma ya empezados, que caducan antes que uno sin abrir.",
+
   "presetCountedOnly": "Solo recuento, sin cuenta atrás",
-  "presetCgmSensor": "Sensor MCG",
-  "presetCgmTransmitter": "Transmisor MCG",
+  "presetCgmSensor": "Sensor de glucosa (MCG)",
+  "presetCgmTransmitter": "Transmisor del sensor",
   "presetInfusionSet": "Equipo de infusión",
   "presetReservoir": "Reservorio",
   "presetPod": "Pod",

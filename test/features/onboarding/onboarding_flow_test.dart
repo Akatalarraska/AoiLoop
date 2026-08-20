@@ -122,7 +122,7 @@ void main() {
     expect(
       types.map((ConsumableType type) => type.name),
       containsAll(<String>[
-        'CGM sensor',
+        'Glucose sensor (CGM)',
         'Infusion set',
         'Reservoir',
         'Test strips',

@@ -329,7 +329,7 @@
     "description": "Section heading for patch pump users, whose hardware is a controller rather than a pump."
   },
 
-  "deviceSectionCgm": "CGM",
+  "deviceSectionCgm": "Glucose sensor (CGM)",
   "@deviceSectionCgm": {
     "description": "Section heading for the continuous glucose monitor fields."
   },
@@ -369,17 +369,47 @@
     "description": "Notice shown when the user has unticked every consumable."
   },
 
+  "presetCgmSensorHelp": "The part you wear on your body. CGM stands for continuous glucose monitor.",
+  "@presetCgmSensorHelp": {
+    "description": "Explains what a glucose sensor is under its label in the consumables step. The initials are spelled out because they are jargon to anyone recently diagnosed, and this screen is often someone's first week."
+  },
+
+  "presetCgmTransmitterHelp": "On some systems this is a separate part with its own lifetime, longer than the sensor's.",
+  "@presetCgmTransmitterHelp": {
+    "description": "Explains the transmitter. Many people do not realise it is a distinct part on some systems, which is exactly why its countdown gets missed."
+  },
+
+  "presetInfusionSetHelp": "The whole assembly: cannula, tubing and connector. Some systems let you change the cannula and the tubing separately.",
+  "@presetInfusionSetHelp": {
+    "description": "Explains what an infusion set is made of. Users ask whether this means the cannula; it does not, it is the complete set, and the schema carries cannula and tubing as separate categories for the systems where they are changed apart."
+  },
+
+  "presetReservoirHelp": "The cartridge inside the pump that holds the insulin.",
+  "@presetReservoirHelp": {
+    "description": "Explains the reservoir under its label."
+  },
+
+  "presetPodHelp": "A patch pump worn on the body, with no tubing.",
+  "@presetPodHelp": {
+    "description": "Explains what a pod is under its label."
+  },
+
+  "presetInsulinHelp": "An opened vial, cartridge or pen, which expires sooner than an unopened one.",
+  "@presetInsulinHelp": {
+    "description": "Explains why opened insulin is tracked separately: the in-use life is shorter than the printed expiry."
+  },
+
   "presetCountedOnly": "Counted, no countdown",
   "@presetCountedOnly": {
     "description": "Subtitle for consumables that are tracked as stock only, with no wear cycle."
   },
 
-  "presetCgmSensor": "CGM sensor",
+  "presetCgmSensor": "Glucose sensor (CGM)",
   "@presetCgmSensor": {
     "description": "Consumable preset: continuous glucose monitor sensor."
   },
 
-  "presetCgmTransmitter": "CGM transmitter",
+  "presetCgmTransmitter": "Sensor transmitter",
   "@presetCgmTransmitter": {
     "description": "Consumable preset: continuous glucose monitor transmitter, where it has a fixed lifetime."
   },
