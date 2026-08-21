@@ -121,6 +121,67 @@ class ConsumableInstanceRepository extends Repository {
         .get();
   }
 
+  /// When something was last *put on* each body site, for this profile.
+  ///
+  /// Keyed by site id; a site nothing was ever placed on simply does not
+  /// appear, so the body map can tell "rested a long time" from "never used".
+  /// Those look identical if you only report a duration and they mean very
+  /// different things.
+  ///
+  /// Derived from the instances themselves rather than read from
+  /// `SiteUsages`, which would be the cheaper query and is the wrong one.
+  /// That table's unique index allows a site one occupant at a time, which is
+  /// true of an exact spot and false of a region: a sensor and an infusion set
+  /// on the same side of the abdomen is an ordinary week, and writing a second
+  /// open usage for that region would abort the transaction and leave the user
+  /// unable to register their change at all. Grouping over an indexed column
+  /// costs nothing at the scale one person's history reaches.
+  Future<Map<String, DateTime>> lastInstalledByBodySite(
+    String userProfileId,
+  ) async {
+    final Expression<DateTime> lastInstalled = db
+        .consumableInstances
+        .installedAt
+        .max();
+
+    final List<TypedResult> rows =
+        await (db.selectOnly(db.consumableInstances)
+              ..addColumns(<Expression<Object>>[
+                db.consumableInstances.bodySiteId,
+                lastInstalled,
+              ])
+              ..where(
+                db.consumableInstances.userProfileId.equals(userProfileId) &
+                    db.consumableInstances.bodySiteId.isNotNull(),
+              )
+              ..groupBy(<Expression<Object>>[
+                db.consumableInstances.bodySiteId,
+              ]))
+            .get();
+
+    return <String, DateTime>{
+      for (final TypedResult row in rows)
+        row.read<String>(db.consumableInstances.bodySiteId)!: row
+            .read<DateTime>(lastInstalled)!,
+    };
+  }
+
+  /// Everything ever placed on one site, most recent first.
+  Future<List<ConsumableInstance>> findForBodySite(
+    String bodySiteId, {
+    int limit = 50,
+  }) {
+    return (db.select(db.consumableInstances)
+          ..where(
+            ($ConsumableInstancesTable t) => t.bodySiteId.equals(bodySiteId),
+          )
+          ..orderBy(<OrderClauseGenerator<$ConsumableInstancesTable>>[
+            ($ConsumableInstancesTable t) => OrderingTerm.desc(t.installedAt),
+          ])
+          ..limit(limit))
+        .get();
+  }
+
   Future<ConsumableInstance> create({
     required String userProfileId,
     required String consumableTypeId,

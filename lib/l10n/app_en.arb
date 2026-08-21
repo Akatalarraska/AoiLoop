@@ -1214,5 +1214,125 @@
   "registerChangeReasonHint": "A trip, a shower, a planned swap",
   "@registerChangeReasonHint": {
     "description": "Placeholder inside the early-change reason field. Examples of ordinary reasons, none of them a failure."
+  },
+  "bodyRegionLeftArm": "Left arm",
+  "@bodyRegionLeftArm": { "description": "Body site: the left arm." },
+  "bodyRegionRightArm": "Right arm",
+  "@bodyRegionRightArm": { "description": "Body site: the right arm." },
+  "bodyRegionUpperLeftAbdomen": "Upper left abdomen",
+  "@bodyRegionUpperLeftAbdomen": { "description": "Body site: upper left quadrant of the abdomen." },
+  "bodyRegionUpperRightAbdomen": "Upper right abdomen",
+  "@bodyRegionUpperRightAbdomen": { "description": "Body site: upper right quadrant of the abdomen." },
+  "bodyRegionLowerLeftAbdomen": "Lower left abdomen",
+  "@bodyRegionLowerLeftAbdomen": { "description": "Body site: lower left quadrant of the abdomen." },
+  "bodyRegionLowerRightAbdomen": "Lower right abdomen",
+  "@bodyRegionLowerRightAbdomen": { "description": "Body site: lower right quadrant of the abdomen." },
+  "bodyRegionLeftThigh": "Left thigh",
+  "@bodyRegionLeftThigh": { "description": "Body site: the left thigh." },
+  "bodyRegionRightThigh": "Right thigh",
+  "@bodyRegionRightThigh": { "description": "Body site: the right thigh." },
+  "bodyRegionLeftButtock": "Left buttock",
+  "@bodyRegionLeftButtock": { "description": "Body site: the left buttock." },
+  "bodyRegionRightButtock": "Right buttock",
+  "@bodyRegionRightButtock": { "description": "Body site: the right buttock." },
+  "bodyRegionOther": "Somewhere else",
+  "@bodyRegionOther": { "description": "Body site the user named themselves, outside the standard set." },
+
+  "bodyAreaArms": "Arms",
+  "@bodyAreaArms": { "description": "Heading for the arm sites." },
+  "bodyAreaAbdomen": "Abdomen",
+  "@bodyAreaAbdomen": { "description": "Heading for the abdominal sites." },
+  "bodyAreaThighs": "Thighs",
+  "@bodyAreaThighs": { "description": "Heading for the thigh sites." },
+  "bodyAreaButtocks": "Buttocks",
+  "@bodyAreaButtocks": { "description": "Heading for the buttock sites." },
+  "bodyAreaOther": "Elsewhere",
+  "@bodyAreaOther": { "description": "Heading for sites the user named themselves." },
+
+  "bodyMapIntro": "Where you have put things, and when. BlauLoop records this — it does not tell you where to put the next one.",
+  "@bodyMapIntro": { "description": "Sits at the top of the body map. States the boundary plainly at the one screen a user might expect placement advice." },
+
+  "bodyMapInUse": "In use now: {name}",
+  "@bodyMapInUse": {
+    "description": "Says which consumable is currently on a site.",
+    "placeholders": { "name": { "type": "String", "example": "CGM sensor" } }
+  },
+
+  "bodyMapNeverUsed": "Never used",
+  "@bodyMapNeverUsed": { "description": "Shown for a site nothing has ever been placed on. Deliberately not phrased as a duration — a site that has never been used is not the same as one that has rested a long time." },
+
+  "bodyMapRestingDays": "{count, plural, =0{Free since today} =1{Free for 1 day} other{Free for {count} days}}",
+  "@bodyMapRestingDays": {
+    "description": "How long a site has been free since the last thing came off it.",
+    "placeholders": { "count": { "type": "int", "example": "12" } }
+  },
+
+  "bodyMapLastUsed": "Last used {when}",
+  "@bodyMapLastUsed": {
+    "description": "The date something was last placed on a site.",
+    "placeholders": { "when": { "type": "String", "example": "Tue 12 Aug" } }
+  },
+
+  "bodyMapLongestRested": "Longest without use",
+  "@bodyMapLongestRested": { "description": "Marks the site that has gone longest without anything on it. A fact about the user's own history, never a recommendation — the copy avoids any word that would read as a suggestion." },
+
+  "bodyMapOccupiedCount": "{count, plural, =0{Nothing on you right now} =1{1 site in use} other{{count} sites in use}}",
+  "@bodyMapOccupiedCount": {
+    "description": "Summary line at the top of the body map.",
+    "placeholders": { "count": { "type": "int", "example": "2" } }
+  },
+
+  "bodyMapHistoryTitle": "{region}",
+  "@bodyMapHistoryTitle": {
+    "description": "Title of the sheet listing everything that was placed on one site. Just the site's own name.",
+    "placeholders": { "region": { "type": "String", "example": "Left arm" } }
+  },
+
+  "bodyMapHistoryEmpty": "Nothing has been placed here yet.",
+  "@bodyMapHistoryEmpty": { "description": "Shown in the site history sheet when the site has never been used." },
+
+  "bodyMapHistoryEntry": "{name} · {when}",
+  "@bodyMapHistoryEntry": {
+    "description": "One line of a site's history: what was placed there and when.",
+    "placeholders": {
+      "name": { "type": "String", "example": "CGM sensor" },
+      "when": { "type": "String", "example": "Tue 12 Aug" }
+    }
+  },
+
+  "bodyMapSiteSemanticLabel": "{region}. {state}.",
+  "@bodyMapSiteSemanticLabel": {
+    "description": "Single screen reader announcement for a site, so the place and its state are read as one sentence rather than two fragments. Both parts are already translated.",
+    "placeholders": {
+      "region": { "type": "String", "example": "Left arm" },
+      "state": { "type": "String", "example": "Free for 12 days" }
+    }
+  },
+
+  "sitePickerTitle": "Where did it go?",
+  "@sitePickerTitle": { "description": "Title of the sheet for choosing a body site." },
+
+  "sitePickerNone": "Not recorded",
+  "@sitePickerNone": { "description": "Shown where no body site has been chosen for a consumable." },
+
+  "sitePickerSame": "Same place as before",
+  "@sitePickerSame": { "description": "Shown beside the site a routine change will keep, to make clear nothing is moving unless the user says so." },
+
+  "sitePickerChange": "Change",
+  "@sitePickerChange": { "description": "Button that opens the body site picker." },
+
+  "sitePickerChoose": "Choose",
+  "@sitePickerChoose": { "description": "Button that opens the body site picker when no site is recorded yet." },
+
+  "sitePickerWhere": "Where",
+  "@sitePickerWhere": { "description": "Label for the body site row on the register-change and report-a-problem sheets." },
+
+  "sitePickerClear": "Leave it unrecorded",
+  "@sitePickerClear": { "description": "Option in the site picker for someone who does not want to track placement." },
+
+  "sitePickerOccupied": "{name} is here",
+  "@sitePickerOccupied": {
+    "description": "Marks a site in the picker that already has something on it. Informational — the site is still selectable, because a region is coarse enough to hold two things at once.",
+    "placeholders": { "name": { "type": "String", "example": "CGM sensor" } }
   }
 }

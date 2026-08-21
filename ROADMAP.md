@@ -3,7 +3,7 @@
 The MVP is `0.1.0`. It is built in phases, and **each phase is finished — it
 analyzes, it tests, it runs — before the next one starts.**
 
-Current position: **Phase 6 complete.**
+Current position: **Phase 7 complete.**
 
 ---
 
@@ -82,10 +82,28 @@ for that release to pick up. Also not built: the photo `Incidents.photoPath`
 exists for, which needs camera permissions and file storage; and editing a
 report after the fact, which belongs with the history screen in Phase 9.
 
-### Phase 7 — Body map
+### Phase 7 — Body map ✅
 
-Front and back views, selectable regions, current site, last used, days since
-last use, history. Reports usage; never prescribes a site.
+Selectable regions, current site, last used, days since last use, history.
+Reports usage; never prescribes a site. Placement is chosen in the change and
+incident sheets, and a routine change stays where the last one was unless the
+user says otherwise.
+
+**Regions only, no silhouette and no front/back views.** Recording an exact
+point was the alternative, and nobody reproduces a real placement on a phone
+diagram accurately enough for the precision to mean anything. With placement
+recorded to a region, a picture buys nothing a heading does not, and a grouped
+list is the layout a screen reader and a 200% text scale both handle without
+help. `BodySites.normalizedX` / `normalizedY` stay unused.
+
+That decision had a consequence worth recording. `SiteUsages` carries a unique
+index allowing a site one occupant at a time — true of an exact spot, false of
+a region, because a sensor and an infusion set on the same side of the abdomen
+is an ordinary week. Writing usages would have aborted the transaction and
+left the user unable to register the change at all. So placement is derived
+from `ConsumableInstances`, which answers every question this phase asks, and
+`SiteUsages` is left unwritten. Fixing or dropping that index belongs to
+whichever release wants the cheaper query.
 
 ### Phase 8 — Inventory
 

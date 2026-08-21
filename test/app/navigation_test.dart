@@ -1,3 +1,4 @@
+import 'package:blauloop/features/body_map/presentation/body_map_screen.dart';
 import 'package:blauloop/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -51,7 +52,6 @@ void main() {
 
     for (final (String tab, int phase) in <(String, int)>[
       ('Calendar', 9),
-      ('Body', 7),
       ('History', 9),
     ]) {
       await tester.tap(
@@ -68,6 +68,28 @@ void main() {
         reason: 'tapping $tab did not show its screen',
       );
     }
+  });
+
+  testWidgets('the body tab reaches the body map itself', (
+    WidgetTester tester,
+  ) async {
+    // Built in Phase 7, so it is the one primary destination no longer
+    // answering with a placeholder.
+    await pumpApp(tester);
+
+    await tester.tap(
+      find.descendant(
+        of: find.byType(NavigationBar),
+        matching: find.text('Body'),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byType(BodyMapScreen), findsOneWidget);
+    expect(
+      find.textContaining('it does not tell you where to put the next one'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('the overflow menu reaches the four secondary sections', (

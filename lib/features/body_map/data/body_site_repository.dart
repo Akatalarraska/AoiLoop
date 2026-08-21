@@ -27,6 +27,24 @@ class BodySiteRepository extends Repository {
         .watch();
   }
 
+  /// The sites a user currently wants offered, as a plain future.
+  ///
+  /// The same question [watchActive] answers, for callers that read once and
+  /// build rather than subscribing. Sites change when a user edits them, which
+  /// is a settings screen away and not something the body map needs to react
+  /// to mid-frame.
+  Future<List<BodySite>> findActive(String userProfileId) {
+    return (db.select(db.bodySites)
+          ..where(
+            ($BodySitesTable t) =>
+                t.userProfileId.equals(userProfileId) & t.active.equals(true),
+          )
+          ..orderBy(<OrderClauseGenerator<$BodySitesTable>>[
+            ($BodySitesTable t) => OrderingTerm.asc(t.bodyRegion),
+          ]))
+        .get();
+  }
+
   Future<List<BodySite>> findAll(String userProfileId) {
     return (db.select(db.bodySites)
           ..where(($BodySitesTable t) => t.userProfileId.equals(userProfileId)))
@@ -81,6 +99,25 @@ class BodySiteRepository extends Repository {
       }
       return created;
     });
+  }
+
+  /// Creates the standard set of sites, but only for a profile that has none.
+  ///
+  /// The body map cannot work without somewhere to put things, and there are
+  /// two populations to serve: profiles created from now on, and profiles that
+  /// finished onboarding before this existed. One idempotent call on the read
+  /// path covers both, rather than a seed in onboarding plus a migration for
+  /// everyone else.
+  ///
+  /// It counts **all** sites, not the active ones. Someone who deliberately
+  /// deactivated every site is telling the app something, and an app that
+  /// silently put them all back would be arguing with them.
+  Future<List<BodySite>> ensureDefaults(String userProfileId) async {
+    final List<BodySite> existing = await findAll(userProfileId);
+    if (existing.isNotEmpty) {
+      return existing;
+    }
+    return createDefaults(userProfileId);
   }
 
   Future<void> update(String id, BodySitesCompanion changes) async {

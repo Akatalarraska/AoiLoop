@@ -281,6 +281,35 @@ build the tracking that gives them a purpose. Asking someone to copy two
 numbers off a box into an app that then does nothing with them is a worse
 answer than not asking.
 
+### Body map
+
+Placement is recorded to a **region** and no finer. Ten coarse regions, grouped
+by area, chosen from a list — no silhouette, no front/back views, and
+`BodySites.normalizedX` / `normalizedY` unused. Nobody reproduces a real
+placement on a phone diagram accurately enough for the extra precision to be
+worth anything, and a list is what a screen reader and a 200% text scale both
+handle without help.
+
+Placement is derived from `ConsumableInstances`, not from `SiteUsages`. That
+table would be the cheaper query and it is the wrong one: its unique index
+allows a site one occupant at a time, which is true of an exact spot and false
+of a region. A sensor and an infusion set on the same side of the abdomen is an
+ordinary week, and a second open usage for that region would abort the
+transaction — leaving someone unable to register a change at all. Grouping over
+an indexed column costs nothing at the scale one person's history reaches.
+`SiteUsages` stays in the schema, unwritten.
+
+Where a change puts the new one is a `BodySiteChoice`, not a `String?`, because
+three answers have to be told apart: *here*, *nowhere at all*, and *I did not
+say* — which means wherever the last one was. Collapsing the last two makes
+"leave it unrecorded" silently keep the previous site, which is the app
+recording a placement the user just declined to give it.
+
+The strongest statement the map makes is which site has gone longest without
+use. That is arithmetic over the user's own history, and the copy is written
+to keep it a statement of fact. A tracker that starts recommending placements
+has quietly become something else.
+
 ### Preferred change time
 
 If a sensor fails at 03:17 and a new one goes on, the next change would fall at

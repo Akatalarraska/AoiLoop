@@ -7,6 +7,60 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Added — Phase 7: Body map
+
+- The body map: every site grouped by the part of the body it is on, each
+  saying what is on it now, when it was last used, and how long it has been
+  free since. Tapping one opens everything ever placed there
+- Placement is chosen in the change and incident sheets, so it is recorded at
+  the moment it is known rather than reconstructed later. A routine change
+  stays where the last one was and says so — the site only moves when the user
+  says it moved
+- Body sites are created on first visit rather than during onboarding. Two
+  populations needed serving — profiles created from now on and profiles that
+  finished onboarding before the body map existed — and one idempotent call on
+  the read path covers both. It counts every site, not the active ones, so
+  someone who deliberately turned them all off is not argued with
+- **Regions only.** No silhouette, no front and back views, and
+  `BodySites.normalizedX` / `normalizedY` left unused. Recording an exact point
+  was the alternative and nobody reproduces a real placement on a phone diagram
+  accurately enough for the precision to mean anything. With placement recorded
+  to a region a picture buys nothing a heading does not, and a grouped list is
+  what a screen reader and a 200% text scale both handle without help
+- A site that has never been used says so, rather than reporting a duration.
+  "Free for 400 days" and "never used" are different facts and only the second
+  is true of a site nothing has touched. Rest is rounded down, for the same
+  reason every countdown in the app is
+- The one ranking BlauLoop performs — which site has gone longest without use —
+  is worded as a statement about the user's own history. A never-used site wins
+  over any rested one, ties break on id so the answer does not move between
+  visits, and an occupied site never wins at all. A tracker that starts
+  recommending placements has quietly become something else, and the copy is
+  written to keep that line
+- Placement can be declined outright. Tracking a site is a courtesy the app
+  offers, not a toll it charges for logging a change
+- The picker marks an occupied site rather than blocking it. A region is coarse
+  enough to hold a sensor and an infusion set at once, and refusing one would
+  be the app telling somebody their own body is arranged wrongly
+
+### Changed — Phase 7
+
+- Where a change puts the new one is a `BodySiteChoice` rather than a
+  `String?`. Three answers have to be told apart — *here*, *nowhere at all*,
+  and *I did not say* — and a nullable id carries two. The first cut collapsed
+  the last two, which made "leave it unrecorded" silently keep the previous
+  site; a flow test caught it writing a placement the user had just declined
+- Placement is derived from `ConsumableInstances` rather than read from
+  `SiteUsages`. That table's unique index allows a site one occupant at a time,
+  which is true of an exact spot and false of a region — a sensor and an
+  infusion set on the same side of the abdomen is an ordinary week, and a
+  second open usage for that region would abort the transaction and leave the
+  user unable to register their change. `SiteUsages` stays in the schema,
+  unwritten; fixing or dropping that index belongs to whichever release wants
+  the cheaper query
+- The Body tab is the first primary destination to stop answering with a
+  placeholder
+
 ### Added — Phase 6: Incidents
 
 - Reporting that a consumable failed: what went wrong, when it went wrong, a

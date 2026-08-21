@@ -6,6 +6,7 @@ import '../../../core/database/database_providers.dart';
 import '../../../core/errors/app_failure.dart';
 import '../../../core/notifications/data/notification_scheduler.dart';
 import '../../../shared/models/cycle_status.dart';
+import '../../body_map/domain/body_site_choice.dart';
 import '../../consumables/data/consumable_instance_repository.dart';
 import '../../incidents/data/incident_repository.dart';
 import '../../incidents/domain/incident_report.dart';
@@ -175,6 +176,12 @@ class CycleEngine {
   /// [usePreferredTime] is the user's answer to the offer in
   /// [CycleSchedule.preferredChangeAt]. It is ignored when there is no offer.
   ///
+  /// [placement] is where the new one went. Null means *wherever the last one
+  /// was*, which is what a routine change is: the site only moves when the
+  /// user says it did. [BodySiteChoice.none] is the different answer of *do
+  /// not record a place at all*, and the two must not be collapsed — doing so
+  /// makes the app store a placement the user has just declined to give it.
+  ///
   /// Throws [ValidationFailure] if [changedAt] falls before the install it
   /// would be closing — a change cannot precede the thing it replaced.
   Future<CycleTransition> registerChange({
@@ -183,6 +190,7 @@ class CycleEngine {
     required DateTime changedAt,
     int? profileMinuteOfDay,
     bool usePreferredTime = false,
+    BodySiteChoice? placement,
     String? notes,
   }) async {
     final CycleTransition transition = await _write(
@@ -191,6 +199,7 @@ class CycleEngine {
       changedAt: changedAt,
       profileMinuteOfDay: profileMinuteOfDay,
       usePreferredTime: usePreferredTime,
+      placement: placement,
       notes: notes,
     );
 
@@ -210,6 +219,7 @@ class CycleEngine {
     required DateTime changedAt,
     int? profileMinuteOfDay,
     bool usePreferredTime = false,
+    BodySiteChoice? placement,
     String? notes,
   }) {
     final DateTime changed = changedAt.toUtc();
@@ -247,11 +257,11 @@ class CycleEngine {
         consumableTypeId: type.id,
         installedAt: changed,
         expectedChangeAt: schedule.changeAt(usePreferredTime: usePreferredTime),
-        // Carried over so a site, a device or a pod keeps its association
-        // across a routine change. Choosing a *different* site is the body
-        // map's job, in Phase 7.
+        // The device is carried over unconditionally — it is the same pump.
+        // The site is carried over only when the user did not name one, so a
+        // routine change stays where it was and a deliberate move is honoured.
         deviceId: previous?.deviceId,
-        bodySiteId: previous?.bodySiteId,
+        bodySiteId: placement != null ? placement.siteId : previous?.bodySiteId,
       );
 
       // The note goes on the change, not on the instance it opened. "Going
@@ -306,6 +316,7 @@ class CycleEngine {
     DateTime? replacedAt,
     int? profileMinuteOfDay,
     bool usePreferredTime = false,
+    BodySiteChoice? placement,
   }) async {
     final IncidentRecord record = await _writeIncident(
       userProfileId: userProfileId,
@@ -314,6 +325,7 @@ class CycleEngine {
       replacedAt: replacedAt,
       profileMinuteOfDay: profileMinuteOfDay,
       usePreferredTime: usePreferredTime,
+      placement: placement,
     );
 
     // Only when the cycle actually moved. A user who logged an irritated site
@@ -334,6 +346,7 @@ class CycleEngine {
     DateTime? replacedAt,
     int? profileMinuteOfDay,
     bool usePreferredTime = false,
+    BodySiteChoice? placement,
   }) {
     final DateTime occurred = report.occurredAt.toUtc();
     final DateTime replaced = (replacedAt ?? report.occurredAt).toUtc();
@@ -392,12 +405,11 @@ class CycleEngine {
         consumableTypeId: type.id,
         installedAt: replaced,
         expectedChangeAt: schedule.changeAt(usePreferredTime: usePreferredTime),
-        // Carried over for the same reason an ordinary change carries them:
-        // the pump and the pod are still the same hardware. A site that just
-        // reacted badly is a different matter, and choosing a new one is the
-        // body map's job in Phase 7.
+        // The site matters more here than on a routine change: a site that
+        // just reacted badly is exactly the one somebody moves away from, and
+        // the report sheet offers that. Carried over when they did not.
         deviceId: failed.deviceId,
-        bodySiteId: failed.bodySiteId,
+        bodySiteId: placement != null ? placement.siteId : failed.bodySiteId,
       );
 
       final ChangeEvent event = await changes.create(

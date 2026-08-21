@@ -5,9 +5,13 @@ import '../../../app/theme/app_spacing.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/errors/app_failure.dart';
 import '../../../core/utils/clock.dart';
+import '../../../shared/extensions/body_enums_l10n.dart';
 import '../../../shared/extensions/build_context_x.dart';
 import '../../../shared/extensions/date_time_format.dart';
 import '../../../shared/extensions/incident_enums_l10n.dart';
+import '../../body_map/domain/body_site_choice.dart';
+import '../../body_map/presentation/body_map_providers.dart';
+import '../../body_map/presentation/body_site_picker.dart';
 import '../../changes/data/cycle_engine.dart';
 import '../../changes/domain/cycle_schedule.dart';
 import '../../dashboard/domain/dashboard_view.dart';
@@ -98,7 +102,44 @@ class _ReportIncidentSheetState extends ConsumerState<ReportIncidentSheet> {
     super.dispose();
   }
 
+  /// Where the replacement is going.
+  ///
+  /// Null means *where the failed one was*. It matters more here than on a
+  /// routine change: the site that just reacted badly is exactly the one
+  /// somebody moves away from, and the app has to let them say so without
+  /// assuming they did.
+  BodySiteChoice? _site;
+
+  String? get _effectiveSiteId =>
+      _site != null ? _site!.siteId : widget.card.instance?.bodySiteId;
+
+  bool get _siteIsCarriedOver => _site == null;
+
+  String? get _siteLabel {
+    final String? id = _effectiveSiteId;
+    if (id == null) {
+      return null;
+    }
+    return ref
+        .watch(bodyMapProvider)
+        .value
+        ?.cardFor(id)
+        ?.region
+        .label(context.l10n);
+  }
+
+  Future<void> _pickSite() async {
+    final BodySiteChoice? choice = await BodySitePicker.show(
+      context,
+      selectedSiteId: _effectiveSiteId,
+    );
+    if (choice != null && mounted) {
+      setState(() => _site = choice);
+    }
+  }
+
   /// True while the report still holds the moment the sheet opened.
+
   bool get _isNow => _occurredAt == _openedAt;
 
   /// When the replacement went on.
@@ -222,6 +263,12 @@ class _ReportIncidentSheetState extends ConsumerState<ReportIncidentSheet> {
                       ],
 
                       if (replacing) ...<Widget>[
+                        const Divider(height: AppSpacing.xl),
+                        _SiteRow(
+                          siteLabel: _siteLabel,
+                          isCarriedOver: _siteIsCarriedOver,
+                          onEdit: _saving ? null : _pickSite,
+                        ),
                         const Divider(height: AppSpacing.xl),
                         _NextChangeRow(
                           changeAt: schedule.changeAt(
@@ -417,6 +464,7 @@ class _ReportIncidentSheetState extends ConsumerState<ReportIncidentSheet> {
                 : null,
             profileMinuteOfDay: widget.profile.preferredChangeMinuteOfDay,
             usePreferredTime: _usePreferredTime,
+            placement: _outcome == IncidentOutcome.replaced ? _site : null,
           );
     } on ValidationFailure catch (failure) {
       error = switch (failure.field) {
@@ -477,6 +525,55 @@ class _IncidentTypePicker extends StatelessWidget {
             selected: selected == type,
             onSelected: onChanged == null ? null : (bool _) => onChanged!(type),
           ),
+      ],
+    );
+  }
+}
+
+/// Where the replacement is going, and the way to say somewhere else.
+class _SiteRow extends StatelessWidget {
+  const _SiteRow({
+    required this.siteLabel,
+    required this.isCarriedOver,
+    required this.onEdit,
+  });
+
+  final String? siteLabel;
+  final bool isCarriedOver;
+  final VoidCallback? onEdit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _FieldLabel(context.l10n.sitePickerWhere),
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                siteLabel ?? context.l10n.sitePickerNone,
+                style: context.textStyles.titleMedium,
+              ),
+              if (siteLabel != null && isCarriedOver)
+                Text(
+                  context.l10n.sitePickerSame,
+                  style: context.textStyles.bodySmall?.copyWith(
+                    color: context.colors.onSurfaceVariant,
+                  ),
+                ),
+            ],
+          ),
+        ),
+        TextButton(
+          onPressed: onEdit,
+          child: Text(
+            siteLabel == null
+                ? context.l10n.sitePickerChoose
+                : context.l10n.sitePickerChange,
+          ),
+        ),
       ],
     );
   }

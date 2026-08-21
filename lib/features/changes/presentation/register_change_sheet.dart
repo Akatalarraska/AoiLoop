@@ -5,9 +5,14 @@ import '../../../app/theme/app_spacing.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/errors/app_failure.dart';
 import '../../../core/utils/clock.dart';
+import '../../../shared/extensions/body_enums_l10n.dart';
 import '../../../shared/extensions/build_context_x.dart';
 import '../../../shared/extensions/cycle_countdown_l10n.dart';
 import '../../../shared/extensions/date_time_format.dart';
+import '../../body_map/domain/body_map_view.dart';
+import '../../body_map/domain/body_site_choice.dart';
+import '../../body_map/presentation/body_map_providers.dart';
+import '../../body_map/presentation/body_site_picker.dart';
 import '../../dashboard/domain/dashboard_view.dart';
 import '../data/cycle_engine.dart';
 import '../domain/cycle_schedule.dart';
@@ -111,7 +116,42 @@ class _RegisterChangeSheetState extends ConsumerState<RegisterChangeSheet> {
     super.dispose();
   }
 
+  /// Where the new one is going.
+  ///
+  /// Null until the user says otherwise, which means *wherever the last one
+  /// was*. Holding "unset" rather than eagerly copying the previous site is
+  /// what lets the engine tell a deliberate move from a routine change.
+  BodySiteChoice? _site;
+
+  /// The site id that will actually be written.
+  String? get _effectiveSiteId =>
+      _site != null ? _site!.siteId : widget.card.instance?.bodySiteId;
+
+  bool get _siteIsCarriedOver => _site == null;
+
+  /// The chosen site's own name, read from the body map so the sheet and the
+  /// picker cannot disagree about what a site is called.
+  String? get _siteLabel {
+    final String? id = _effectiveSiteId;
+    if (id == null) {
+      return null;
+    }
+    final BodySiteCard? card = ref.watch(bodyMapProvider).value?.cardFor(id);
+    return card?.region.label(context.l10n);
+  }
+
+  Future<void> _pickSite() async {
+    final BodySiteChoice? choice = await BodySitePicker.show(
+      context,
+      selectedSiteId: _effectiveSiteId,
+    );
+    if (choice != null && mounted) {
+      setState(() => _site = choice);
+    }
+  }
+
   /// True while the sheet still holds the moment it opened with, which is the
+
   /// overwhelmingly common case: someone logging a change as they make it.
   bool get _isNow => _changedAt == _openedAt;
 
@@ -156,6 +196,13 @@ class _RegisterChangeSheetState extends ConsumerState<RegisterChangeSheet> {
               changedAt: _changedAt,
               isNow: _isNow,
               onEdit: _saving ? null : _pickMoment,
+            ),
+            const Divider(height: AppSpacing.xl),
+
+            _SiteRow(
+              siteLabel: _siteLabel,
+              isCarriedOver: _siteIsCarriedOver,
+              onEdit: _saving ? null : _pickSite,
             ),
             const Divider(height: AppSpacing.xl),
 
@@ -281,6 +328,7 @@ class _RegisterChangeSheetState extends ConsumerState<RegisterChangeSheet> {
             changedAt: _changedAt,
             profileMinuteOfDay: widget.profile.preferredChangeMinuteOfDay,
             usePreferredTime: _usePreferredTime,
+            placement: _site,
             notes: reason,
           );
     } on ValidationFailure {
@@ -341,6 +389,69 @@ class _EarlyChangeReason extends StatelessWidget {
           decoration: InputDecoration(
             labelText: context.l10n.registerChangeReason,
             hintText: context.l10n.registerChangeReasonHint,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Where the consumable is going, and the way to say somewhere else.
+///
+/// Shows the site that will actually be stored — the one carried over from
+/// the last change unless the user names another — for the same reason the
+/// deadline row shows the date that will be stored. A preview that disagreed
+/// with what was saved would be worse than no preview.
+class _SiteRow extends StatelessWidget {
+  const _SiteRow({
+    required this.siteLabel,
+    required this.isCarriedOver,
+    required this.onEdit,
+  });
+
+  /// The site's own name, or null when none is recorded.
+  final String? siteLabel;
+
+  /// Whether this is simply where the last one was.
+  final bool isCarriedOver;
+
+  final VoidCallback? onEdit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                context.l10n.sitePickerWhere,
+                style: context.textStyles.labelMedium?.copyWith(
+                  color: context.colors.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                siteLabel ?? context.l10n.sitePickerNone,
+                style: context.textStyles.titleMedium,
+              ),
+              if (siteLabel != null && isCarriedOver)
+                Text(
+                  context.l10n.sitePickerSame,
+                  style: context.textStyles.bodySmall?.copyWith(
+                    color: context.colors.onSurfaceVariant,
+                  ),
+                ),
+            ],
+          ),
+        ),
+        TextButton(
+          onPressed: onEdit,
+          child: Text(
+            siteLabel == null
+                ? context.l10n.sitePickerChoose
+                : context.l10n.sitePickerChange,
           ),
         ),
       ],

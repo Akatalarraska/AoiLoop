@@ -29,7 +29,37 @@ enum BodyRegion {
   other,
 }
 
+/// A group of regions that sit together on the body.
+///
+/// Exists for one reason: ten regions in a flat list is a wall of text, and
+/// the thing a user is actually doing is finding "the arm" and then picking a
+/// side. Grouping turns one long scan into two short ones.
+///
+/// It is presentation vocabulary that happens to be pure Dart, so it lives
+/// beside the enum it derives from rather than in a widget.
+enum BodyArea {
+  arms,
+  abdomen,
+  thighs,
+  buttocks,
+
+  /// Whatever the user named themselves.
+  other,
+}
+
 extension BodyRegionX on BodyRegion {
+  /// The group this region belongs to.
+  BodyArea get area => switch (this) {
+    BodyRegion.leftArm || BodyRegion.rightArm => BodyArea.arms,
+    BodyRegion.upperLeftAbdomen ||
+    BodyRegion.upperRightAbdomen ||
+    BodyRegion.lowerLeftAbdomen ||
+    BodyRegion.lowerRightAbdomen => BodyArea.abdomen,
+    BodyRegion.leftThigh || BodyRegion.rightThigh => BodyArea.thighs,
+    BodyRegion.leftButtock || BodyRegion.rightButtock => BodyArea.buttocks,
+    BodyRegion.other => BodyArea.other,
+  };
+
   /// Which side of the body this region is on, derived from the region itself.
   BodySide get side => switch (this) {
     BodyRegion.leftArm ||
