@@ -1,16 +1,19 @@
 import 'package:blauloop/core/database/app_database.dart';
 import 'package:blauloop/core/database/id_generator.dart';
 import 'package:blauloop/core/notifications/data/notification_schedule_repository.dart';
+import 'package:blauloop/core/notifications/data/notification_scheduler.dart';
 import 'package:blauloop/core/utils/clock.dart';
 import 'package:blauloop/features/body_map/data/body_site_repository.dart';
 import 'package:blauloop/features/body_map/data/site_usage_repository.dart';
 import 'package:blauloop/features/changes/data/change_event_repository.dart';
+import 'package:blauloop/features/changes/data/cycle_engine.dart';
 import 'package:blauloop/features/consumables/data/consumable_instance_repository.dart';
 import 'package:blauloop/features/consumables/data/consumable_type_repository.dart';
 import 'package:blauloop/features/devices/data/device_repository.dart';
 import 'package:blauloop/features/incidents/data/incident_repository.dart';
 import 'package:blauloop/features/inventory/data/inventory_repository.dart';
 import 'package:blauloop/features/settings/data/user_profile_repository.dart';
+import 'package:blauloop/shared/models/cycle_status.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -67,6 +70,27 @@ class TestHarness {
       InventoryRepository(db: db, clock: clock, ids: ids);
   NotificationScheduleRepository get notifications =>
       NotificationScheduleRepository(db: db, clock: clock, ids: ids);
+
+  /// The cycle engine, wired to this harness.
+  ///
+  /// A factory rather than a getter because [thresholds] is the one thing
+  /// tests need to vary, and because building it in one place keeps every
+  /// test out of the business of knowing which repositories it takes.
+  /// Reminders are left off: a test that cares about them injects its own
+  /// scheduler.
+  CycleEngine cycleEngine({
+    CycleStatusThresholds thresholds = CycleStatusThresholds.defaults,
+    NotificationScheduler? reminders,
+  }) {
+    return CycleEngine(
+      db: db,
+      instances: instances,
+      changes: changes,
+      incidents: incidents,
+      reminders: reminders,
+      thresholds: thresholds,
+    );
+  }
 
   /// Every consumable type, as a plain future.
   ///

@@ -7,6 +7,8 @@ import '../../../shared/extensions/build_context_x.dart';
 import '../../changes/presentation/register_change_sheet.dart';
 import '../domain/dashboard_view.dart';
 import 'dashboard_providers.dart';
+import 'widgets/consumable_actions_sheet.dart';
+import 'widgets/consumable_rail.dart';
 import 'widgets/countdown_card.dart';
 import 'widgets/next_change_card.dart';
 
@@ -102,6 +104,20 @@ class _DashboardBody extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.sm),
           _AttentionSummary(view: view),
+          const SizedBox(height: AppSpacing.lg),
+
+          // Above the detail, because the jobs it leads to are why the app
+          // gets opened. The cards below answer "how long have I got"; the
+          // circles answer "I need to log something", and that one should not
+          // require a scroll.
+          ConsumableRail(
+            cards: view.cards,
+            onTap: (DashboardCard card) => ConsumableActionsSheet.show(
+              context,
+              card: card,
+              profile: view.profile,
+            ),
+          ),
           const SizedBox(height: AppSpacing.xl),
           Text(
             context.l10n.dashboardTracking,

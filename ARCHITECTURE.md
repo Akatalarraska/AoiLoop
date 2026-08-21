@@ -209,6 +209,7 @@ Owns, exclusively:
 - the next change date for a consumable
 - custom durations and early changes
 - applying the user's preferred change time
+- recording a failure and restarting the cycle after one
 - cancelling and rescheduling notifications
 
 Note what is *not* in that list: turning a stored deadline into a status is
@@ -216,6 +217,16 @@ Note what is *not* in that list: turning a stored deadline into a status is
 than each keeping their own version. The date arithmetic is not the engine's
 either — that is `CycleSchedule`, plain Dart next door in `domain/`, which is
 where the dates are actually tested.
+
+Incidents live here rather than in an engine of their own, even though the
+rows they write belong to `features/incidents/`. Reporting a failure *is* a
+cycle transition with a reason attached: it closes an instance, may open the
+next one, and has to decide whether the one that failed had run its course.
+That last question is `_wasOnTime`, and a second copy of it is how the app
+ends up contradicting itself in writing — calling a change on time on Home
+and early in the history. One engine, one boundary. `wouldBeEarly` is the same
+rule exposed for the register-change sheet, which asks *why* only when the
+answer will actually be recorded as an early change.
 
 The engine lives in `data/` rather than `domain/` because it orchestrates
 repositories inside a transaction, the same reason `OnboardingService` does.
@@ -242,6 +253,33 @@ happens to notifications — a permission revoked and restored, a reinstall, a
 reboot, an OS that quietly dropped some. The ledger in `NotificationSchedules`
 is what makes the rebuild possible, and what lets Home tell the difference
 between "nothing is due" and "nothing can be delivered".
+
+### Incidents
+
+An incident is what the user says happened, and nothing else. BlauLoop stores
+the category, the moment and a note. It does not say what caused a failure,
+whether it will recur, or what to do about it, and the report sheet says so on
+its face.
+
+Two things follow from that.
+
+Two of the sheet's answers have **no default**. Neither the failure reason nor
+what the user did next is pre-selected, and the save button waits for both. A
+pre-ticked reason writes an account of someone's day that they never gave, and
+a pre-ticked outcome moves a deadline they never agreed to move.
+
+The failure list is **ordered, never filtered**. `incidentTypesFor` puts what
+plausibly happens to a category first and leaves everything else reachable
+below it — the same principle as the product catalogue accepting a name typed
+by hand. A list that hides the answer someone needs fails exactly the person
+whose product did something unexpected.
+
+Manufacturer claims are **not modelled at all**, and neither is the lot and
+serial capture that would feed one. `ConsumableInstances` has the columns and
+`IncidentType.commonlyClaimable` has the rule, both unused, waiting for 0.4 to
+build the tracking that gives them a purpose. Asking someone to copy two
+numbers off a box into an app that then does nothing with them is a worse
+answer than not asking.
 
 ### Preferred change time
 

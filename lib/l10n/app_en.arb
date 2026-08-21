@@ -983,5 +983,236 @@
         "example": "6 hours left"
       }
     }
+  },
+  "incidentTypeDetached": "It came off",
+  "@incidentTypeDetached": {
+    "description": "Incident type: the consumable came off the body."
+  },
+
+  "incidentTypeAdhesiveFailure": "The adhesive stopped holding",
+  "@incidentTypeAdhesiveFailure": {
+    "description": "Incident type: adhesive lifted or failed."
+  },
+
+  "incidentTypeBentCannula": "Bent cannula",
+  "@incidentTypeBentCannula": {
+    "description": "Incident type: the cannula bent on insertion or in use."
+  },
+
+  "incidentTypeOcclusion": "Blocked line or cannula",
+  "@incidentTypeOcclusion": {
+    "description": "Incident type: an occlusion."
+  },
+
+  "incidentTypeNoFlow": "Insulin not getting through",
+  "@incidentTypeNoFlow": {
+    "description": "Incident type: no delivery, without a detected occlusion."
+  },
+
+  "incidentTypeLeak": "It leaked",
+  "@incidentTypeLeak": {
+    "description": "Incident type: leaking at the site or a connection."
+  },
+
+  "incidentTypePain": "It hurt",
+  "@incidentTypePain": {
+    "description": "Incident type: a painful site."
+  },
+
+  "incidentTypeBleeding": "It bled",
+  "@incidentTypeBleeding": {
+    "description": "Incident type: bleeding at the site."
+  },
+
+  "incidentTypeIrritation": "The skin reacted",
+  "@incidentTypeIrritation": {
+    "description": "Incident type: redness, itching or irritation at the site."
+  },
+
+  "incidentTypeInaccurateReadings": "Readings were off",
+  "@incidentTypeInaccurateReadings": {
+    "description": "Incident type: sensor readings clearly not matching fingersticks."
+  },
+
+  "incidentTypeSignalLoss": "It lost signal",
+  "@incidentTypeSignalLoss": {
+    "description": "Incident type: lost connection between sensor and reader."
+  },
+
+  "incidentTypeDeviceError": "The device reported an error",
+  "@incidentTypeDeviceError": {
+    "description": "Incident type: the device raised an error of its own."
+  },
+
+  "incidentTypePumpFailure": "The pump failed",
+  "@incidentTypePumpFailure": {
+    "description": "Incident type: pump hardware failure."
+  },
+
+  "incidentTypePodFailure": "The pod failed",
+  "@incidentTypePodFailure": {
+    "description": "Incident type: pod failure or alarm."
+  },
+
+  "incidentTypeOther": "Something else",
+  "@incidentTypeOther": {
+    "description": "Incident type: anything not in the list."
+  },
+
+  "incidentOutcomeReplaced": "I put a new one on",
+  "@incidentOutcomeReplaced": {
+    "description": "What the user did after the failure: replaced it there and then."
+  },
+
+  "incidentOutcomeRemoved": "I took it off, nothing on yet",
+  "@incidentOutcomeRemoved": {
+    "description": "What the user did after the failure: removed it without a replacement."
+  },
+
+  "incidentOutcomeKeptInUse": "It is still on",
+  "@incidentOutcomeKeptInUse": {
+    "description": "What the user did after the failure: logged it and carried on using it."
+  },
+
+  "actionReportIncident": "Report a problem",
+  "@actionReportIncident": {
+    "description": "Opens the sheet for recording that a consumable failed."
+  },
+
+  "consumableActionsTitle": "{name}",
+  "@consumableActionsTitle": {
+    "description": "Title of the sheet that opens when a consumable circle on Home is tapped. Just the consumable's own name, which the user typed or chose.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "CGM sensor"
+      }
+    }
+  },
+
+  "consumableActionsNothingInUse": "Nothing is in use for this one yet",
+  "@consumableActionsNothingInUse": {
+    "description": "Why reporting a problem is unavailable: there is no active instance to report one against."
+  },
+
+  "dashboardRailHint": "Tap one to log a change or a problem.",
+  "@dashboardRailHint": {
+    "description": "Caption above the row of consumable circles on Home, which explains what tapping a circle does."
+  },
+
+  "reportIncidentTitle": "What went wrong?",
+  "@reportIncidentTitle": {
+    "description": "Title of the report-a-problem sheet."
+  },
+
+  "reportIncidentSubtitle": "BlauLoop writes this down so your history is honest and so you have the facts if you claim a replacement. It does not tell you what caused it or what to do about it.",
+  "@reportIncidentSubtitle": {
+    "description": "Standing reminder of what the app does and does not do with an incident. Keeps the boundary explicit at the moment the user is most likely to expect advice."
+  },
+
+  "reportIncidentWhat": "What happened",
+  "@reportIncidentWhat": {
+    "description": "Label for the incident type picker."
+  },
+
+  "reportIncidentWhen": "When",
+  "@reportIncidentWhen": {
+    "description": "Label for the moment the failure happened."
+  },
+
+  "reportIncidentNow": "Now",
+  "@reportIncidentNow": {
+    "description": "Shown beside the timestamp while it is still the moment the sheet opened."
+  },
+
+  "reportIncidentEditTime": "Edit",
+  "@reportIncidentEditTime": {
+    "description": "Button that opens the date and time pickers."
+  },
+
+  "reportIncidentOutcome": "And now?",
+  "@reportIncidentOutcome": {
+    "description": "Label for the question of whether the consumable was removed or replaced."
+  },
+
+  "reportIncidentReplacedWhen": "The new one went on",
+  "@reportIncidentReplacedWhen": {
+    "description": "Label for when the replacement was installed. Only asked when the failure is being logged after the fact, where the two moments can differ."
+  },
+
+  "reportIncidentNextTitle": "Next change",
+  "@reportIncidentNextTitle": {
+    "description": "Label for the deadline the replacement cycle will be given."
+  },
+
+  "reportIncidentNotes": "Notes",
+  "@reportIncidentNotes": {
+    "description": "Label for the free-text notes field on the report sheet."
+  },
+
+  "reportIncidentNotesHint": "Anything worth remembering about it",
+  "@reportIncidentNotesHint": {
+    "description": "Placeholder inside the notes field."
+  },
+
+  "reportIncidentSubmit": "Save report",
+  "@reportIncidentSubmit": {
+    "description": "Confirms the incident report."
+  },
+
+  "reportIncidentSaved": "{name} problem recorded.",
+  "@reportIncidentSaved": {
+    "description": "Confirmation after an incident was saved without a replacement.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "CGM sensor"
+      }
+    }
+  },
+
+  "reportIncidentSavedAndReplaced": "{name} problem recorded. The new one is counting down.",
+  "@reportIncidentSavedAndReplaced": {
+    "description": "Confirmation after an incident was saved and a replacement was opened.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "CGM sensor"
+      }
+    }
+  },
+
+  "reportIncidentFailed": "The report could not be saved, so nothing was recorded. Try again.",
+  "@reportIncidentFailed": {
+    "description": "Shown when the incident write failed. States plainly that nothing was half-written."
+  },
+
+  "reportIncidentTooEarly": "That is before this one went on. Pick a later time.",
+  "@reportIncidentTooEarly": {
+    "description": "Shown when the incident is dated before the install it is about."
+  },
+
+  "reportIncidentReplacedTooEarly": "The new one cannot have gone on before the problem happened. Pick a later time.",
+  "@reportIncidentReplacedTooEarly": {
+    "description": "Shown when the replacement is dated before the incident."
+  },
+
+  "reportIncidentNothingInUse": "There is nothing in use for this one, so there is no problem to report.",
+  "@reportIncidentNothingInUse": {
+    "description": "Shown when the consumable was changed elsewhere between opening the sheet and saving it."
+  },
+  "registerChangeEarlyNotice": "This is before the date it was due, so it goes into your history as an early change.",
+  "@registerChangeEarlyNotice": {
+    "description": "Shown on the register-change sheet when the chosen moment falls before the deadline. States what will be recorded, without suggesting the user did anything wrong."
+  },
+
+  "registerChangeReason": "Why, if you want to say",
+  "@registerChangeReason": {
+    "description": "Label for the optional free-text reason for an early change."
+  },
+
+  "registerChangeReasonHint": "A trip, a shower, a planned swap",
+  "@registerChangeReasonHint": {
+    "description": "Placeholder inside the early-change reason field. Examples of ordinary reasons, none of them a failure."
   }
 }

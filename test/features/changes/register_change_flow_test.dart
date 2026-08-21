@@ -368,4 +368,84 @@ void main() {
       expect(opened.expectedChangeAt!.toLocal().minute, 0);
     });
   });
+
+  group('an early change', () {
+    testWidgets('says what will be recorded and offers to say why', (
+      WidgetTester tester,
+    ) async {
+      final AppUnderTest app = await pumpTallApp(tester);
+      await seedType(app, name: 'CGM sensor', dueIn: const Duration(days: 5));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Register change').first);
+      await tester.pumpAndSettle();
+
+      // Phrased as a record rather than a reproach. Changing something early
+      // is a thing people do for good reasons, and an app that tuts at them
+      // is one they stop telling the truth to.
+      expect(
+        find.textContaining('goes into your history as an early change'),
+        findsOneWidget,
+      );
+      expect(find.text('Why, if you want to say'), findsOneWidget);
+    });
+
+    testWidgets('keeps the reason on the change, not on the new one', (
+      WidgetTester tester,
+    ) async {
+      final AppUnderTest app = await pumpTallApp(tester);
+      await seedType(app, name: 'CGM sensor', dueIn: const Duration(days: 5));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Register change').first);
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.widgetWithText(TextField, 'Why, if you want to say'),
+        'going swimming',
+      );
+      await tester.tap(confirmChange);
+      await tester.pumpAndSettle();
+
+      final List<ChangeEvent> events = await app.harness.db
+          .select(app.harness.db.changeEvents)
+          .get();
+      expect(events.single.type, ChangeType.early);
+      expect(events.single.notes, 'going swimming');
+
+      // "Going swimming" is a fact about the swap. Hung on the new sensor it
+      // would read as a remark about something that has not done anything yet.
+      final ConsumableInstance opened = (await instances(app))
+          .firstWhere((ConsumableInstance i) => i.status.isOpen);
+      expect(opened.notes, isNull);
+    });
+
+    testWidgets('does not ask an on-time change to explain itself', (
+      WidgetTester tester,
+    ) async {
+      // Shares the dashboard's own 24 hour threshold, so a swap the evening
+      // before the deadline is following the app's prompt, not failing at
+      // anything.
+      final AppUnderTest app = await pumpTallApp(tester);
+      await seedType(app, name: 'CGM sensor', dueIn: const Duration(hours: 6));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Register change').first);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Why, if you want to say'), findsNothing);
+    });
+
+    testWidgets('a first ever change has no date to have missed', (
+      WidgetTester tester,
+    ) async {
+      final AppUnderTest app = await pumpTallApp(tester);
+      await seedType(app, name: 'CGM sensor', inUse: false);
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Register change').first);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Why, if you want to say'), findsNothing);
+    });
+  });
 }

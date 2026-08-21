@@ -3,7 +3,7 @@
 The MVP is `0.1.0`. It is built in phases, and **each phase is finished — it
 analyzes, it tests, it runs — before the next one starts.**
 
-Current position: **Phase 5 complete.**
+Current position: **Phase 6 complete.**
 
 ---
 
@@ -57,24 +57,30 @@ has no Android SDK and no iOS toolchain, so the platform configuration is
 proven only by CI's `flutter build apk --debug`. Confirm on a phone before
 tagging `0.1.0`.
 
-### Phase 6 — Incidents
+### Phase 6 — Incidents ✅
 
-Early replacement, reasons, notes, lot and serial capture, the manufacturer
-replacement flow, cycle restart.
+Reporting that something failed: what went wrong, when, and a note. What the
+user did next is a separate answer, because all three happen: still wearing it,
+took it off, put a new one on. Only the last two touch the cycle, and only the
+last opens the next one.
+
+Reporting goes through `CycleEngine`, not an engine of its own. A failure is a
+cycle transition with a reason attached, and the question of whether the failed
+unit had run its course is the same rule Home uses for *due soon*.
 
 Its entry point on Home is a row of circles, one per tracked consumable,
 carrying the category's icon and a ring in the status colour. Tapping one opens
-the actions for that consumable — register a change, report that it failed —
-so the common jobs are one tap from the first screen instead of a scroll and a
-card.
+the actions for that consumable — register a change, report that it failed.
 
-The circles ship *with* this phase rather than before it. "It broke" is the
-action they exist for, and a menu whose other entries say "not built yet" is
-half a feature. Two constraints on them, both already load-bearing elsewhere in
-the app: a circle needs its countdown in words underneath, because a colour and
-an icon alone break the rule that a status is never carried by colour, and a
-horizontal row has to survive a 200% text scale the way `CountdownCard` already
-does.
+Deliberately not built here: **anything to do with manufacturer claims**,
+including capturing the lot and serial number for one. The whole subject moves
+to 0.4, where the tracking that would give those numbers a purpose lives —
+collecting them with nowhere for them to go is a form asking for work it does
+nothing with. `ConsumableInstances.lotNumber`, `serialNumber` and
+`IncidentType.commonlyClaimable` stay in the schema and the domain, unused,
+for that release to pick up. Also not built: the photo `Incidents.photoPath`
+exists for, which needs camera permissions and file storage; and editing a
+report after the fact, which belongs with the history screen in Phase 9.
 
 ### Phase 7 — Body map
 
@@ -118,8 +124,11 @@ forecasts from the user's own settings, not clinical recommendations.
 
 ### 0.4 — Claims, expiry and stats
 
-Manufacturer replacement tracking, expiry alerts, barcode scanning,
-statistics, home screen widgets.
+Manufacturer replacement tracking — the whole subject, including capturing the
+lot and serial number off the packaging at the moment a failure is reported.
+Phase 6 deliberately leaves all of it here rather than collecting numbers it
+would do nothing with. Also: expiry alerts, barcode scanning, statistics, home
+screen widgets.
 
 ### 1.0 — Integrations
 

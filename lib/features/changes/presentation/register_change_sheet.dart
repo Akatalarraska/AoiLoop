@@ -17,10 +17,16 @@ import '../domain/cycle_schedule.dart';
 /// Deliberately small. Everything it asks for is something the engine cannot
 /// work out on its own — *when* it happened, and whether to accept the shift
 /// to the user's preferred time — and everything it shows is a consequence of
-/// those two answers. Body site, lot number and what went wrong belong to
-/// later phases and to their own screens; putting them here would make the
-/// common case, a routine change logged as it happens, three taps longer than
-/// it needs to be.
+/// those two answers. Body site belongs to a later phase, and a failure
+/// belongs to `ReportIncidentSheet`, which the same menu offers one row down;
+/// putting either here would make the common case, a routine change logged as
+/// it happens, several taps longer than it needs to be.
+///
+/// The one thing that appears conditionally is the reason for an early
+/// change, and only when the chosen moment actually makes it one. This is the
+/// sheet a deliberate early swap goes through — a trip, a shower, a planned
+/// change — and a history that records those with no explanation is a history
+/// nobody can read a month later.
 ///
 /// The dashboard is not told to refresh. `watchActive` is a Drift stream, so
 /// closing one instance and opening another redraws Home on its own.
@@ -78,6 +84,9 @@ class RegisterChangeSheet extends ConsumerStatefulWidget {
 }
 
 class _RegisterChangeSheetState extends ConsumerState<RegisterChangeSheet> {
+  /// Why the change is early. Only ever asked for when it is.
+  final TextEditingController _reason = TextEditingController();
+
   /// The moment the change happened, in local time because that is how it was
   /// picked. Converted on the way to the engine, never before.
   late DateTime _changedAt;
@@ -96,9 +105,23 @@ class _RegisterChangeSheetState extends ConsumerState<RegisterChangeSheet> {
     _changedAt = _openedAt;
   }
 
+  @override
+  void dispose() {
+    _reason.dispose();
+    super.dispose();
+  }
+
   /// True while the sheet still holds the moment it opened with, which is the
   /// overwhelmingly common case: someone logging a change as they make it.
   bool get _isNow => _changedAt == _openedAt;
+
+  /// Whether this change will go into the history as an early removal.
+  ///
+  /// Asked of the engine rather than worked out here, so the sheet and the
+  /// row it writes agree about where "early" starts.
+  bool get _isEarly => ref
+      .read(cycleEngineProvider)
+      .wouldBeEarly(widget.card.instance, _changedAt);
 
   CycleSchedule get _schedule => ref
       .read(cycleEngineProvider)
@@ -153,6 +176,11 @@ class _RegisterChangeSheetState extends ConsumerState<RegisterChangeSheet> {
                     ? null
                     : (bool value) => setState(() => _usePreferredTime = value),
               ),
+            ],
+
+            if (_isEarly) ...<Widget>[
+              const Divider(height: AppSpacing.xl),
+              _EarlyChangeReason(controller: _reason, enabled: !_saving),
             ],
 
             const SizedBox(height: AppSpacing.lg),
@@ -237,6 +265,12 @@ class _RegisterChangeSheetState extends ConsumerState<RegisterChangeSheet> {
     final String tooEarly = context.l10n.registerChangeTooEarly;
     final String failed = context.l10n.registerChangeFailed;
 
+    // Read before the await, and normalised: a field someone tapped into and
+    // left is an empty string, and storing '' would leave a change claiming a
+    // reason that reads as blank.
+    final String trimmed = _reason.text.trim();
+    final String? reason = trimmed.isEmpty ? null : trimmed;
+
     String? error;
     try {
       await ref
@@ -247,6 +281,7 @@ class _RegisterChangeSheetState extends ConsumerState<RegisterChangeSheet> {
             changedAt: _changedAt,
             profileMinuteOfDay: widget.profile.preferredChangeMinuteOfDay,
             usePreferredTime: _usePreferredTime,
+            notes: reason,
           );
     } on ValidationFailure {
       error = tooEarly;
@@ -269,6 +304,47 @@ class _RegisterChangeSheetState extends ConsumerState<RegisterChangeSheet> {
     messenger
       ..clearSnackBars()
       ..showSnackBar(SnackBar(content: Text(saved)));
+  }
+}
+
+/// What the history will say, and the chance to add why.
+///
+/// Shown only when the change lands before the deadline, so a routine on-time
+/// swap stays the two-tap job it should be. The notice comes first because the
+/// user is entitled to know what is being written down about them before they
+/// are asked to explain it — and it is phrased as a record, not a reproach.
+/// Changing something early is a thing people do for good reasons, and an app
+/// that tuts at them is one they stop telling the truth to.
+class _EarlyChangeReason extends StatelessWidget {
+  const _EarlyChangeReason({required this.controller, required this.enabled});
+
+  final TextEditingController controller;
+  final bool enabled;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          context.l10n.registerChangeEarlyNotice,
+          style: context.textStyles.bodySmall?.copyWith(
+            color: context.colors.onSurfaceVariant,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          controller: controller,
+          enabled: enabled,
+          maxLines: 2,
+          maxLength: 2000,
+          decoration: InputDecoration(
+            labelText: context.l10n.registerChangeReason,
+            hintText: context.l10n.registerChangeReasonHint,
+          ),
+        ),
+      ],
+    );
   }
 }
 

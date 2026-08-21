@@ -7,6 +7,85 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Added — Phase 6: Incidents
+
+- Reporting that a consumable failed: what went wrong, when it went wrong, a
+  note, and what the user did about it. BlauLoop records the account and draws
+  no conclusion from it — it does not say what caused a failure, whether it
+  will happen again, or what to do about it, and the sheet says so on its face
+  rather than leaving the user to infer it
+- A row of circles at the top of Home, one per tracked consumable, carrying
+  the category's icon and a ring in the status colour. Tapping one opens the
+  two things people open this app to do: *I changed it* and *it broke*. Both
+  were previously a scroll away, and the moment someone opens a tracker is
+  usually the moment something has just happened
+- The circles carry the status on three channels like everything else — the
+  ring's colour, the status glyph on the corner, and the countdown in words
+  underneath. The tiles widen with the text scale rather than clipping, so a
+  200% setting reflows into a longer row instead of a row of truncated words
+- **Two of the report's answers have no default.** Neither the failure reason
+  nor what happened next is pre-selected, and the save button waits for both.
+  A pre-ticked reason would write an account of someone's day that they never
+  gave; a pre-ticked outcome would move a deadline they never agreed to move
+- Three outcomes, because all three happen: still wearing it, took it off, put
+  a new one on. A sensor that reads badly is often left on until the evening;
+  a set that occluded comes off immediately whether or not there is a spare in
+  the house. Only the last two close the cycle, and only the last opens the
+  next
+- The failure list is **ordered, never filtered**. `incidentTypesFor` leads
+  with what plausibly happens to that category and leaves everything else
+  reachable below — the same principle as the catalogue accepting a name typed
+  by hand. A list that hides the answer someone needs fails exactly the person
+  whose product did something unexpected. *Something else* is pinned last in
+  both halves, because an escape hatch offered before the real options is the
+  one people take by mistake
+- Reporting goes through `CycleEngine` rather than an engine of its own. A
+  failure is a cycle transition with a reason attached, and deciding whether
+  the failed unit had run its course is the same rule Home uses for *due
+  soon*. A second copy of that rule is how an app ends up calling a change on
+  time on one screen and early in the history
+- A set that occludes an hour after its deadline is closed as **completed**,
+  not as an early removal. It lasted exactly as long as it was rated for, and
+  a mark in someone's history for that would be a lie about their routine
+- A replacement fitted later than the failure gets its own moment, but only
+  when the report is being written up after the fact. Logged as it happens the
+  two are the same instant and asking twice is how a form teaches people to
+  stop reading it; moved into the past they can differ by hours, and hours are
+  what the next deadline is made of
+- A reason for a **deliberate** early change — a trip, a shower, a planned
+  swap — on the register-change sheet, appearing only when the chosen moment
+  actually makes the change early. It is phrased as a record rather than a
+  reproach: changing something early is a thing people do for good reasons,
+  and an app that tuts at them is one they stop telling the truth to
+- Reminders are rebuilt after an incident only when the cycle actually moved.
+  Someone who logged an irritated site and left the sensor on has the deadline
+  they had a second ago, and a platform round-trip to arrive back at it is
+  spent for nothing
+
+### Changed — Phase 6
+
+- The note on a registered change is written onto the `ChangeEvent` and no
+  longer onto the instance it opened. "Going swimming" is a fact about the
+  swap; hung on the new sensor it read as a remark about a consumable that had
+  not done anything yet. The field had no UI until this phase, so no stored
+  data changes meaning
+
+### Deliberately not built in Phase 6
+
+- **Manufacturer claims, in any form** — including capturing the lot and
+  serial number off the packaging when a failure is reported. An earlier cut
+  of this phase collected those two numbers; they were taken back out. The
+  tracking that would give them a purpose is 0.4, and asking someone to copy
+  a batch number off a box into an app that then does nothing with it is a
+  worse answer than not asking. `ConsumableInstances.lotNumber`,
+  `serialNumber` and `IncidentType.commonlyClaimable` remain in the schema and
+  the domain, unused, for that release to pick up
+- The photo `Incidents.photoPath` exists for. Camera permissions and private
+  file storage are a piece of work in their own right and not what this phase
+  is about; the column stays unused and honest
+- Editing or deleting a report after the fact, which belongs with the history
+  screen in Phase 9
+
 ### Added — Phase 5: Notifications
 
 - Reminders before a change is due, at the offsets chosen during onboarding —

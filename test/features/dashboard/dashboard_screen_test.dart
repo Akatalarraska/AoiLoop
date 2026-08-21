@@ -1,4 +1,5 @@
 import 'package:blauloop/core/database/app_database.dart';
+import 'package:blauloop/features/dashboard/presentation/widgets/consumable_rail.dart';
 import 'package:blauloop/features/dashboard/presentation/widgets/countdown_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -61,6 +62,25 @@ void main() {
     }
   }
 
+  /// How many times [text] appears on Home, ignoring the rail of circles.
+  ///
+  /// The circles repeat every countdown by design, so an unscoped count now
+  /// answers a different question from the one these tests ask — which is
+  /// what the *summary* and the *cards* say. Counted rather than scoped
+  /// because the interesting number is the total across two unrelated
+  /// widgets.
+  int awayFromTheRail(WidgetTester tester, String text) {
+    final Set<Element> inRail = find
+        .descendant(of: find.byType(ConsumableRail), matching: find.text(text))
+        .evaluate()
+        .toSet();
+    return find
+        .text(text)
+        .evaluate()
+        .where((Element element) => !inRail.contains(element))
+        .length;
+  }
+
   /// A tracked type, optionally with something already in use.
   ///
   /// Seeded *after* the app is pumped, which is the interesting order: the
@@ -111,7 +131,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(CountdownCard), findsNWidgets(2));
-      expect(find.text('Nothing in use'), findsNWidgets(2));
+      expect(awayFromTheRail(tester, 'Nothing in use'), 2);
     });
   });
 
@@ -125,7 +145,7 @@ void main() {
 
       expect(find.text('Next change'), findsOneWidget);
       // Once on the summary card, once on the countdown card below it.
-      expect(find.text('3 days left'), findsNWidgets(2));
+      expect(awayFromTheRail(tester, '3 days left'), 2);
       expect(find.text('Nothing needs changing right now.'), findsOneWidget);
     });
 
@@ -143,7 +163,7 @@ void main() {
 
       expect(find.text('Needs attention'), findsOneWidget);
       expect(find.text('Next change'), findsNothing);
-      expect(find.text('2 days late'), findsNWidgets(2));
+      expect(awayFromTheRail(tester, '2 days late'), 2);
       expect(find.text('2 items need changing'), findsOneWidget);
     });
 
@@ -177,13 +197,13 @@ void main() {
       await seedType(app, name: 'CGM sensor', dueIn: const Duration(hours: 3));
       await tester.pumpAndSettle();
 
-      expect(find.text('3 hours left'), findsNWidgets(2));
+      expect(awayFromTheRail(tester, '3 hours left'), 2);
 
       app.harness.clock.advance(const Duration(hours: 2));
       app.ticker.tick();
       await tester.pumpAndSettle();
 
-      expect(find.text('1 hour left'), findsNWidgets(2));
+      expect(awayFromTheRail(tester, '1 hour left'), 2);
       expect(find.text('3 hours left'), findsNothing);
     });
 
@@ -216,7 +236,7 @@ void main() {
       await seedType(app, name: 'CGM sensor', dueIn: const Duration(days: 2));
       await tester.pumpAndSettle();
 
-      expect(find.text('2 days left'), findsNWidgets(2));
+      expect(awayFromTheRail(tester, '2 days left'), 2);
 
       backgroundAndResume(
         tester,
@@ -224,7 +244,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('1 day left'), findsNWidgets(2));
+      expect(awayFromTheRail(tester, '1 day left'), 2);
     });
 
     testWidgets('a change registered elsewhere appears without a reload', (
@@ -245,7 +265,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Next change'), findsOneWidget);
-      expect(find.text('10 days left'), findsNWidgets(2));
+      expect(awayFromTheRail(tester, '10 days left'), 2);
     });
   });
 
@@ -324,6 +344,6 @@ void main() {
 
     expect(find.text('Hola, Test'), findsOneWidget);
     expect(find.text('Próximo cambio'), findsOneWidget);
-    expect(find.text('Quedan 2 días'), findsNWidgets(2));
+    expect(awayFromTheRail(tester, 'Quedan 2 días'), 2);
   });
 }

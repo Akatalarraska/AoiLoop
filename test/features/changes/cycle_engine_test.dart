@@ -22,7 +22,7 @@ void main() {
 
   setUp(() async {
     h = TestHarness.create(now: installedAt.toUtc());
-    engine = CycleEngine(db: h.db, instances: h.instances, changes: h.changes);
+    engine = h.cycleEngine();
     profile = await h.seedProfile();
     sensor = await h.seedType(name: 'Sensor', defaultDuration: tenDays);
   });
