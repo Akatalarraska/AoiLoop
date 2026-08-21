@@ -26,6 +26,16 @@ extension DateTimeFormatX on BuildContext {
   String formatDay(DateTime instant) =>
       DateFormat.MMMEd(_locale).format(instant.toLocal());
 
+  /// The time of day an instant fell at — "08:15", "8:15 PM".
+  ///
+  /// Through [MaterialLocalizations] rather than [DateFormat], for the reason
+  /// [formatMinuteOfDay] gives: whether to show a 24-hour clock is a device
+  /// setting the user chose, not a property of their language.
+  String formatTimeOfDay(DateTime instant) {
+    return MaterialLocalizations.of(this)
+        .formatTimeOfDay(TimeOfDay.fromDateTime(instant.toLocal()));
+  }
+
   /// A time of day held as minutes since local midnight — "08:00", "8:00 PM".
   ///
   /// Minutes since midnight rather than an instant because this is a

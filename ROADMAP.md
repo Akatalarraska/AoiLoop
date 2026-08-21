@@ -3,7 +3,7 @@
 The MVP is `0.1.0`. It is built in phases, and **each phase is finished — it
 analyzes, it tests, it runs — before the next one starts.**
 
-Current position: **Phase 8 complete.**
+Current position: **Phase 9 complete.**
 
 ---
 
@@ -138,9 +138,26 @@ The lot number is folded behind *More details*. Copying a code off a box is no
 part of why anyone opens a tracker and the app does nothing with it; the expiry
 date sits in plain view because it is what the reminders are built on.
 
-### Phase 9 — Calendar & history
+### Phase 9 — Calendar & history ✅
 
-Calendar of upcoming and completed changes; timeline with filters and detail.
+A month grid showing what was logged on each day and what is expected, and a
+timeline with filters and detail. A consumable's own history is reached from
+its circle on Home, which narrows the same timeline rather than adding a second
+screen showing the same rows.
+
+**The timeline reads two tables, not one.** An incident the user rode out —
+kept the sensor on through an irritated site — writes an `Incidents` row and no
+change event, because nothing was installed. A history built on `ChangeEvents`
+alone would drop it silently, which is the worst way for a history to be wrong.
+
+What happened and what is expected are drawn differently on purpose. A record
+is a fact; a deadline is a date the app worked out, and it moves the moment the
+user does anything. A filled dot and a hollow one — two shapes rather than two
+colours, so the difference survives a greyscale screenshot.
+
+The grid is six rows always, starts on the locale's first weekday, and drops
+expectations that fall in the past: either it happened and there is an entry
+for it, or it did not and Home is already saying so.
 
 ### Phase 10 — Polish
 

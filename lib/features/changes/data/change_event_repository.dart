@@ -35,6 +35,27 @@ class ChangeEventRepository extends Repository {
         .watch();
   }
 
+  /// The timeline, most recent first, as a plain future.
+  ///
+  /// The same question [watchTimeline] answers, for callers that read once and
+  /// build. The history screen joins each row to a consumable, which is a
+  /// series of awaits — and doing that inside a stream transform would re-run
+  /// the whole join on every unrelated database write.
+  Future<List<ChangeEvent>> findTimeline(
+    String userProfileId, {
+    int limit = 200,
+  }) {
+    return (db.select(db.changeEvents)
+          ..where(
+            ($ChangeEventsTable t) => t.userProfileId.equals(userProfileId),
+          )
+          ..orderBy(<OrderClauseGenerator<$ChangeEventsTable>>[
+            ($ChangeEventsTable t) => OrderingTerm.desc(t.changedAt),
+          ])
+          ..limit(limit))
+        .get();
+  }
+
   /// The timeline filtered to particular reasons — the "incidents only" view.
   Stream<List<ChangeEvent>> watchTimelineOfTypes(
     String userProfileId,

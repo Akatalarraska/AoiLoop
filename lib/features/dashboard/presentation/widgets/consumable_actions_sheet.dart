@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../app/router/app_routes.dart';
 import '../../../../app/theme/app_spacing.dart';
 import '../../../../core/database/app_database.dart';
 import '../../../../shared/extensions/build_context_x.dart';
 import '../../../../shared/extensions/cycle_countdown_l10n.dart';
 import '../../../../shared/widgets/status_chip.dart';
 import '../../../changes/presentation/register_change_sheet.dart';
+import '../../../history/domain/history_view.dart';
+import '../../../history/presentation/history_providers.dart';
 import '../../../incidents/presentation/report_incident_sheet.dart';
 import '../../domain/dashboard_view.dart';
 
 /// What you can do about one consumable, opened by tapping its circle on Home.
 ///
-/// Two actions, which is the whole list. *I changed it* and *it broke* are the
-/// things people open this app to record; anything else is a screen of its
-/// own, and a menu padded out with entries that lead nowhere teaches users to
-/// stop opening it.
+/// Three actions. *I changed it* and *it broke* are the two things people open
+/// this app to record; *see its history* is the way back out of the record,
+/// which Phase 9 made real. Anything beyond those is a screen of its own, and
+/// a menu padded out with entries that lead nowhere teaches users to stop
+/// opening it.
 class ConsumableActionsSheet extends StatelessWidget {
   const ConsumableActionsSheet({
     required this.card,
@@ -31,6 +37,7 @@ class ConsumableActionsSheet extends StatelessWidget {
     BuildContext context, {
     required DashboardCard card,
     required UserProfile profile,
+    WidgetRef? ref,
   }) async {
     final _ConsumableAction? action =
         await showModalBottomSheet<_ConsumableAction>(
@@ -49,6 +56,19 @@ class ConsumableActionsSheet extends StatelessWidget {
         await RegisterChangeSheet.show(context, card: card, profile: profile);
       case _ConsumableAction.reportIncident:
         await ReportIncidentSheet.show(context, card: card, profile: profile);
+      case _ConsumableAction.viewHistory:
+        // The timeline narrows to this consumable and then the History tab is
+        // opened on it, rather than a second screen being built that shows the
+        // same rows. One history, reached two ways.
+        ref?.read(historyScopeProvider.notifier).select(card.type.id);
+        // Widened as well, so somebody who last looked at problems only does
+        // not arrive at an empty list having asked to see a history.
+        ref
+            ?.read(historyFilterProvider.notifier)
+            .select(HistoryFilter.everything);
+        if (context.mounted) {
+          context.goNamed(AppRoute.history.routeName);
+        }
     }
   }
 
@@ -116,6 +136,13 @@ class ConsumableActionsSheet extends StatelessWidget {
                 Navigator.of(context).pop(_ConsumableAction.reportIncident),
           ),
 
+          ListTile(
+            leading: const Icon(Icons.history),
+            title: Text(context.l10n.actionViewHistory),
+            onTap: () =>
+                Navigator.of(context).pop(_ConsumableAction.viewHistory),
+          ),
+
           const SizedBox(height: AppSpacing.md),
         ],
       ),
@@ -125,4 +152,4 @@ class ConsumableActionsSheet extends StatelessWidget {
 
 /// Which row was tapped. Returned through the navigator rather than acted on
 /// in place, so the sheet is closed before the next one opens.
-enum _ConsumableAction { registerChange, reportIncident }
+enum _ConsumableAction { registerChange, reportIncident, viewHistory }

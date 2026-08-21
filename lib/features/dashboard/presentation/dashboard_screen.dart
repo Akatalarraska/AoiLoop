@@ -114,13 +114,17 @@ class _DashboardBody extends StatelessWidget {
           // gets opened. The cards below answer "how long have I got"; the
           // circles answer "I need to log something", and that one should not
           // require a scroll.
-          ConsumableRail(
-            cards: view.cards,
-            onTap: (DashboardCard card) => ConsumableActionsSheet.show(
-              context,
-              card: card,
-              profile: view.profile,
-            ),
+          Consumer(
+            builder: (BuildContext context, WidgetRef ref, Widget? _) =>
+                ConsumableRail(
+                  cards: view.cards,
+                  onTap: (DashboardCard card) => ConsumableActionsSheet.show(
+                    context,
+                    card: card,
+                    profile: view.profile,
+                    ref: ref,
+                  ),
+                ),
           ),
           const SizedBox(height: AppSpacing.xl),
           Text(

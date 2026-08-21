@@ -370,6 +370,35 @@ rewrite. Setting the first batch to the new total and emptying the rest
 balances the count just as well and destroys every expiry date behind it, and
 those dates are what these reminders are built on.
 
+### History and calendar
+
+`HistoryEntry` is sealed over two kinds, because the history has two sources.
+Changes and incidents are separate tables, and an incident with no replacement
+writes only the second — so a timeline reading `ChangeEvents` alone is missing
+entries rather than merely terse. Sealing it means every surface that renders
+an entry has to handle both and the analyzer says so.
+
+The join to a consumable happens in the provider, not the view model: both
+tables point at a `ConsumableInstance` and the name a user recognises is one
+hop further on, on the type. Instance lookups are memoised, because a busy
+history points many rows at the same handful of instances.
+
+`CalendarExpectation` is a separate type from `HistoryEntry` for the same
+reason the calendar draws them differently. One is a record of what happened;
+the other is a date the app worked out, and it moves the moment the user logs
+anything. Collapsing them would let a plan read as a fact.
+
+Day headings — *Today*, *Yesterday*, a date — are decided in `HistoryView`,
+against a `today` passed in. Comparing two dates in a widget is the same bug as
+computing a deadline in one, only smaller, and this way it is pinned at an
+exact instant like every other piece of date arithmetic here.
+
+`historyScopeProvider` is the one provider in the feature that is **not**
+auto-disposed. It is written on Home — tapping *see its history* on a
+consumable — and read after navigating to the History tab; auto-disposed, the
+value would be discarded in the gap, because nothing is listening at the moment
+it is set.
+
 ### Preferred change time
 
 If a sensor fails at 03:17 and a new one goes on, the next change would fall at

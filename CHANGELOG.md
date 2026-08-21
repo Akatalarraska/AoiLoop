@@ -7,6 +7,58 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Added — Phase 9: Calendar & history
+
+- A timeline of everything logged, newest first, grouped by day with *Today*
+  and *Yesterday* as headings
+- **It reads two tables, not one.** An incident the user rode out writes an
+  `Incidents` row and no change event, because nothing was installed. A history
+  built on `ChangeEvents` alone would have dropped it silently, which is the
+  worst way for a history to be wrong. `HistoryEntry` is sealed over the two
+  kinds so no surface can forget one
+- Filters by what happened — everything, changes, problems — and by which
+  consumable. An empty list says *nothing matches what you are filtering by*
+  rather than *nothing logged yet*: telling somebody their history is empty
+  when it is only hidden would be a small betrayal
+- A month grid: what was logged on each day, and what is expected. Six rows
+  always, because a grid that grew and shrank between months would make
+  everything below it jump; and it starts on the locale's first weekday rather
+  than assuming Monday
+- **What happened and what is expected are drawn differently**, and are
+  different types in the domain. A record is a fact; a deadline is a date the
+  app worked out and it moves the moment the user does anything. A filled dot
+  and a hollow one — two shapes rather than two colours, so the distinction
+  survives a greyscale screenshot
+- Expectations that fall in the past are dropped from the grid. Either it
+  happened, in which case there is a real entry for it, or it did not, in which
+  case Home is already saying so and a stale marker would only disagree
+- Tapping a day opens it, with what was logged and what is expected under their
+  own headings
+- A consumable's own history, reached from its circle on Home. It narrows the
+  same timeline rather than adding a second screen showing the same rows, and
+  it widens the *what happened* filter on the way so nobody arrives at an empty
+  list having asked to see a history
+- The timeline says what it is for at the top: it keeps the record and does not
+  judge it. A run of failures is a run of failures, and none of the copy lets
+  that read as a verdict on the person having them
+- Calendar and History are the last primary destinations to stop answering with
+  a placeholder. Every tab in the bottom bar is now built
+
+### Fixed — Phase 9
+
+- `historyScopeProvider` was auto-disposed, so the narrowing set by *see its
+  history* on Home was discarded before the History tab could read it — nothing
+  is listening in the gap. Caught by the flow test, which landed on an
+  unnarrowed list having asked for a narrowed one
+
+### Deliberately not built in Phase 9
+
+- Editing or deleting a history entry. `ChangeEvents` is append-only in spirit
+  and `ChangeType.manualCorrection` is how a mistake is recorded; wiring that up
+  needs a screen and belongs with the rest of the settings work in Phase 10
+- Statistics. Counting is one thing and interpreting it is another, and the
+  numbers are 0.4's
+
 ### Added — Phase 8: Inventory
 
 - Supply counts: what is left of each consumable, across every batch and

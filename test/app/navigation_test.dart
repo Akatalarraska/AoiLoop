@@ -1,5 +1,7 @@
 import 'package:blauloop/features/body_map/presentation/body_map_screen.dart';
+import 'package:blauloop/features/calendar/presentation/calendar_screen.dart';
 import 'package:blauloop/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:blauloop/features/history/presentation/history_screen.dart';
 import 'package:blauloop/features/inventory/presentation/inventory_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -51,9 +53,12 @@ void main() {
   ) async {
     await pumpApp(tester);
 
-    for (final (String tab, int phase) in <(String, int)>[
-      ('Calendar', 9),
-      ('History', 9),
+    // Every primary destination is built as of Phase 9, so each is checked
+    // by the screen it actually shows rather than by a placeholder.
+    for (final (String tab, Type screen) in <(String, Type)>[
+      ('Calendar', CalendarScreen),
+      ('Body', BodyMapScreen),
+      ('History', HistoryScreen),
     ]) {
       await tester.tap(
         find.descendant(
@@ -64,7 +69,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.text('Planned for phase $phase of the roadmap.'),
+        find.byType(screen),
         findsOneWidget,
         reason: 'tapping $tab did not show its screen',
       );
@@ -94,28 +99,6 @@ void main() {
     await tester.tap(find.byType(BackButton));
     await tester.pumpAndSettle();
     expect(find.byType(NavigationBar), findsOneWidget);
-  });
-
-  testWidgets('the body tab reaches the body map itself', (
-    WidgetTester tester,
-  ) async {
-    // Built in Phase 7, so it is the one primary destination no longer
-    // answering with a placeholder.
-    await pumpApp(tester);
-
-    await tester.tap(
-      find.descendant(
-        of: find.byType(NavigationBar),
-        matching: find.text('Body'),
-      ),
-    );
-    await tester.pumpAndSettle();
-
-    expect(find.byType(BodyMapScreen), findsOneWidget);
-    expect(
-      find.textContaining('it does not tell you where to put the next one'),
-      findsOneWidget,
-    );
   });
 
   testWidgets('the overflow menu reaches the sections still to be built', (

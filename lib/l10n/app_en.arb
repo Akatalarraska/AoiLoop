@@ -1523,5 +1523,116 @@
     "placeholders": { "when": { "type": "String", "example": "Tue 12 Aug" } }
   },
   "inventoryMoreDetails": "More details",
-  "@inventoryMoreDetails": { "description": "Folds away the batch details the app does nothing with, such as the lot number. Kept out of the way because copying a code off a box is no part of why anyone opens a tracker." }
+  "@inventoryMoreDetails": { "description": "Folds away the batch details the app does nothing with, such as the lot number. Kept out of the way because copying a code off a box is no part of why anyone opens a tracker." },
+  "historyIntro": "Everything you have logged, newest first. BlauLoop keeps the record; it does not judge it.",
+  "@historyIntro": { "description": "Sits at the top of the history screen. States the boundary at the one screen where a run of failures might read as a verdict." },
+
+  "historyEmptyTitle": "Nothing logged yet",
+  "@historyEmptyTitle": { "description": "Title of the history empty state." },
+
+  "historyEmptyBody": "Register a change or report a problem and it shows up here.",
+  "@historyEmptyBody": { "description": "Body of the history empty state." },
+
+  "historyEmptyFiltered": "Nothing matches what you are filtering by.",
+  "@historyEmptyFiltered": { "description": "Shown when the history has entries but the current filter admits none of them, so the user knows to widen it rather than thinking their data is gone." },
+
+  "historyFilterEverything": "Everything",
+  "@historyFilterEverything": { "description": "History filter: both changes and problems." },
+
+  "historyFilterChanges": "Changes",
+  "@historyFilterChanges": { "description": "History filter: replacements only." },
+
+  "historyFilterProblems": "Problems",
+  "@historyFilterProblems": { "description": "History filter: failures only." },
+
+  "historyAllConsumables": "All consumables",
+  "@historyAllConsumables": { "description": "History filter option covering every consumable rather than one." },
+
+  "historyCount": "{count, plural, =0{Nothing to show} =1{1 entry} other{{count} entries}}",
+  "@historyCount": {
+    "description": "How many entries the current filter shows.",
+    "placeholders": { "count": { "type": "int", "example": "12" } }
+  },
+
+  "historyChangeScheduled": "Changed on schedule",
+  "@historyChangeScheduled": { "description": "Timeline entry for a change made at or near the expected date." },
+
+  "historyChangeEarly": "Changed early",
+  "@historyChangeEarly": { "description": "Timeline entry for a deliberate early change. A statement, not a mark against the user." },
+
+  "historyChangeIncident": "Changed after a problem",
+  "@historyChangeIncident": { "description": "Timeline entry for a change caused by a failure." },
+
+  "historyChangeCorrection": "Record corrected",
+  "@historyChangeCorrection": { "description": "Timeline entry for a fix to something recorded wrongly, kept distinct so corrections never read as failures." },
+
+  "historyFirstEver": "First one logged",
+  "@historyFirstEver": { "description": "Marks the change that started a consumable's history, where there was nothing to replace." },
+
+  "historyToday": "Today",
+  "@historyToday": { "description": "Date heading for entries logged today." },
+
+  "historyYesterday": "Yesterday",
+  "@historyYesterday": { "description": "Date heading for entries logged yesterday." },
+
+  "historySemanticLabel": "{name}. {what}. {when}.",
+  "@historySemanticLabel": {
+    "description": "Single screen reader announcement for a timeline entry, so the consumable, what happened and the time read as one sentence rather than three fragments. All parts are already translated.",
+    "placeholders": {
+      "name": { "type": "String", "example": "CGM sensor" },
+      "what": { "type": "String", "example": "Changed on schedule" },
+      "when": { "type": "String", "example": "08:15" }
+    }
+  },
+
+  "calendarIntro": "What you did, and what is coming.",
+  "@calendarIntro": { "description": "Sits under the month heading on the calendar." },
+
+  "calendarToday": "Today",
+  "@calendarToday": { "description": "Button that returns the calendar to the current month." },
+
+  "calendarPreviousMonth": "Previous month",
+  "@calendarPreviousMonth": { "description": "Tooltip for the button that steps the calendar back a month." },
+
+  "calendarNextMonth": "Next month",
+  "@calendarNextMonth": { "description": "Tooltip for the button that steps the calendar forward a month." },
+
+  "calendarMonthCount": "{count, plural, =0{Nothing logged this month} =1{1 thing logged this month} other{{count} things logged this month}}",
+  "@calendarMonthCount": {
+    "description": "Summary of how much happened in the month on screen.",
+    "placeholders": { "count": { "type": "int", "example": "6" } }
+  },
+
+  "calendarDayEmpty": "Nothing on this day.",
+  "@calendarDayEmpty": { "description": "Shown when a day the user opened has neither entries nor anything expected." },
+
+  "calendarExpectedTitle": "Expected",
+  "@calendarExpectedTitle": { "description": "Heading above the things the app expects on a day, kept separate from what actually happened so a plan never reads as a fact." },
+
+  "calendarHappenedTitle": "Logged",
+  "@calendarHappenedTitle": { "description": "Heading above what was actually recorded on a day." },
+
+  "calendarChangeDue": "{name} due",
+  "@calendarChangeDue": {
+    "description": "An expected change on a calendar day.",
+    "placeholders": { "name": { "type": "String", "example": "CGM sensor" } }
+  },
+
+  "calendarStockExpires": "{name} stock expires",
+  "@calendarStockExpires": {
+    "description": "Stock going off on a calendar day.",
+    "placeholders": { "name": { "type": "String", "example": "CGM sensor" } }
+  },
+
+  "calendarDaySemanticLabel": "{date}. {summary}.",
+  "@calendarDaySemanticLabel": {
+    "description": "Single screen reader announcement for a calendar square, so the date and what is on it read as one sentence. Both parts are already translated.",
+    "placeholders": {
+      "date": { "type": "String", "example": "Tue 12 Aug" },
+      "summary": { "type": "String", "example": "2 entries" }
+    }
+  },
+
+  "actionViewHistory": "See its history",
+  "@actionViewHistory": { "description": "Opens the timeline narrowed to one consumable." }
 }
