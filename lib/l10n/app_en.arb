@@ -1334,5 +1334,169 @@
   "@sitePickerOccupied": {
     "description": "Marks a site in the picker that already has something on it. Informational — the site is still selectable, because a region is coarse enough to hold two things at once.",
     "placeholders": { "name": { "type": "String", "example": "CGM sensor" } }
-  }
+  },
+  "inventoryIntro": "What you have left. BlauLoop subtracts one each time you register a change, and you can correct the count whenever it is wrong.",
+  "@inventoryIntro": { "description": "Sits at the top of the inventory screen. Says both what the app does automatically and that the user overrides it." },
+
+  "inventoryEmptyTitle": "Nothing counted yet",
+  "@inventoryEmptyTitle": { "description": "Title of the inventory empty state." },
+
+  "inventoryEmptyBody": "Add what you have in the cupboard and BlauLoop keeps the count as you register changes.",
+  "@inventoryEmptyBody": { "description": "Body of the inventory empty state." },
+
+  "inventoryNothingToCount": "Nothing you set up counts stock, so there is nothing to show here.",
+  "@inventoryNothingToCount": { "description": "Shown when every consumable type has stock counting switched off." },
+
+  "inventoryUnits": "{count, plural, =0{None left} =1{1 left} other{{count} left}}",
+  "@inventoryUnits": {
+    "description": "How many units of a consumable are in stock.",
+    "placeholders": { "count": { "type": "int", "example": "8" } }
+  },
+
+  "inventoryNotCounted": "Not counted",
+  "@inventoryNotCounted": { "description": "Shown for a consumable no stock has ever been added for. Deliberately not 'none left' - zero is a fact and unknown is not." },
+
+  "inventoryLowBadge": "Running low",
+  "@inventoryLowBadge": { "description": "Marks a consumable at or below the level the user asked to be warned at." },
+
+  "inventoryOutBadge": "Out",
+  "@inventoryOutBadge": { "description": "Marks a consumable with none left." },
+
+  "inventoryOkBadge": "In stock",
+  "@inventoryOkBadge": { "description": "Marks a consumable comfortably above its minimum." },
+
+  "inventoryMinimum": "Warn me at {count}",
+  "@inventoryMinimum": {
+    "description": "The level a consumable warns at.",
+    "placeholders": { "count": { "type": "int", "example": "5" } }
+  },
+
+  "inventoryNoMinimum": "No warning level set",
+  "@inventoryNoMinimum": { "description": "Shown for a consumable with no minimum, which means the user does not want warning about it." },
+
+  "inventoryLowCount": "{count, plural, =0{Nothing is running low} =1{1 thing is running low} other{{count} things are running low}}",
+  "@inventoryLowCount": {
+    "description": "Summary line at the top of the inventory screen.",
+    "placeholders": { "count": { "type": "int", "example": "2" } }
+  },
+
+  "inventoryAddStock": "Add stock",
+  "@inventoryAddStock": { "description": "Opens the sheet for adding units of a consumable." },
+
+  "inventoryCorrectCount": "Correct the count",
+  "@inventoryCorrectCount": { "description": "Opens the sheet for setting an exact quantity by hand." },
+
+  "inventorySetMinimum": "Set warning level",
+  "@inventorySetMinimum": { "description": "Opens the sheet for choosing when to warn about low stock." },
+
+  "inventoryAddQuantity": "How many are you adding",
+  "@inventoryAddQuantity": { "description": "Label for the quantity field when adding stock." },
+
+  "inventoryExactQuantity": "How many you actually have",
+  "@inventoryExactQuantity": { "description": "Label for the quantity field when correcting a count by hand." },
+
+  "inventoryMinimumField": "Warn me when I have this many or fewer",
+  "@inventoryMinimumField": { "description": "Label for the minimum quantity field." },
+
+  "inventoryMinimumHint": "Zero means never warn me",
+  "@inventoryMinimumHint": { "description": "Explains that a minimum of zero switches the warning off." },
+
+  "inventoryLotOptional": "Lot number (optional)",
+  "@inventoryLotOptional": { "description": "Label for the optional batch number when adding stock." },
+
+  "inventoryExpiryOptional": "Expiry date (optional)",
+  "@inventoryExpiryOptional": { "description": "Label for the optional expiry date when adding stock." },
+
+  "inventoryExpiryNone": "Not set",
+  "@inventoryExpiryNone": { "description": "Shown where no expiry date has been given." },
+
+  "inventoryExpiryChoose": "Choose",
+  "@inventoryExpiryChoose": { "description": "Button that opens the expiry date picker." },
+
+  "inventoryLocation": "Where it is kept",
+  "@inventoryLocation": { "description": "Label for the storage location of a batch." },
+
+  "inventoryLocationNone": "Not filed anywhere",
+  "@inventoryLocationNone": { "description": "Shown for stock that has not been assigned a location, which is where most people start." },
+
+  "inventoryLocations": "Places",
+  "@inventoryLocations": { "description": "Opens the list of storage locations." },
+
+  "inventoryLocationsIntro": "Home, a backpack, school, a second household. Stock can be filed in one of these, or in none of them.",
+  "@inventoryLocationsIntro": { "description": "Explains what storage locations are for. Names the split-household case, which is the reason multiple locations exist at all." },
+
+  "inventoryLocationAdd": "Add a place",
+  "@inventoryLocationAdd": { "description": "Opens the sheet for creating a storage location." },
+
+  "inventoryLocationName": "Name",
+  "@inventoryLocationName": { "description": "Label for a storage location's name." },
+
+  "inventoryLocationRemove": "Remove",
+  "@inventoryLocationRemove": { "description": "Hides a storage location without deleting the stock filed in it." },
+
+  "inventoryLocationsEmpty": "No places yet. Stock does not need one.",
+  "@inventoryLocationsEmpty": { "description": "Shown when no storage locations have been created. Makes clear locations are optional." },
+
+  "inventoryBatchesTitle": "Batches",
+  "@inventoryBatchesTitle": { "description": "Heading above the individual batches of one consumable." },
+
+  "inventoryBatchLine": "{count} · {where}",
+  "@inventoryBatchLine": {
+    "description": "One batch: how many units and where they are kept.",
+    "placeholders": {
+      "count": { "type": "String", "example": "8 left" },
+      "where": { "type": "String", "example": "Backpack" }
+    }
+  },
+
+  "inventoryBatchExpires": "Expires {when}",
+  "@inventoryBatchExpires": {
+    "description": "When a batch goes off.",
+    "placeholders": { "when": { "type": "String", "example": "Tue 12 Aug" } }
+  },
+
+  "inventorySemanticLabel": "{name}. {state}. {count}.",
+  "@inventorySemanticLabel": {
+    "description": "Single screen reader announcement for a stock card, so the name, the level and the count read as one sentence rather than three fragments. All three parts are already translated.",
+    "placeholders": {
+      "name": { "type": "String", "example": "CGM sensor" },
+      "state": { "type": "String", "example": "Running low" },
+      "count": { "type": "String", "example": "2 left" }
+    }
+  },
+
+  "inventorySaved": "Count updated.",
+  "@inventorySaved": { "description": "Confirmation after a stock count was changed." },
+
+  "inventoryFailed": "The count could not be saved, so nothing changed. Try again.",
+  "@inventoryFailed": { "description": "Shown when a stock write failed. States plainly that nothing was half-written." },
+
+  "inventoryInvalidQuantity": "Enter a whole number, zero or more.",
+  "@inventoryInvalidQuantity": { "description": "Shown when a quantity field does not hold a usable number." },
+
+  "stockRanOutSnack": "That was your last {name}.",
+  "@stockRanOutSnack": {
+    "description": "Told to the user right after a change that emptied their stock. Only ever shown to someone who is actually counting.",
+    "placeholders": { "name": { "type": "String", "example": "CGM sensor" } }
+  },
+
+  "stockShortSnack": "You had no {name} left to subtract, so the count stayed at zero.",
+  "@stockShortSnack": {
+    "description": "Told to the user when a change was registered but there was no stock to take it from. The change is still recorded - the log is the product and the count is a convenience on top of it.",
+    "placeholders": { "name": { "type": "String", "example": "CGM sensor" } }
+  },
+
+  "homeLowStock": "{count, plural, =1{1 supply is running low} other{{count} supplies are running low}}",
+  "@homeLowStock": {
+    "description": "Line on Home when stock is at or below its warning level.",
+    "placeholders": { "count": { "type": "int", "example": "2" } }
+  },
+
+  "homeLowStockAction": "Check supplies",
+  "@homeLowStockAction": { "description": "Button on Home that opens the inventory screen." },
+  "actionSave": "Save",
+  "@actionSave": { "description": "Confirms a form. Used wherever the change is an edit rather than a new record." },
+
+  "actionAdd": "Add",
+  "@actionAdd": { "description": "Confirms creating something new." }
 }

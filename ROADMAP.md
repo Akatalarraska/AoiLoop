@@ -3,7 +3,7 @@
 The MVP is `0.1.0`. It is built in phases, and **each phase is finished — it
 analyzes, it tests, it runs — before the next one starts.**
 
-Current position: **Phase 7 complete.**
+Current position: **Phase 8 complete.**
 
 ---
 
@@ -105,10 +105,28 @@ from `ConsumableInstances`, which answers every question this phase asks, and
 `SiteUsages` is left unwritten. Fixing or dropping that index belongs to
 whichever release wants the cheaper query.
 
-### Phase 8 — Inventory
+### Phase 8 — Inventory ✅
 
-Quantities, automatic decrement on change, manual correction, minimum stock,
-locations, low-stock warnings.
+Quantities per batch, automatic decrement when a change is registered, manual
+correction, a warning level per consumable, storage places, and a line on Home
+when something is running low.
+
+Correcting the count by hand sits beside adding stock rather than behind a
+menu. An automatic count the user cannot override is a trap — boxes get
+borrowed, someone else restocks, a change gets logged twice — and the person
+holding the supplies is the authority.
+
+Two rules keep the count honest. It never goes negative: a shortfall is
+reported and the change is recorded anyway, because the log is the product and
+the count is a convenience on top of it. And it never claims to know anything
+about a consumable nobody is counting — *not counted* and *none left* are
+different answers, and only one of them is a fact.
+
+The warning level lives per batch in the schema because expiry does, but
+nobody thinks in per-lot minimums. It is written to every batch of a type and
+read as the highest, so both readings agree and a stray older figure cannot
+quietly lower the threshold. Setting one before any stock exists creates an
+empty batch to hold it.
 
 ### Phase 9 — Calendar & history
 

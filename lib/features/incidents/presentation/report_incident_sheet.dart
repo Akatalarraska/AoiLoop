@@ -5,6 +5,7 @@ import '../../../app/theme/app_spacing.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/errors/app_failure.dart';
 import '../../../core/utils/clock.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/extensions/body_enums_l10n.dart';
 import '../../../shared/extensions/build_context_x.dart';
 import '../../../shared/extensions/date_time_format.dart';
@@ -15,6 +16,7 @@ import '../../body_map/presentation/body_site_picker.dart';
 import '../../changes/data/cycle_engine.dart';
 import '../../changes/domain/cycle_schedule.dart';
 import '../../dashboard/domain/dashboard_view.dart';
+import '../../inventory/presentation/stock_note.dart';
 import '../domain/incident_report.dart';
 
 /// Records that something went wrong, and what the user did about it.
@@ -450,6 +452,8 @@ class _ReportIncidentSheetState extends ConsumerState<ReportIncidentSheet> {
       notes: _notes.text,
     );
 
+    final AppLocalizations l10n = context.l10n;
+
     String? error;
     IncidentRecord? record;
     try {
@@ -489,10 +493,12 @@ class _ReportIncidentSheetState extends ConsumerState<ReportIncidentSheet> {
     }
 
     navigator.pop();
+    final String message = record!.wasReplaced ? savedAndReplaced : saved;
+    final String? note = stockNote(l10n, record.stock, name);
     messenger
       ..clearSnackBars()
       ..showSnackBar(
-        SnackBar(content: Text(record!.wasReplaced ? savedAndReplaced : saved)),
+        SnackBar(content: Text(note == null ? message : '$message $note')),
       );
   }
 }

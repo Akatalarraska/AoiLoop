@@ -87,6 +87,7 @@ class TestHarness {
       instances: instances,
       changes: changes,
       incidents: incidents,
+      inventory: inventory,
       reminders: reminders,
       thresholds: thresholds,
     );

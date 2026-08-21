@@ -6,6 +6,7 @@ import '../../../core/database/database_providers.dart';
 import '../../../core/database/id_generator.dart';
 import '../../../core/database/repository.dart';
 import '../../../core/utils/clock.dart';
+import '../domain/stock_draw.dart';
 
 /// Reads and writes supply counts and the places they are kept.
 ///
@@ -224,6 +225,83 @@ class InventoryRepository extends Repository {
       }
 
       return remaining;
+    });
+  }
+
+  /// Takes stock for one registered change, and says what it found.
+  ///
+  /// The difference from [consume] is the distinction it preserves: a
+  /// consumable with no batches at all is *not counted*, which is not the same
+  /// as counted and empty. Telling someone who never set inventory up that
+  /// they have run out would be an invention.
+  Future<StockDraw> draw({
+    required String userProfileId,
+    required String consumableTypeId,
+    int amount = 1,
+  }) async {
+    final List<InventoryItem> before = await findByType(
+      userProfileId,
+      consumableTypeId,
+    );
+    if (before.isEmpty) {
+      return const StockDraw.untracked();
+    }
+
+    final int shortfall = await consume(
+      userProfileId: userProfileId,
+      consumableTypeId: consumableTypeId,
+      amount: amount,
+    );
+
+    return StockDraw(
+      tracked: true,
+      requested: amount,
+      shortfall: shortfall,
+      remaining: await totalQuantity(userProfileId, consumableTypeId),
+    );
+  }
+
+  /// Sets the level to warn at for a whole consumable type.
+  ///
+  /// The column lives on the batch because expiry does, but nobody thinks in
+  /// per-lot minimums — "warn me below five sensors" is about the sensors, not
+  /// about one carton. So the figure is written to every batch of the type,
+  /// which keeps it identical wherever it is read from.
+  ///
+  /// A type with no batches gets an empty one, so a minimum can be set before
+  /// any stock exists. The alternative is refusing to take the answer until
+  /// the user has typed a quantity they may not know yet.
+  Future<void> setTypeMinimum({
+    required String userProfileId,
+    required String consumableTypeId,
+    required int minimum,
+  }) async {
+    if (minimum < 0) {
+      throw ArgumentError.value(
+        minimum,
+        'minimum',
+        'Minimum quantity cannot be negative',
+      );
+    }
+
+    await db.transaction(() async {
+      final List<InventoryItem> batches = await findByType(
+        userProfileId,
+        consumableTypeId,
+      );
+
+      if (batches.isEmpty) {
+        await createItem(
+          userProfileId: userProfileId,
+          consumableTypeId: consumableTypeId,
+          minimumQuantity: minimum,
+        );
+        return;
+      }
+
+      for (final InventoryItem batch in batches) {
+        await setMinimumQuantity(batch.id, minimum);
+      }
     });
   }
 

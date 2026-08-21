@@ -1,5 +1,6 @@
 import 'package:blauloop/features/body_map/presentation/body_map_screen.dart';
 import 'package:blauloop/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:blauloop/features/inventory/presentation/inventory_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -70,6 +71,31 @@ void main() {
     }
   });
 
+  testWidgets('the overflow menu reaches the inventory itself', (
+    WidgetTester tester,
+  ) async {
+    // Built in Phase 8, so it is the one secondary section no longer
+    // answering with a placeholder.
+    await pumpApp(tester);
+
+    await tester.tap(find.byTooltip('More sections'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Inventory').last);
+    await tester.pumpAndSettle();
+
+    // This profile has no consumables at all, so the screen answers with the
+    // honest version of empty rather than a count of nothing.
+    expect(find.byType(InventoryScreen), findsOneWidget);
+    expect(
+      find.textContaining('Nothing you set up counts stock'),
+      findsOneWidget,
+    );
+
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.byType(NavigationBar), findsOneWidget);
+  });
+
   testWidgets('the body tab reaches the body map itself', (
     WidgetTester tester,
   ) async {
@@ -92,13 +118,12 @@ void main() {
     );
   });
 
-  testWidgets('the overflow menu reaches the four secondary sections', (
+  testWidgets('the overflow menu reaches the sections still to be built', (
     WidgetTester tester,
   ) async {
     await pumpApp(tester);
 
     for (final (String section, String availability) in <(String, String)>[
-      ('Inventory', 'Planned for phase 8 of the roadmap.'),
       ('Travel', 'Planned for release 0.3, after the 0.1.0 MVP.'),
       ('Family', 'Planned for release 0.2, after the 0.1.0 MVP.'),
       ('Settings', 'Planned for phase 10 of the roadmap.'),

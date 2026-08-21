@@ -7,6 +7,60 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Added — Phase 8: Inventory
+
+- Supply counts: what is left of each consumable, across every batch and
+  place, with the batch expiring soonest read first
+- **One unit comes off automatically each time a change is registered**, inside
+  the change's own transaction. A change that was recorded but did not come out
+  of stock leaves a count quietly one too high, and a supply count that drifts
+  is one nobody trusts
+- *Correct the count* sits beside *add stock* rather than behind a menu. An
+  automatic count the user cannot override is a trap — boxes get borrowed,
+  someone else restocks the cupboard, a change gets logged twice — and the
+  person holding the supplies is the authority on what is in their own drawer
+- A warning level per consumable, and a line on Home when something reaches it.
+  Silent otherwise, because a warning that is always on screen stops being a
+  warning. It sits below the countdowns, since a sensor due today outranks a
+  box getting thin
+- Storage places — home, a backpack, school, a second household — which is the
+  case multiple locations were put in the schema for. Entirely optional, and
+  the screen says so: most people keep everything in one cupboard
+- Two rules keep the count honest, and both are tested from the engine down.
+  It **never goes negative**: a shortfall is reported and the change is
+  recorded anyway, because the log is the product and the count is a
+  convenience on top of it. And it **never claims to know anything about a
+  consumable nobody is counting** — *not counted* and *none left* are different
+  answers and only one is a fact
+- `StockDraw` is what preserves that second rule. Three outcomes where a bare
+  integer carries two, and one place — `isWorthMentioning` — that every
+  user-facing message goes through. Someone who never set inventory up is never
+  told they have run out
+- A word after a change when stock has something to say: that it was the last
+  one, or that there was none left to subtract. A pharmacy trip planned a day
+  early costs nothing and one planned a day late costs a missed change
+- `tracksInventory` is checked before the cupboard is, so a consumable the user
+  switched counting off for never gets a row created and decremented behind
+  their back
+- The warning level is written to every batch of a type and read back as the
+  highest. The column lives on the batch because expiry does, but nobody thinks
+  in per-lot minimums; writing it everywhere keeps both readings identical, and
+  taking the maximum makes a stray older figure harmless rather than a silently
+  lowered threshold. Setting one for a consumable with no stock creates an
+  empty batch to hold it, so the answer can be given before the first box
+  arrives
+- Inventory is the last secondary section to stop answering with a placeholder
+
+### Deliberately not built in Phase 8
+
+- Expiry alerts. The dates are captured and shown per batch, and
+  `findExpiringBefore` has been there since Phase 1, but warning on them is
+  0.4 along with barcode scanning
+- Editing or deleting a batch. Correcting the total covers the case that
+  actually comes up, and per-batch surgery is a settings-shaped job
+- Any recommendation about how much to keep. The warning level is a number the
+  user chose and the app repeats back
+
 ### Added — Phase 7: Body map
 
 - The body map: every site grouped by the part of the body it is on, each

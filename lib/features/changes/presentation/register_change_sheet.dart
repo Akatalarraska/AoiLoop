@@ -5,6 +5,7 @@ import '../../../app/theme/app_spacing.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/errors/app_failure.dart';
 import '../../../core/utils/clock.dart';
+import '../../../l10n/generated/app_localizations.dart';
 import '../../../shared/extensions/body_enums_l10n.dart';
 import '../../../shared/extensions/build_context_x.dart';
 import '../../../shared/extensions/cycle_countdown_l10n.dart';
@@ -14,6 +15,7 @@ import '../../body_map/domain/body_site_choice.dart';
 import '../../body_map/presentation/body_map_providers.dart';
 import '../../body_map/presentation/body_site_picker.dart';
 import '../../dashboard/domain/dashboard_view.dart';
+import '../../inventory/presentation/stock_note.dart';
 import '../data/cycle_engine.dart';
 import '../domain/cycle_schedule.dart';
 
@@ -318,9 +320,12 @@ class _RegisterChangeSheetState extends ConsumerState<RegisterChangeSheet> {
     final String trimmed = _reason.text.trim();
     final String? reason = trimmed.isEmpty ? null : trimmed;
 
+    final AppLocalizations l10n = context.l10n;
+
     String? error;
+    CycleTransition? transition;
     try {
-      await ref
+      transition = await ref
           .read(cycleEngineProvider)
           .registerChange(
             userProfileId: widget.profile.id,
@@ -349,9 +354,16 @@ class _RegisterChangeSheetState extends ConsumerState<RegisterChangeSheet> {
     }
 
     navigator.pop();
+    final String? note = stockNote(
+      l10n,
+      transition!.stock,
+      widget.card.type.name,
+    );
     messenger
       ..clearSnackBars()
-      ..showSnackBar(SnackBar(content: Text(saved)));
+      ..showSnackBar(
+        SnackBar(content: Text(note == null ? saved : '$saved $note')),
+      );
   }
 }
 

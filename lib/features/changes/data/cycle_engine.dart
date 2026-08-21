@@ -10,6 +10,8 @@ import '../../body_map/domain/body_site_choice.dart';
 import '../../consumables/data/consumable_instance_repository.dart';
 import '../../incidents/data/incident_repository.dart';
 import '../../incidents/domain/incident_report.dart';
+import '../../inventory/data/inventory_repository.dart';
+import '../../inventory/domain/stock_draw.dart';
 import '../domain/cycle_schedule.dart';
 import 'change_event_repository.dart';
 
@@ -25,6 +27,7 @@ class CycleTransition {
     required this.opened,
     required this.event,
     required this.schedule,
+    this.stock = const StockDraw.untracked(),
   });
 
   /// The instance that came off. Null for the first change of a type, when
@@ -40,6 +43,10 @@ class CycleTransition {
   /// The dates the new cycle was opened with, including the offer that was
   /// on the table.
   final CycleSchedule schedule;
+
+  /// What taking a unit out of stock found. Untracked when the consumable is
+  /// not counted, which is every profile until somebody adds their first box.
+  final StockDraw stock;
 
   /// Whether this replaced something rather than starting from nothing.
   bool get replacedSomething => closed != null;
@@ -58,6 +65,7 @@ class IncidentRecord {
     this.replacement,
     this.event,
     this.schedule,
+    this.stock = const StockDraw.untracked(),
   });
 
   /// The row recording what went wrong.
@@ -77,6 +85,9 @@ class IncidentRecord {
 
   /// The dates the replacement cycle was opened with.
   final CycleSchedule? schedule;
+
+  /// What taking a unit out of stock found, when one was put on.
+  final StockDraw stock;
 
   /// Whether the user is now wearing something again.
   bool get wasReplaced => replacement != null;
@@ -99,6 +110,7 @@ class CycleEngine {
     required this.instances,
     required this.changes,
     required this.incidents,
+    required this.inventory,
     this.reminders,
     this.thresholds = CycleStatusThresholds.defaults,
   });
@@ -115,6 +127,16 @@ class CycleEngine {
   /// [_wasOnTime], and two copies of that rule is how the app ends up
   /// contradicting itself in writing.
   final IncidentRepository incidents;
+
+  /// Where the count of what is left in the cupboard lives.
+  ///
+  /// Decrementing happens inside the change's own transaction: a change that
+  /// was recorded but did not come out of stock leaves the user with a count
+  /// that is quietly one too high, and a supply count that drifts is a supply
+  /// count nobody trusts. It cannot fail the write — [InventoryRepository.draw]
+  /// reports a shortfall rather than throwing, and never pushes a count
+  /// negative.
+  final InventoryRepository inventory;
 
   /// Rebuilds the reminders after a change. Null where notifications are not
   /// wired up, which is every test that is only interested in the rows.
@@ -283,6 +305,7 @@ class CycleEngine {
         opened: opened,
         event: event,
         schedule: schedule,
+        stock: await _drawStock(userProfileId, type),
       );
     });
   }
@@ -429,8 +452,27 @@ class CycleEngine {
         replacement: opened,
         event: event,
         schedule: schedule,
+        stock: await _drawStock(userProfileId, type),
       );
     });
+  }
+
+  /// Takes one unit out of stock for a consumable that is counted.
+  ///
+  /// `tracksInventory` is the user's answer to whether they want this counted
+  /// at all, and it is checked before the cupboard is: someone who turned
+  /// counting off for test strips should not have a row quietly created and
+  /// decremented behind their back.
+  ///
+  /// One unit, always. A change puts one thing on, whatever else happened.
+  Future<StockDraw> _drawStock(String userProfileId, ConsumableType type) {
+    if (!type.tracksInventory) {
+      return Future<StockDraw>.value(const StockDraw.untracked());
+    }
+    return inventory.draw(
+      userProfileId: userProfileId,
+      consumableTypeId: type.id,
+    );
   }
 
   /// Whether replacing [previous] at [changedAt] counts as running its course.
@@ -484,6 +526,7 @@ final Provider<CycleEngine> cycleEngineProvider = Provider<CycleEngine>((
     instances: ref.watch(consumableInstanceRepositoryProvider),
     changes: ref.watch(changeEventRepositoryProvider),
     incidents: ref.watch(incidentRepositoryProvider),
+    inventory: ref.watch(inventoryRepositoryProvider),
     reminders: ref.watch(notificationSchedulerProvider),
   );
 });

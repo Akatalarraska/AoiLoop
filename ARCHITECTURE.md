@@ -310,6 +310,36 @@ use. That is arithmetic over the user's own history, and the copy is written
 to keep it a statement of fact. A tracker that starts recommending placements
 has quietly become something else.
 
+### Inventory
+
+Stock is a row per batch, not a running total, because expiry is per batch and
+"eight sensors, three of which expire next month" is unreachable from a single
+number. Consumption takes from the batch expiring soonest and spills into later
+ones.
+
+The decrement happens **inside the change's own transaction**. A change that
+was recorded but did not come out of stock leaves a count that is quietly one
+too high, and a supply count that drifts is one nobody trusts. It cannot fail
+the write: `InventoryRepository.draw` reports a shortfall rather than throwing,
+and the CHECK constraint means it can never go negative.
+
+`StockDraw` carries three outcomes where a bare integer carries two —
+*untracked*, *ran short*, *that was the last one*. Someone who never set
+inventory up must not be told they have run out, because they have not; they
+are simply not counting. `isWorthMentioning` is the single place that
+distinction is enforced, and every user-facing message goes through it.
+
+`ConsumableTypes.tracksInventory` is checked before the cupboard is. Creating
+and decrementing a row for a consumable the user switched counting off for
+would be overruling them.
+
+The warning level is per batch in the schema, because `expirationDate` is.
+Nobody thinks in per-lot minimums, so it is written to every batch of a type
+and read back as the maximum: the two readings agree, and a stray older value
+is harmless rather than a silently lowered threshold. Setting one for a
+consumable with no stock creates an empty batch to hold it, so the answer can
+be given before the first box arrives.
+
 ### Preferred change time
 
 If a sensor fails at 03:17 and a new one goes on, the next change would fall at

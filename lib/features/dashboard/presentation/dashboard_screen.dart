@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../app/router/app_routes.dart';
 import '../../../app/theme/app_spacing.dart';
 import '../../../core/notifications/presentation/reminders_off_banner.dart';
 import '../../../shared/extensions/build_context_x.dart';
 import '../../changes/presentation/register_change_sheet.dart';
+import '../../inventory/presentation/inventory_providers.dart';
 import '../domain/dashboard_view.dart';
 import 'dashboard_providers.dart';
 import 'widgets/consumable_actions_sheet.dart';
@@ -104,6 +107,7 @@ class _DashboardBody extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.sm),
           _AttentionSummary(view: view),
+          const _LowStockLine(),
           const SizedBox(height: AppSpacing.lg),
 
           // Above the detail, because the jobs it leads to are why the app
@@ -164,6 +168,50 @@ class _AttentionSummary extends StatelessWidget {
           : context.l10n.dashboardAttentionCount(count),
       style: context.textStyles.bodyMedium?.copyWith(
         color: context.colors.onSurfaceVariant,
+      ),
+    );
+  }
+}
+
+/// One line when supplies are at or below the level the user asked about.
+///
+/// Below the countdowns rather than above them, because a sensor that is due
+/// today outranks a box that is getting thin — and silent when nothing is low,
+/// which is most days. A warning that is always on screen stops being a
+/// warning.
+class _LowStockLine extends ConsumerWidget {
+  const _LowStockLine();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final int low = ref.watch(lowStockCountProvider);
+    if (low == 0) {
+      return const SizedBox.shrink();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.sm),
+      child: Row(
+        children: <Widget>[
+          Icon(
+            Icons.inventory_2_outlined,
+            size: 18,
+            color: context.colors.error,
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Text(
+              context.l10n.homeLowStock(low),
+              style: context.textStyles.bodyMedium?.copyWith(
+                color: context.colors.error,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () => context.pushNamed(AppRoute.inventory.routeName),
+            child: Text(context.l10n.homeLowStockAction),
+          ),
+        ],
       ),
     );
   }
