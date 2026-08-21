@@ -99,6 +99,92 @@ class ReminderPlan {
     return ReminderPlan(List<ReminderMoment>.unmodifiable(moments));
   }
 
+  /// The reminders for stock expiring on [expiresOn], evaluated at [now].
+  ///
+  /// Two kinds, because they are two different sentences rather than the same
+  /// one said twice. The warnings ahead of the date are something to plan a
+  /// pharmacy trip around; the one on the date itself is something to act on —
+  /// take it out of the drawer before it gets used by mistake.
+  ///
+  /// [expiresOn] is a calendar date, so every moment is placed at
+  /// [reminderHourUtc] rather than at midnight. A notification that lands at
+  /// 00:00 either wakes someone up or is buried under everything that arrived
+  /// overnight, and neither reads as a warning.
+  ///
+  /// Moments already behind [now] are dropped, for the same reason
+  /// [ReminderPlan.forCycle] drops them: a notification dated in the past
+  /// either never fires or fires immediately.
+  factory ReminderPlan.forExpiry({
+    required DateTime? expiresOn,
+    required List<Duration> leadTimes,
+    required DateTime now,
+  }) {
+    if (expiresOn == null) {
+      return const ReminderPlan(<ReminderMoment>[]);
+    }
+
+    final DateTime expiry = expiresOn.toUtc();
+    final DateTime dueMoment = DateTime.utc(
+      expiry.year,
+      expiry.month,
+      expiry.day,
+      reminderHourUtc,
+    );
+    final DateTime cutoff = now.toUtc();
+
+    final List<ReminderMoment> moments = <ReminderMoment>[];
+
+    for (final Duration lead in ReminderOffsetsConverter.normalize(leadTimes)) {
+      if (lead == Duration.zero) {
+        continue;
+      }
+      final DateTime at = dueMoment.subtract(lead);
+      if (!at.isAfter(cutoff)) {
+        continue;
+      }
+      moments.add(
+        ReminderMoment(
+          kind: NotificationKind.expiringSoon,
+          at: at,
+          leadTime: lead,
+        ),
+      );
+    }
+
+    if (dueMoment.isAfter(cutoff)) {
+      moments.add(
+        ReminderMoment(
+          kind: NotificationKind.expired,
+          at: dueMoment,
+          leadTime: Duration.zero,
+        ),
+      );
+    }
+
+    moments.sort((ReminderMoment a, ReminderMoment b) => a.at.compareTo(b.at));
+    return ReminderPlan(List<ReminderMoment>.unmodifiable(moments));
+  }
+
+  /// The hour of the UTC day an expiry reminder lands on.
+  ///
+  /// Expiry is a calendar date rather than an instant, so something has to
+  /// choose a time. Late morning UTC covers waking hours across the zones
+  /// BlauLoop currently ships to without landing in the middle of anyone's
+  /// night, and it is a constant rather than a preference because Phase 10 is
+  /// where the settings screen decides which of these become adjustable.
+  static const int reminderHourUtc = 9;
+
+  /// How far ahead of an expiry date to warn, by default.
+  ///
+  /// Weeks rather than hours, because the action is a pharmacy trip and not a
+  /// two-minute change. Thirty days is roughly a prescription cycle — long
+  /// enough to do something about it — and seven is the reminder for anyone
+  /// who read the first one and forgot.
+  static const List<Duration> defaultExpiryLeadTimes = <Duration>[
+    Duration(days: 30),
+    Duration(days: 7),
+  ];
+
   /// Every reminder to schedule, soonest first.
   final List<ReminderMoment> moments;
 

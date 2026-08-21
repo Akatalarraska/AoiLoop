@@ -19,6 +19,13 @@ enum NotificationKind {
 
   /// Stock is approaching its expiry date.
   expiringSoon,
+
+  /// Stock has passed its expiry date and is still on the shelf.
+  ///
+  /// Separate from [expiringSoon] because it is a different sentence, not a
+  /// later one. "In a week" is something to plan around; "as of today" is
+  /// something to take out of the drawer before it gets used by mistake.
+  expired,
 }
 
 /// Where a scheduled notification is in its life.

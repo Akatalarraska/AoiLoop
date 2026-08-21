@@ -336,5 +336,10 @@
   "homeLowStock": "{count, plural, =1{Queda poco de 1 suministro} other{Queda poco de {count} suministros}}",
   "homeLowStockAction": "Ver existencias",
   "actionSave": "Guardar",
-  "actionAdd": "Añadir"
+  "actionAdd": "Añadir",
+  "notificationExpiringSoonTitle": "{name} a punto de caducar",
+  "notificationExpiringSoonBody": "Parte de tus existencias caduca el {when}.",
+  "notificationExpiredTitle": "{name} caducado",
+  "notificationExpiredBody": "Tienes existencias con fecha {when} ya caducadas. Conviene sacarlas del cajón.",
+  "inventoryMoreDetails": "Más detalles"
 }

@@ -340,6 +340,36 @@ is harmless rather than a silently lowered threshold. Setting one for a
 consumable with no stock creates an empty batch to hold it, so the answer can
 be given before the first box arrives.
 
+### Expiry reminders
+
+Stock going off runs through the same machinery as a change falling due, and
+deliberately so: it is the same job — telling somebody something before they
+find it out too late — and giving it a second scheduler would mean a second
+ledger, a second budget and two ways for reminders to go quiet.
+
+`ReminderPlan.forExpiry` is the pure half, next to `forCycle`. It places every
+moment at a fixed hour rather than at midnight, because expiry is a calendar
+date and a notification at 00:00 is either an alarm or a thing buried under the
+overnight pile. The warnings ahead of the date and the one on it are different
+`NotificationKind`s, because they are different sentences: one is something to
+plan a pharmacy trip around, the other is something to take out of the drawer.
+
+Warnings are grouped by consumable and date, not emitted per batch. Four
+cartons expiring together are one sentence, not four identical ones spending
+four slots of a budget of 64.
+
+There is **no planning horizon**. A cutoff would have to be expressed in expiry
+dates while the thing worth bounding is warning dates, and the two are a lead
+time apart — a 31-day cutoff silently loses the thirty-day warning for a box
+going off in six weeks, which is precisely the warning that box needs. The
+budget is the limit, spent soonest-first, which is already the rule cycle
+reminders live by.
+
+Correcting a count by hand applies the **difference**, never a wholesale
+rewrite. Setting the first batch to the new total and emptying the rest
+balances the count just as well and destroys every expiry date behind it, and
+those dates are what these reminders are built on.
+
 ### Preferred change time
 
 If a sensor fails at 03:17 and a new one goes on, the next change would fall at

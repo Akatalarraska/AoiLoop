@@ -53,13 +53,28 @@ class ReminderCopy {
 
   String title(NotificationKind kind, String consumableName) => switch (kind) {
     NotificationKind.cycleDue => l10n.notificationCycleDueTitle(consumableName),
+    NotificationKind.expiringSoon => l10n.notificationExpiringSoonTitle(
+      consumableName,
+    ),
+    NotificationKind.expired => l10n.notificationExpiredTitle(consumableName),
     _ => l10n.notificationCycleReminderTitle(consumableName),
   };
 
   String body(NotificationKind kind, DateTime dueAt) => switch (kind) {
     NotificationKind.cycleDue => l10n.notificationCycleDueBody,
+    // A calendar date rather than a date and a time. Expiry is stated on a box
+    // to the day, and printing an hour beside it would invent a precision the
+    // packaging does not have.
+    NotificationKind.expiringSoon => l10n.notificationExpiringSoonBody(
+      formatDay(dueAt),
+    ),
+    NotificationKind.expired => l10n.notificationExpiredBody(formatDay(dueAt)),
     _ => l10n.notificationCycleReminderBody(formatDayAndTime(dueAt)),
   };
+
+  /// A weekday and a date, with no time.
+  String formatDay(DateTime instant) =>
+      DateFormat.MMMEd(languageTag).format(instant.toLocal());
 
   /// A weekday, a date and a time in the profile's language and the device's
   /// zone. Matches what `DateTimeFormatX` shows inside the app, so a reminder

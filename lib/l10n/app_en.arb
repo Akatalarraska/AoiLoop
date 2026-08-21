@@ -1498,5 +1498,30 @@
   "@actionSave": { "description": "Confirms a form. Used wherever the change is an edit rather than a new record." },
 
   "actionAdd": "Add",
-  "@actionAdd": { "description": "Confirms creating something new." }
+  "@actionAdd": { "description": "Confirms creating something new." },
+  "notificationExpiringSoonTitle": "{name} expiring",
+  "@notificationExpiringSoonTitle": {
+    "description": "Notification title warning that stock is approaching its expiry date.",
+    "placeholders": { "name": { "type": "String", "example": "CGM sensor" } }
+  },
+
+  "notificationExpiringSoonBody": "Some of your stock goes off on {when}.",
+  "@notificationExpiringSoonBody": {
+    "description": "Notification body for stock approaching expiry. Carries the date rather than a countdown, because a notification sits in the shade until someone looks at it and 'in 7 days' is a lie by then.",
+    "placeholders": { "when": { "type": "String", "example": "Tue 12 Aug" } }
+  },
+
+  "notificationExpiredTitle": "{name} expired",
+  "@notificationExpiredTitle": {
+    "description": "Notification title for stock that has reached its expiry date.",
+    "placeholders": { "name": { "type": "String", "example": "CGM sensor" } }
+  },
+
+  "notificationExpiredBody": "Stock dated {when} is out of date. Worth taking out of the drawer.",
+  "@notificationExpiredBody": {
+    "description": "Notification body for expired stock. Says what to do without instructing on treatment - the point is that expired stock does not get used by mistake.",
+    "placeholders": { "when": { "type": "String", "example": "Tue 12 Aug" } }
+  },
+  "inventoryMoreDetails": "More details",
+  "@inventoryMoreDetails": { "description": "Folds away the batch details the app does nothing with, such as the lot number. Kept out of the way because copying a code off a box is no part of why anyone opens a tracker." }
 }

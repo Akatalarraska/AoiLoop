@@ -165,6 +165,28 @@ void main() {
       expect(find.text('6 left'), findsOneWidget);
     });
 
+    testWidgets('the lot number is folded away, the expiry date is not', (
+      WidgetTester tester,
+    ) async {
+      // Copying a code off a box is no part of why anyone opens a tracker, and
+      // the app does nothing with it. The expiry date is the opposite: it is
+      // what the going-off reminders are built on.
+      final AppUnderTest app = await pumpTallApp(tester);
+      await seedType(app);
+      await tester.pumpAndSettle();
+      await openInventory(tester);
+
+      await tester.tap(find.text('Add stock'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Expiry date (optional)'), findsOneWidget);
+      expect(find.text('Lot number (optional)'), findsNothing);
+
+      await tester.tap(find.text('More details'));
+      await tester.pumpAndSettle();
+      expect(find.text('Lot number (optional)'), findsOneWidget);
+    });
+
     testWidgets('correcting the count overrules whatever the app thought', (
       WidgetTester tester,
     ) async {
@@ -186,6 +208,76 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(await total(app, sensor), 3);
+    });
+
+    testWidgets('correcting keeps the expiry dates of the other batches', (
+      WidgetTester tester,
+    ) async {
+      // The reason this is not a tidiness point: those dates are what the
+      // expiry reminders are built on. Emptying the far batch to balance the
+      // total would tell somebody all eight boxes go off next month.
+      final AppUnderTest app = await pumpTallApp(tester);
+      final ConsumableType sensor = await seedType(app);
+      final UserProfile profile = (await app.harness.profiles.findPrimary())!;
+      await app.harness.inventory.createItem(
+        userProfileId: profile.id,
+        consumableTypeId: sensor.id,
+        quantity: 2,
+        expirationDate: now.add(const Duration(days: 30)),
+      );
+      await app.harness.inventory.createItem(
+        userProfileId: profile.id,
+        consumableTypeId: sensor.id,
+        quantity: 6,
+        expirationDate: now.add(const Duration(days: 400)),
+      );
+      await tester.pumpAndSettle();
+      await openInventory(tester);
+
+      await tester.tap(find.text('Correct the count'));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.widgetWithText(TextField, 'How many you actually have'),
+        '7',
+      );
+      await tester.tap(find.widgetWithText(FilledButton, 'Save'));
+      await tester.pumpAndSettle();
+
+      final List<InventoryItem> batches = await app.harness.inventory
+          .findByType(profile.id, sensor.id);
+      expect(await total(app, sensor), 7);
+      // One came out of the batch going off soonest. The far one is untouched,
+      // and still says what it says.
+      expect(batches.first.quantity, 1);
+      expect(batches.last.quantity, 6);
+      expect(batches.last.expirationDate, isNotNull);
+    });
+
+    testWidgets('correcting upwards adds to the batch going off soonest', (
+      WidgetTester tester,
+    ) async {
+      final AppUnderTest app = await pumpTallApp(tester);
+      final ConsumableType sensor = await seedType(app);
+      final UserProfile profile = (await app.harness.profiles.findPrimary())!;
+      await app.harness.inventory.createItem(
+        userProfileId: profile.id,
+        consumableTypeId: sensor.id,
+        quantity: 2,
+        expirationDate: now.add(const Duration(days: 30)),
+      );
+      await tester.pumpAndSettle();
+      await openInventory(tester);
+
+      await tester.tap(find.text('Correct the count'));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.widgetWithText(TextField, 'How many you actually have'),
+        '5',
+      );
+      await tester.tap(find.widgetWithText(FilledButton, 'Save'));
+      await tester.pumpAndSettle();
+
+      expect(await total(app, sensor), 5);
     });
 
     testWidgets('a warning level can be set before any stock exists', (

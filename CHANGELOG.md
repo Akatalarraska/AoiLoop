@@ -51,15 +51,53 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   arrives
 - Inventory is the last secondary section to stop answering with a placeholder
 
+### Added — Phase 8: expiry reminders
+
+- **Notifications when stock is going off, and on the day it has.** Moved into
+  the MVP from 0.4: being told a box is about to expire is the same job as
+  being told a sensor is due, so it runs on the same gateway, the same ledger
+  and the same budget rather than growing a second set of any of them
+- Warnings at 30 and 7 days, then one on the date itself. The last one is a
+  different `NotificationKind` and a different sentence, not a later copy of
+  the same one — "in a week" is something to plan a pharmacy trip around, "as
+  of today" is something to take out of the drawer before it gets used
+- Every moment lands at a fixed hour rather than at midnight. Expiry is a
+  calendar date, so something has to choose a time, and 00:00 is either an
+  alarm clock or a thing buried under everything that arrived overnight
+- Four cartons expiring on one date get one warning, not four. Identical
+  sentences spending four slots of a budget of 64 would tell the user nothing
+  extra
+- A batch with nothing left in it is never warned about. The row records a box
+  that is gone
+- The lot number is folded behind *More details*. Copying a code off a box is
+  no part of why anyone opens a tracker and the app does nothing with it. The
+  expiry date stays in plain view, because it is what these reminders are
+  built on
+
+### Fixed — Phase 8
+
+- **Correcting a count by hand no longer destroys the expiry dates behind it.**
+  The first cut set the soonest-expiring batch to the new total and emptied the
+  rest, which balanced the count and told anyone with two boxes going off next
+  month and six going off next year that all eight expired next month. It now
+  applies the difference: units come out of the soonest batch and spill into
+  later ones, a surplus goes to that same batch, and nothing else is touched.
+  Harmless while nothing read those dates; not harmless now that the reminders
+  do
+- The expiry planner had a 31-day horizon expressed in expiry dates, so a box
+  going off in six weeks lost the thirty-day warning that was a fortnight away.
+  There is no horizon now — the budget is the limit, spent soonest-first, which
+  is already the rule cycle reminders live by
+
 ### Deliberately not built in Phase 8
 
-- Expiry alerts. The dates are captured and shown per batch, and
-  `findExpiringBefore` has been there since Phase 1, but warning on them is
-  0.4 along with barcode scanning
-- Editing or deleting a batch. Correcting the total covers the case that
-  actually comes up, and per-batch surgery is a settings-shaped job
+- Editing or deleting an individual batch. Correcting the total covers the case
+  that actually comes up, and per-batch surgery is a settings-shaped job
 - Any recommendation about how much to keep. The warning level is a number the
   user chose and the app repeats back
+- Barcode scanning, dropped from the plan rather than deferred. Asking someone
+  to scan or type the codes on their own supplies is work the app cannot pay
+  back
 
 ### Added — Phase 7: Body map
 

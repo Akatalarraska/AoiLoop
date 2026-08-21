@@ -128,6 +128,16 @@ read as the highest, so both readings agree and a stray older figure cannot
 quietly lower the threshold. Setting one before any stock exists creates an
 empty batch to hold it.
 
+**Expiry reminders ship here too**, moved in from 0.4. Being reminded that
+stock is going off is the same job as being reminded a sensor is due — a thing
+the user would otherwise find out too late — so it runs on the same gateway,
+the same ledger and the same budget. Warnings at 30 and 7 days, and one on the
+date itself, which is a different sentence rather than a later one.
+
+The lot number is folded behind *More details*. Copying a code off a box is no
+part of why anyone opens a tracker and the app does nothing with it; the expiry
+date sits in plain view because it is what the reminders are built on.
+
 ### Phase 9 — Calendar & history
 
 Calendar of upcoming and completed changes; timeline with filters and detail.
@@ -158,13 +168,17 @@ duplicate reminder for something already done.
 checklist, inventory versus needs, time zone shifts. These are logistics
 forecasts from the user's own settings, not clinical recommendations.
 
-### 0.4 — Claims, expiry and stats
+### 0.4 — Claims and stats
 
 Manufacturer replacement tracking — the whole subject, including capturing the
 lot and serial number off the packaging at the moment a failure is reported.
 Phase 6 deliberately leaves all of it here rather than collecting numbers it
-would do nothing with. Also: expiry alerts, barcode scanning, statistics, home
-screen widgets.
+would do nothing with. Also: statistics and home screen widgets.
+
+Expiry alerts were listed here and have moved into Phase 8. Barcode scanning
+was listed here and has been dropped: asking someone to scan or type the codes
+on their own supplies is work the app cannot pay back, and knowing *that* a
+change happened and *when* is what a tracker is for.
 
 ### 1.0 — Integrations
 

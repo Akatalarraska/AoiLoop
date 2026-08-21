@@ -63,6 +63,7 @@ class _StockSheetState extends ConsumerState<StockSheet> {
   String? _lot;
   DateTime? _expiry;
   String? _locationId;
+  bool _showLot = false;
   bool _saving = false;
   String? _error;
 
@@ -155,14 +156,9 @@ class _StockSheetState extends ConsumerState<StockSheet> {
                       ),
 
                       if (isAdding) ...<Widget>[
-                        const SizedBox(height: AppSpacing.lg),
-                        TextField(
-                          enabled: !_saving,
-                          onChanged: (String value) => _lot = value,
-                          decoration: InputDecoration(
-                            labelText: context.l10n.inventoryLotOptional,
-                          ),
-                        ),
+                        // The expiry date stays in plain view: it is the one
+                        // detail the app acts on, since it drives the
+                        // reminders that stock is going off.
                         const SizedBox(height: AppSpacing.lg),
                         _ExpiryRow(
                           expiry: _expiry,
@@ -176,6 +172,30 @@ class _StockSheetState extends ConsumerState<StockSheet> {
                             enabled: !_saving,
                             onChanged: (String? id) =>
                                 setState(() => _locationId = id),
+                          ),
+                        ],
+
+                        // The lot number is not. Copying a code off a box is
+                        // no part of why anyone opens a tracker, and the app
+                        // does nothing with it. It is here for the user who
+                        // wants their own record, and folded away for everyone
+                        // else.
+                        const SizedBox(height: AppSpacing.sm),
+                        _MoreDetails(
+                          expanded: _showLot,
+                          onToggle: _saving
+                              ? null
+                              : () => setState(() => _showLot = !_showLot),
+                        ),
+                        if (_showLot) ...<Widget>[
+                          const SizedBox(height: AppSpacing.sm),
+                          TextField(
+                            enabled: !_saving,
+                            onChanged: (String value) => _lot = value,
+                            textCapitalization: TextCapitalization.characters,
+                            decoration: InputDecoration(
+                              labelText: context.l10n.inventoryLotOptional,
+                            ),
                           ),
                         ],
                       ],
@@ -301,10 +321,16 @@ class _StockSheetState extends ConsumerState<StockSheet> {
 
   /// Makes the total equal [value], across however many batches there are.
   ///
-  /// The user answers for the consumable, not for a carton — they counted what
-  /// is in the drawer. So the correction is applied to the batch expiring
-  /// soonest and the rest are emptied, which keeps the total honest and keeps
-  /// the stock that survives the correction the stock that goes off first.
+  /// The user counted what is in the drawer, so they are answering for the
+  /// consumable rather than for one carton. The **difference** is applied and
+  /// nothing else is touched: units come out of the batch expiring soonest and
+  /// spill into later ones, and a surplus is added to that same batch.
+  ///
+  /// Setting the first batch to the total and emptying the rest would balance
+  /// the count just as well and destroy every expiry date behind it. Somebody
+  /// with two boxes going off next month and six going off next year would end
+  /// up being told all eight expire next month. Those dates are what the
+  /// expiry reminders are built on, so this is not a tidiness point.
   Future<void> _correctTo(
     InventoryRepository repository,
     UserProfile profile,
@@ -320,12 +346,39 @@ class _StockSheetState extends ConsumerState<StockSheet> {
       return;
     }
 
-    await repository.setQuantity(batches.first.id, value);
-    for (final InventoryItem batch in batches.skip(1)) {
-      if (batch.quantity != 0) {
-        await repository.setQuantity(batch.id, 0);
-      }
+    final int delta = value - widget.card.total;
+    if (delta == 0) {
+      return;
     }
+    if (delta > 0) {
+      await repository.restock(batches.first.id, delta);
+      return;
+    }
+    await repository.consume(
+      userProfileId: profile.id,
+      consumableTypeId: widget.card.type.id,
+      amount: -delta,
+    );
+  }
+}
+
+/// The way into the details almost nobody needs.
+class _MoreDetails extends StatelessWidget {
+  const _MoreDetails({required this.expanded, required this.onToggle});
+
+  final bool expanded;
+  final VoidCallback? onToggle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: AlignmentDirectional.centerStart,
+      child: TextButton.icon(
+        onPressed: onToggle,
+        icon: Icon(expanded ? Icons.expand_less : Icons.expand_more),
+        label: Text(context.l10n.inventoryMoreDetails),
+      ),
+    );
   }
 }
 
