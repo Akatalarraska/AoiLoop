@@ -5,6 +5,7 @@ import '../../../app/theme/app_spacing.dart';
 import '../../../core/database/app_database.dart';
 import '../../../shared/extensions/build_context_x.dart';
 import '../../../shared/extensions/date_time_format.dart';
+import '../../../shared/widgets/responsive_page.dart';
 import '../domain/inventory_view.dart';
 import 'inventory_locations_screen.dart';
 import 'inventory_providers.dart';
@@ -91,8 +92,7 @@ class _InventoryBody extends StatelessWidget {
       );
     }
 
-    return ListView(
-      padding: AppSpacing.pagePadding,
+    return ResponsivePage(
       children: <Widget>[
         if (view.hasAnyStock) ...<Widget>[
           Text(

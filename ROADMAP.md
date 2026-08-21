@@ -3,7 +3,8 @@
 The MVP is `0.1.0`. It is built in phases, and **each phase is finished — it
 analyzes, it tests, it runs — before the next one starts.**
 
-Current position: **Phase 9 complete.**
+Current position: **Phase 10 in progress** — settings and responsive
+layouts are done; the remaining items are listed below.
 
 ---
 
@@ -161,10 +162,32 @@ for it, or it did not and Home is already saying so.
 
 ### Phase 10 — Polish
 
-Error, empty and loading states. A settings screen for everything onboarding
-asked — language, preferred change time, reminder offsets, units, tracked
-consumables. Accessibility pass. Responsive layouts. Dark mode. Copy review.
-Both platforms. Test coverage. Tag `0.1.0`.
+**Done:**
+
+- A settings screen for everything onboarding asked — name, language, units,
+  preferred change time — plus a screen per consumable for its duration, its
+  own change time and its reminder offsets, and a switch for whether it is
+  tracked at all. Every screen that said "arrives with the settings screen" was
+  pointing here
+- Nothing on it is destructive. Turning a consumable off hides it and keeps
+  every row it ever produced, and the list is built from *all* types so the
+  switch that put it away is the switch that brings it back
+- Nothing on it moves a date the user did not agree to move. Clearing the
+  preferred change time re-dates nothing, and changing a duration applies to
+  the next cycle rather than to whatever is already on the body
+- `ResponsivePage`, which `AppSpacing.pagePadding` has promised since Phase 0
+  without there being any such thing. Content stops widening at a readable
+  measure and the extra room becomes margin
+
+**Still to do:** an accessibility pass, a dark-mode pass, a copy review, error
+and empty states audited screen by screen, a run on both platforms, and the
+test-coverage sweep. Then tag `0.1.0`.
+
+Two things block the tag rather than merely waiting on it. **Notification
+delivery has never run on a device** — there are now two kinds of reminder
+riding on machinery no phone has confirmed works. And the **catalogue's wear
+times are unverified** against any manufacturer, which is why the settings
+screen points the user at their own box rather than at the app.
 
 ---
 

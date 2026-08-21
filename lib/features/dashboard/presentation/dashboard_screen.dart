@@ -6,6 +6,7 @@ import '../../../app/router/app_routes.dart';
 import '../../../app/theme/app_spacing.dart';
 import '../../../core/notifications/presentation/reminders_off_banner.dart';
 import '../../../shared/extensions/build_context_x.dart';
+import '../../../shared/widgets/responsive_page.dart';
 import '../../changes/presentation/register_change_sheet.dart';
 import '../../inventory/presentation/inventory_providers.dart';
 import '../domain/dashboard_view.dart';
@@ -83,8 +84,7 @@ class _DashboardBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: AppSpacing.pagePadding,
+    return ResponsivePage(
       children: <Widget>[
         Text(
           context.l10n.dashboardGreeting(view.profile.displayName),

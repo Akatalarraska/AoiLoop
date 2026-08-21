@@ -41,6 +41,16 @@ final StreamProvider<List<ConsumableType>> allConsumableTypesProvider =
       isAutoDispose: true,
     );
 
+/// Every consumable type, including the ones switched off.
+///
+/// Only the settings screen wants this. Everywhere else, a type the user
+/// turned off should be invisible — that is what turning it off meant.
+final StreamProvider<List<ConsumableType>> everyConsumableTypeProvider =
+    StreamProvider<List<ConsumableType>>(
+      (Ref ref) => ref.watch(consumableTypeRepositoryProvider).watchAll(),
+      isAutoDispose: true,
+    );
+
 /// When something was last put on each site.
 ///
 /// A query rather than a stream, re-run whenever the set of things in use

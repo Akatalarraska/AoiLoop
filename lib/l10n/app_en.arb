@@ -1634,5 +1634,121 @@
   },
 
   "actionViewHistory": "See its history",
-  "@actionViewHistory": { "description": "Opens the timeline narrowed to one consumable." }
+  "@actionViewHistory": { "description": "Opens the timeline narrowed to one consumable." },
+  "settingsYouTitle": "You",
+  "@settingsYouTitle": { "description": "Settings section covering the profile itself." },
+
+  "settingsName": "Name",
+  "@settingsName": { "description": "The display name shown on the dashboard." },
+
+  "settingsNameHint": "It appears on Home and never leaves this device.",
+  "@settingsNameHint": { "description": "Repeats the promise onboarding made about the name, at the one place it can be changed." },
+
+  "settingsLanguage": "Language",
+  "@settingsLanguage": { "description": "The language the app runs in." },
+
+  "settingsLanguageNote": "Reminders already scheduled keep the language they were written in until the next change is registered.",
+  "@settingsLanguageNote": { "description": "Explains a real limit rather than hiding it: notification text is resolved when a reminder is scheduled, so changing language does not rewrite what the OS is already holding." },
+
+  "settingsUnits": "Glucose units",
+  "@settingsUnits": { "description": "The unit glucose values are shown in." },
+
+  "settingsUnitsNote": "BlauLoop does not read or interpret glucose. This is only how numbers are written if you note one down.",
+  "@settingsUnitsNote": { "description": "Keeps the boundary explicit at the one setting that could imply the app handles glucose." },
+
+  "settingsChangesTitle": "Changes",
+  "@settingsChangesTitle": { "description": "Settings section covering change times and reminders." },
+
+  "settingsPreferredTime": "Preferred change time",
+  "@settingsPreferredTime": { "description": "The hour of day the user would rather make changes at." },
+
+  "settingsPreferredTimeNone": "No preference",
+  "@settingsPreferredTimeNone": { "description": "Shown when no preferred change time is set." },
+
+  "settingsPreferredTimeNote": "Offered when you register a change, never applied on its own. Consumables with a time of their own keep it.",
+  "@settingsPreferredTimeNote": { "description": "States both that the preference is an offer and that a per-consumable time overrides it, which is the rule the cycle engine actually follows." },
+
+  "settingsClearPreferredTime": "Clear",
+  "@settingsClearPreferredTime": { "description": "Removes the preferred change time." },
+
+  "settingsConsumablesTitle": "What you track",
+  "@settingsConsumablesTitle": { "description": "Settings section listing the consumables." },
+
+  "settingsConsumablesNote": "Turning one off hides it from Home. Nothing you have logged is deleted, and you can turn it back on.",
+  "@settingsConsumablesNote": { "description": "Makes clear that deactivating is reversible and non-destructive, which is what makes it safe to tap." },
+
+  "settingsConsumableOff": "Not tracked",
+  "@settingsConsumableOff": { "description": "Marks a consumable the user has switched off." },
+
+  "settingsTracked": "Tracked",
+  "@settingsTracked": { "description": "Whether this consumable appears on Home." },
+
+  "settingsDuration": "How long it lasts",
+  "@settingsDuration": { "description": "The expected wear time of a consumable." },
+
+  "settingsDurationNone": "Counted, not timed",
+  "@settingsDurationNone": { "description": "Shown for a consumable with no duration, which gets no countdown and no reminders." },
+
+  "settingsDurationDays": "{count, plural, =1{1 day} other{{count} days}}",
+  "@settingsDurationDays": {
+    "description": "A wear time in whole days.",
+    "placeholders": { "count": { "type": "int", "example": "10" } }
+  },
+
+  "settingsDurationHours": "{count, plural, =1{1 hour} other{{count} hours}}",
+  "@settingsDurationHours": {
+    "description": "A wear time shorter than a day.",
+    "placeholders": { "count": { "type": "int", "example": "72" } }
+  },
+
+  "settingsDurationField": "Days it lasts",
+  "@settingsDurationField": { "description": "Label for the wear time field." },
+
+  "settingsDurationUnverified": "BlauLoop does not know how long your product lasts. Check the box or the manufacturer's instructions and put that number here.",
+  "@settingsDurationUnverified": { "description": "Says plainly that the app is not the authority on wear time. A wrong duration means a reminder on the wrong day, which is the failure this app cannot recover from." },
+
+  "settingsOwnChangeTime": "Its own change time",
+  "@settingsOwnChangeTime": { "description": "A per-consumable preferred change time, overriding the profile's." },
+
+  "settingsFollowsProfile": "Follows your general preference",
+  "@settingsFollowsProfile": { "description": "Shown when a consumable has no change time of its own, so it inherits the profile's." },
+
+  "settingsReminders": "Reminders",
+  "@settingsReminders": { "description": "When to warn before this consumable is due." },
+
+  "settingsRemindersNone": "No reminders",
+  "@settingsRemindersNone": { "description": "Shown when a consumable has no reminder offsets set." },
+
+  "settingsReminderOffsetDays": "{count, plural, =1{1 day before} other{{count} days before}}",
+  "@settingsReminderOffsetDays": {
+    "description": "One reminder lead time, in days.",
+    "placeholders": { "count": { "type": "int", "example": "2" } }
+  },
+
+  "settingsReminderOffsetHours": "{count, plural, =1{1 hour before} other{{count} hours before}}",
+  "@settingsReminderOffsetHours": {
+    "description": "One reminder lead time, in hours.",
+    "placeholders": { "count": { "type": "int", "example": "6" } }
+  },
+
+  "settingsReminderOnTheDay": "When it is due",
+  "@settingsReminderOnTheDay": { "description": "The reminder that fires on the deadline itself." },
+
+  "settingsAboutTitle": "About",
+  "@settingsAboutTitle": { "description": "Settings section with the version and the project link." },
+
+  "settingsVersion": "Version {version}",
+  "@settingsVersion": {
+    "description": "The running version of the app.",
+    "placeholders": { "version": { "type": "String", "example": "0.1.0" } }
+  },
+
+  "settingsSaved": "Saved.",
+  "@settingsSaved": { "description": "Confirmation after a setting was changed." },
+
+  "settingsFailed": "That could not be saved, so nothing changed. Try again.",
+  "@settingsFailed": { "description": "Shown when a settings write failed. States plainly that nothing was half-written." },
+
+  "settingsNameRequired": "A name is needed. It is what Home greets you by.",
+  "@settingsNameRequired": { "description": "Shown when the name field is emptied. The column requires one." }
 }

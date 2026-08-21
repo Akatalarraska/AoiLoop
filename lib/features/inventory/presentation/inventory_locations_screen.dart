@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/theme/app_spacing.dart';
 import '../../../core/database/app_database.dart';
 import '../../../shared/extensions/build_context_x.dart';
+import '../../../shared/widgets/responsive_page.dart';
 import '../../settings/data/user_profile_repository.dart';
 import '../data/inventory_repository.dart';
 import 'inventory_providers.dart';
@@ -34,8 +35,7 @@ class InventoryLocationsScreen extends ConsumerWidget {
         label: Text(context.l10n.inventoryLocationAdd),
       ),
       body: SafeArea(
-        child: ListView(
-          padding: AppSpacing.pagePadding,
+        child: ResponsivePage(
           children: <Widget>[
             Text(
               context.l10n.inventoryLocationsIntro,

@@ -3,6 +3,7 @@ import 'package:blauloop/features/calendar/presentation/calendar_screen.dart';
 import 'package:blauloop/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:blauloop/features/history/presentation/history_screen.dart';
 import 'package:blauloop/features/inventory/presentation/inventory_screen.dart';
+import 'package:blauloop/features/settings/presentation/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -76,6 +77,26 @@ void main() {
     }
   });
 
+  testWidgets('the overflow menu reaches the settings themselves', (
+    WidgetTester tester,
+  ) async {
+    // Built in Phase 10. Every screen that promised "arrives with the settings
+    // screen" was pointing at this one.
+    await pumpApp(tester);
+
+    await tester.tap(find.byTooltip('More sections'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Settings').last);
+    await tester.pumpAndSettle();
+
+    expect(find.byType(SettingsScreen), findsOneWidget);
+    expect(find.text('What you track'), findsOneWidget);
+
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.byType(NavigationBar), findsOneWidget);
+  });
+
   testWidgets('the overflow menu reaches the inventory itself', (
     WidgetTester tester,
   ) async {
@@ -109,7 +130,6 @@ void main() {
     for (final (String section, String availability) in <(String, String)>[
       ('Travel', 'Planned for release 0.3, after the 0.1.0 MVP.'),
       ('Family', 'Planned for release 0.2, after the 0.1.0 MVP.'),
-      ('Settings', 'Planned for phase 10 of the roadmap.'),
     ]) {
       await tester.tap(find.byTooltip('More sections'));
       await tester.pumpAndSettle();

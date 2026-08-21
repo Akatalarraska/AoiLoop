@@ -25,6 +25,20 @@ class ConsumableTypeRepository extends Repository {
   }
 
   /// Active types that have a countdown — the ones the dashboard cares about.
+  /// Every type, active or not.
+  ///
+  /// The settings screen needs this and nothing else does. A list of only the
+  /// active ones would make deactivating a one-way door: the row would vanish
+  /// from the very screen that offers the switch, and there would be no way
+  /// back to it.
+  Stream<List<ConsumableType>> watchAll() {
+    return (db.select(db.consumableTypes)
+          ..orderBy(<OrderClauseGenerator<$ConsumableTypesTable>>[
+            ($ConsumableTypesTable t) => OrderingTerm.asc(t.name),
+          ]))
+        .watch();
+  }
+
   Stream<List<ConsumableType>> watchCyclic() {
     return (db.select(db.consumableTypes)
           ..where(
@@ -131,6 +145,18 @@ class ConsumableTypeRepository extends Repository {
       ConsumableTypesCompanion(
         defaultReminderOffsets: Value<List<Duration>>(offsets),
       ),
+    );
+  }
+
+  /// Puts a consumable back on the dashboard.
+  ///
+  /// The counterpart to [deactivate], and the reason that one hides rather
+  /// than deletes: turning something off has to be reversible, or the first
+  /// mistap costs a history. The rows were never gone, only unlisted.
+  Future<void> activate(String id) {
+    return update(
+      id,
+      const ConsumableTypesCompanion(active: Value<bool>(true)),
     );
   }
 

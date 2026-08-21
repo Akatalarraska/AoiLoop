@@ -7,6 +7,7 @@ import '../../../shared/extensions/body_enums_l10n.dart';
 import '../../../shared/extensions/body_site_card_l10n.dart';
 import '../../../shared/extensions/build_context_x.dart';
 import '../../../shared/extensions/date_time_format.dart';
+import '../../../shared/widgets/responsive_page.dart';
 import '../domain/body_map_view.dart';
 import 'body_map_providers.dart';
 
@@ -56,8 +57,7 @@ class _BodyMapBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: AppSpacing.pagePadding,
+    return ResponsivePage(
       children: <Widget>[
         Text(
           context.l10n.bodyMapOccupiedCount(view.occupiedCount),

@@ -7,6 +7,45 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Added — Phase 10: Settings and responsive layout
+
+- **A settings screen**, which eight phases of copy have been promising. Name,
+  language, glucose units and the preferred change time; then a screen per
+  consumable for whether it is tracked, how long it lasts, whether it has a
+  change time of its own, and which reminder offsets it uses
+- **Nothing on it is destructive.** Turning a consumable off hides it and keeps
+  every row it produced. The list is built from *all* types rather than the
+  active ones, because a screen showing only what is switched on makes
+  switching something off a one-way door — the row would vanish from the very
+  screen holding the switch that puts it back
+- **Nothing on it moves a date the user did not agree to move.** Clearing the
+  preferred change time re-dates nothing, since that has always been an offer
+  made when a change is registered. Changing a duration rebuilds the reminders
+  but leaves what is already worn with the deadline it was opened with — a
+  duration describes the next cycle, and re-dating something already on the
+  body would be the app changing a fact it never observed
+- The duration field points the user at their own box. BlauLoop's catalogue
+  wear times have never been checked against a manufacturer, and a wrong
+  duration is a reminder on the wrong day
+- Switching language applies in the same frame, the way onboarding does it, and
+  the screen is honest that reminders already scheduled keep the language they
+  were written in — notification text is resolved when a reminder is scheduled,
+  so changing language cannot rewrite what the OS is holding
+- The units setting says plainly that BlauLoop does not read or interpret
+  glucose. It is the one setting that could imply otherwise
+- `ResponsivePage`. `AppSpacing.pagePadding` has said "widened on tablets by
+  the responsive helpers" since Phase 0 and there were no such helpers; there
+  are now, and every page column goes through them. Width is capped rather than
+  scaled, because a line of text stops being readable somewhere around 70
+  characters however much room is going spare
+
+### Fixed — Phase 10
+
+- `ConsumableSettingsScreen` read the *active* types, so turning a consumable
+  off made its own settings screen fall back to a permanent spinner and left no
+  way to turn it on again. It now reads every type, and holds the one it was
+  opened with so it never flashes a loading indicator mid-edit
+
 ### Added — Phase 9: Calendar & history
 
 - A timeline of everything logged, newest first, grouped by day with *Today*

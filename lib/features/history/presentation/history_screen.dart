@@ -6,6 +6,7 @@ import '../../../core/database/app_database.dart';
 import '../../../shared/extensions/build_context_x.dart';
 import '../../../shared/extensions/date_time_format.dart';
 import '../../../shared/extensions/history_l10n.dart';
+import '../../../shared/widgets/responsive_page.dart';
 import '../../body_map/presentation/body_map_providers.dart';
 import '../domain/history_entry.dart';
 import '../domain/history_view.dart';
@@ -62,8 +63,7 @@ class _HistoryBody extends ConsumerWidget {
     final List<ConsumableType> types =
         ref.watch(allConsumableTypesProvider).value ?? const <ConsumableType>[];
 
-    return ListView(
-      padding: AppSpacing.pagePadding,
+    return ResponsivePage(
       children: <Widget>[
         Text(
           context.l10n.historyCount(view.totalEntries),

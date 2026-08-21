@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../l10n/generated/app_localizations.dart';
+
 /// Locale-aware date formatting for instants read out of the database.
 ///
 /// Every timestamp BlauLoop stores is UTC. Every timestamp it *shows* is local,
@@ -14,6 +16,11 @@ import 'package:intl/intl.dart';
 /// installs through `AppLocalizations.localizationsDelegates`.
 extension DateTimeFormatX on BuildContext {
   String get _locale => Localizations.localeOf(this).toLanguageTag();
+
+  /// Read directly rather than through `BuildContextX.l10n`: two extensions
+  /// declaring the same member on `BuildContext` makes every call site
+  /// ambiguous, and this one is only needed inside this file.
+  AppLocalizations get _l10n => AppLocalizations.of(this);
 
   /// A weekday, a date and a time — "Tue, 25 Aug, 08:00".
   ///
@@ -34,6 +41,33 @@ extension DateTimeFormatX on BuildContext {
   String formatTimeOfDay(DateTime instant) {
     return MaterialLocalizations.of(this)
         .formatTimeOfDay(TimeOfDay.fromDateTime(instant.toLocal()));
+  }
+
+  /// A wear time in the coarsest unit that stays exact — "10 days", "72
+  /// hours" — or the phrase for a consumable that has none.
+  ///
+  /// Coarsest-but-exact rather than rounded: "3 days" for a 72 hour set is the
+  /// same fact more readably, but "3 days" for a 76 hour one is a different
+  /// fact, and a wear time the user has to trust is not the place to round.
+  String formatDuration(Duration? duration) {
+    if (duration == null) {
+      return _l10n.settingsDurationNone;
+    }
+    if (duration.inHours % 24 == 0) {
+      return _l10n.settingsDurationDays(duration.inDays);
+    }
+    return _l10n.settingsDurationHours(duration.inHours);
+  }
+
+  /// One reminder lead time, as the settings screen lists it.
+  String formatReminderOffset(Duration offset) {
+    if (offset == Duration.zero) {
+      return _l10n.settingsReminderOnTheDay;
+    }
+    if (offset.inHours % 24 == 0) {
+      return _l10n.settingsReminderOffsetDays(offset.inDays);
+    }
+    return _l10n.settingsReminderOffsetHours(offset.inHours);
   }
 
   /// A time of day held as minutes since local midnight — "08:00", "8:00 PM".

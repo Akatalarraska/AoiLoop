@@ -6,6 +6,7 @@ import '../../../app/theme/app_spacing.dart';
 import '../../../shared/extensions/build_context_x.dart';
 import '../../../shared/extensions/date_time_format.dart';
 import '../../../shared/extensions/history_l10n.dart';
+import '../../../shared/widgets/responsive_page.dart';
 import '../../history/domain/history_entry.dart';
 import '../domain/calendar_month.dart';
 import 'calendar_providers.dart';
@@ -60,8 +61,7 @@ class _CalendarBody extends ConsumerWidget {
         ? null
         : month.dayOn(selected);
 
-    return ListView(
-      padding: AppSpacing.pagePadding,
+    return ResponsivePage(
       children: <Widget>[
         _MonthHeader(month: month),
         const SizedBox(height: AppSpacing.xs),

@@ -399,6 +399,40 @@ consumable — and read after navigating to the History tab; auto-disposed, the
 value would be discarded in the gap, because nothing is listening at the moment
 it is set.
 
+### Settings
+
+Two rules, and both are tested rather than asserted.
+
+**Nothing is destructive.** Turning a consumable off calls `deactivate`, which
+hides the row; the history keeps every instance and change that referenced it,
+and the `RESTRICT` on the foreign key would refuse a delete anyway. The list is
+built from `everyConsumableTypeProvider` — *all* types, not the active ones —
+because a screen showing only what is switched on makes switching something off
+a one-way door: the row vanishes from the very screen holding the switch that
+would bring it back.
+
+**Nothing moves a date the user did not agree to move.** Clearing the preferred
+change time re-dates nothing, because that preference has always been an offer
+made at the moment a change is registered. Changing a duration rebuilds the
+reminders but leaves instances already in use with the deadline they were
+opened with: a duration describes the *next* cycle, and silently re-dating
+something already on the body would be the app changing a fact it never
+observed.
+
+`ConsumableSettingsScreen` holds the type it was opened with and prefers the
+live row when there is one. Watching the database alone and falling back to a
+spinner reads as reasonable and behaves badly — every edit re-runs the query,
+and the screen flashes a loading indicator in the middle of the user changing
+something.
+
+### Responsive layout
+
+`ResponsivePage` caps a page column at a readable measure and turns the rest
+into margin. Width is capped rather than scaled: a line of text stops being
+readable somewhere around 70 characters however much room is going spare, and a
+countdown card stretched across a tablet reads as a bug rather than as a use of
+the space.
+
 ### Preferred change time
 
 If a sensor fails at 03:17 and a new one goes on, the next change would fall at
